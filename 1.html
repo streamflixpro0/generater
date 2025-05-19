@@ -338,42 +338,6 @@
     </div>
 
     <script>
-        // Disable right-click
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-        // Disable common developer tools shortcuts (F12, Ctrl+Shift+I, Ctrl+U)
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode == 123) { // F12
-                event.preventDefault();
-                alert('Access to developer tools is disabled.');
-                return false;
-            }
-            if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Ctrl+Shift+I
-                event.preventDefault();
-                alert('Access to developer tools is disabled.');
-                return false;
-            }
-            if (event.ctrlKey && event.keyCode == 85) { // Ctrl+U (View Source)
-                event.preventDefault();
-                alert('Viewing source code is disabled.');
-                return false;
-            }
-        });
-
-        // Detect if developer tools are opened
-        function detectDevTools() {
-            const threshold = 160;
-            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-            if (widthThreshold || heightThreshold) {
-                alert('Developer tools detected! Please close them to continue.');
-                // Optionally, redirect or disable functionality
-                // window.location.href = "about:blank"; // Uncomment to redirect
-            }
-        }
-
-        // Check for dev tools periodically
-        setInterval(detectDevTools, 1000);
 
         const apiKey = "bef32038953bef7647b4a5862532fe95";
         let contentType = "movie";
