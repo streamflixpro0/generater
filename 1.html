@@ -427,7 +427,6 @@
 
                     const movieHTML = `
 <div class="separator" style="clear: both;">
-    <a href="https://www.themoviedb.org/movie/${tmdbId}" style="display: block; padding: 1em 0px; text-align: center;">
         <img alt="${title} (${year})" border="0" loading="lazy" src="${posterUrl}" />
     </a>
 </div>
@@ -443,7 +442,7 @@
 <div class="m-tabs">
 <ul class="b-tabs">
     <li>Info</li>
-    <li>Story Line</li>
+    <li>Story</li>
     <li>Download</li>
 </ul>
 <div class="c-tabs">
@@ -488,7 +487,6 @@
 
                     const seriesHTML = `
 <div class="separator" style="clear: both;">
-    <a href="https://image.tmdb.org/t/p/original${data.poster_path}" style="display: block; padding: 1em 0; text-align: center;">
         <img alt="${title}" border="0" data-original-height="800" data-original-width="533" src="${posterUrl}" loading="lazy" />
     </a>
 </div>
@@ -504,7 +502,7 @@
 <div class="m-tabs">
 <ul class="b-tabs">
     <li>Info</li>
-    <li>Sinopsis</li>
+    <li>Story</li>
     <li>Download</li>
 </ul>
 <div class="c-tabs">
