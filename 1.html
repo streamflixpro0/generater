@@ -295,6 +295,14 @@
         body.dark #modeToggle:hover { background: rgba(255, 255, 255, 0.3); }
         body.light #modeToggle:hover { background: rgba(0, 0, 0, 0.1); }
 
+        .copyright {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -307,6 +315,7 @@
             textarea { height: 280px; }
             .input-group { flex-direction: column; }
             .input-paste-btn { width: 100%; }
+            .copyright { position: static; text-align: center; margin-top: 20px; }
         }
 
         @media (max-width: 480px) {
@@ -319,7 +328,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet">
 </head>
-<body class="dark" oncontextmenu="return false;">
+<body class="dark">
     <div id="container">
         <h2>Movie & Series Post Generator</h2>
         <div class="input-group">
@@ -335,10 +344,10 @@
             <button id="copyBtn" onclick="copyToClipboard()">Copy Code</button>
         </div>
         <textarea id="outputHTML" placeholder="Generated HTML will appear here..."></textarea>
+        <div class="copyright">© 2023 streamflixpro.fun - All Rights Reserved</div>
     </div>
 
     <script>
-
         const apiKey = "bef32038953bef7647b4a5862532fe95";
         let contentType = "movie";
 
