@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Protected StreamflixPro Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .auth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.5s ease;
+        }
+        
+        .auth-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+        
+        .submit-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #3367d6;
+        }
+        
+        .error-msg {
+            color: #d32f2f;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        #secureIframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #4285f4;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container" id="authContainer">
+        <div class="auth-box">
+            <svg class="logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" fill="#4285F4"/>
+                <path d="M10 8v8l5-4z" fill="#EA4335"/>
+            </svg>
+            <h2>Enter Access Code</h2>
+            <div class="input-group">
+                <input type="password" id="accessCode" placeholder="Enter your access code" autocomplete="off">
+            </div>
+            <button class="submit-btn" id="submitBtn">Continue</button>
+            <div class="error-msg" id="errorMsg">Invalid access code. Please try again.</div>
+        </div>
+    </div>
+
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Loading Secure Content...</p>
+    </div>
+
+    <div class="iframe-container" id="iframeContainer">
+        <iframe 
+            id="secureIframe"
+            src="about:blank"
+            frameborder="0"
+            scrolling="yes"
+            allowfullscreen
+            allow="autoplay; fullscreen"
+            onload="document.getElementById('loader').style.display='none';">
+        </iframe>
+    </div>
+
+    <script>
+        // Configuration
+        const SECRET_CODE = "123"; // Change this to your desired password
+        const MAX_ATTEMPTS = 5;
+        let attempts = 0;
+        
+        // DOM Elements
+        const authContainer = document.getElementById('authContainer');
+        const accessCodeInput = document.getElementById('accessCode');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        const iframeContainer = document.getElementById('iframeContainer');
+        const loader = document.getElementById('loader');
+        const secureIframe = document.getElementById('secureIframe');
+        
+        // Password validation
+        function validateAccess() {
+            const userInput = accessCodeInput.value.trim();
+            
+            if (userInput === SECRET_CODE) {
+                // Correct password
+                loader.style.display = 'flex';
+                authContainer.style.opacity = '0';
+                
+                setTimeout(() => {
+                    authContainer.style.display = 'none';
+                    iframeContainer.style.display = 'block';
+                    secureIframe.src = "https://streamflixpro0.github.io/generater/1.html";
+                }, 500);
+                
+            } else {
+                // Wrong password
+                attempts++;
+                accessCodeInput.value = '';
+                errorMsg.style.display = 'block';
+                
+                if (attempts >= MAX_ATTEMPTS) {
+                    errorMsg.textContent = 'Maximum attempts reached. Please try again later.';
+                    submitBtn.disabled = true;
+                    setTimeout(() => {
+                        errorMsg.style.display = 'none';
+                        submitBtn.disabled = false;
+                        attempts = 0;
+                    }, 30000);
+                }
+            }
+        }
+        
+        // Event Listeners
+        submitBtn.addEventListener('click', validateAccess);
+        
+        accessCodeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                validateAccess();
+            }
+        });
+        
+        // Fallback in case iframe fails to load
+        setTimeout(() => {
+            if (loader.style.display === 'flex') {
+                loader.style.display = 'none';
+                secureIframe.src = "https://streamflixpro0.github.io/generater/1.html";
+            }
+        }, 15000);
+    </script>
+</body>
+</html>
