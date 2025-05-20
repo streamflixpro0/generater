@@ -550,3 +550,88 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Button Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      font-size: 16px;
+    }
+    .output {
+      background: #222;
+      color: #0f0;
+      padding: 15px;
+      margin-top: 20px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      border-radius: 8px;
+    }
+    .download-button {
+      display: inline-block;
+      margin: 5px 0;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📥 Download Button Generator</h2>
+    <input type="text" id="resolution" placeholder="e.g. 480p, 720p, 1080p, 4K">
+    <input type="text" id="link" placeholder="Download link (https://...)">
+    <button onclick="addDownload()">➕ Add Download Button</button>
+    
+    <h3>📄 Generated HTML:</h3>
+    <div class="output" id="generatedCode" contenteditable></div>
+    <button onclick="copyCode()">📋 Copy HTML</button>
+  </div>
+
+  <script>
+    let code = `<div class="s-tabs">\n  <div class="download-container">\n`;
+
+    function addDownload() {
+      const resolution = document.getElementById('resolution').value.trim();
+      const link = document.getElementById('link').value.trim();
+
+      if (!resolution || !link) {
+        alert("Resolution और लिंक दोनों भरें");
+        return;
+      }
+
+      code += `    <a class="download-button" href="${link}">Download ${resolution}</a>\n`;
+      document.getElementById('generatedCode').textContent = code + "  </div>\n</div>";
+      
+      document.getElementById('resolution').value = '';
+      document.getElementById('link').value = '';
+    }
+
+    function copyCode() {
+      const text = document.getElementById("generatedCode").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("HTML Code copied!");
+      });
+    }
+  </script>
+</body>
+</html>
