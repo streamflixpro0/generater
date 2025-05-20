@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Complete Post Generator</title>
+    <title> Post Generator</title>
     <style>
         * {
             margin: 0;
@@ -220,12 +220,13 @@
             <button class="tab-btn" onclick="switchTab('download-generator')">Download Buttons</button>
         </div>
 
-        <!-- Post Generator Section -->
+        <!-- Post Generator Section - Replaced with new version -->
         <div id="post-generator" class="content-section active">
             <div class="generator-container">
                 <h2>Movie & Series Post Generator</h2>
                 <div class="input-group">
                     <input type="text" id="tmdbId" placeholder="Enter TMDB Movie ID">
+                    <button class="btn-tertiary" onclick="pasteTMDBId()">Paste</button>
                 </div>
                 <div class="toggle-group">
                     <button class="toggle-btn active" id="movieToggle" onclick="toggleType('movie')">Movie</button>
@@ -234,8 +235,9 @@
                 <div class="button-group">
                     <button class="btn-primary" onclick="generateHTML()">Generate HTML</button>
                     <button class="btn-secondary" onclick="copyToClipboard('outputHTML')">Copy Code</button>
+                    <button class="btn-tertiary" onclick="pasteFromClipboard()">Paste Code</button>
                 </div>
-                <textarea id="outputHTML" placeholder="Generated post HTML will appear here..."></textarea>
+                <textarea id="outputHTML" placeholder="Generated HTML will appear here..."></textarea>
             </div>
         </div>
 
@@ -285,7 +287,7 @@
             event.currentTarget.classList.add('active');
         }
 
-        // Post Generator Functions
+        // Post Generator Functions - Replaced with new version
         const apiKey = "bef32038953bef7647b4a5862532fe95";
         let contentType = "movie";
 
@@ -323,57 +325,56 @@
                     const duration = data.runtime ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m` : "Unknown";
                     const genres = data.genres.length ? data.genres.map(g => g.name).join(", ") : "N/A";
                     const director = data.credits.crew.find(person => person.job === "Director")?.name || "Unknown";
-                    const cast = data.credits.cast.slice(0, 2).map(actor => actor.name).join(", ") || "N/A";
+                    const cast = data.credits.cast.slice(0, 2).map(actor => `<a href="https://www.themoviedb.org/person/${actor.id}">${actor.name}</a>`).join(", ") || "N/A";
                     const posterUrl = data.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face${data.poster_path}` : "https://via.placeholder.com/220x330?text=No+Image";
                     const story = data.overview || "No storyline available.";
                     const trailer = data.videos?.results.find(video => video.type === "Trailer");
                     let trailerLink = "https://thegdplayer.blogspot.com/?player=plyr&provider=yt&link=";
                     trailerLink += trailer ? trailer.key : "dQw4w9WgXcQ";
 
-                    const movieHTML = `<div class="separator" style="clear: both;">
-    <img alt="${title} (${year})" border="0" loading="lazy" src="${posterUrl}" />
+                    const movieHTML = `
+<div class="separator" style="clear: both;">
+        <img alt="${title} (${year})" border="0" loading="lazy" src="${posterUrl}" />
+    </a>
 </div>
 
 <span class="hcl">
     <b>{year}=${year}</b> <b>{rating}=${rating}</b> <b>{type}=Movie</b> <b>{khdub}</b>
 </span>
 
-<div style="height: 0; overflow: hidden; padding-bottom: 56.25%; position: relative; background: #000;">
-  <iframe allow="autoplay; encrypted-media" allowfullscreen scrolling="no" 
-          src="${trailerLink}" 
-          style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
-</div>
+<div style="height: 0px; overflow: hidden; padding-bottom: 56.25%; position: relative;">
 
+  <iframe allow="autoplay; encrypted-media" allowfullscreen="" scrolling="no" src="${trailerLink}" style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
+</div>
 <div class="m-tabs">
-<ul class="b-tabs" style="display: flex; justify-content: space-between; padding: 0 10px; margin: 0; list-style: none;">
-    <li class="active" style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid #e50914; color: #e50914; cursor: pointer;">Info</li>
-    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Story</li>
-    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Download</li>
+<ul class="b-tabs">
+    <li>Info</li>
+    <li>Story</li>
+    <li>Download</li>
 </ul>
-
 <div class="c-tabs">
-<div class="s-tabs" style="display: block;">
+<div class="s-tabs">
 <div class="boxInfo">
-<div class="box-i" style="padding: 15px;">
-    <span style="display: block; margin-bottom: 8px;"><b>● Title:</b> ${title}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Duration:</b> ${duration}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Year:</b> ${year}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Genre:</b> ${genres}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Lead Cast:</b> ${cast}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Rating:</b> ⭐${rating}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Director:</b> ${director}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Type:</b> Movie</span>
+<div class="box-i">
+    <span><b>● Title:</b> ${title}</span>
+    <span><b>● Duration:</b> ${duration}</span>
+    <span><b>● Year:</b> ${year}</span>
+    <span><b>● Genre:</b> ${genres}</span>
+    <span><b>● Lead Cast:</b> ${cast}</span>
+    <span><b>● Rating:</b> ⭐${rating}</span>
+    <span><b>● Director:</b> ${director}</span>
+    <span><b>● Type:</b> Movie</span>
 </div>
 </div>
 </div>
-
-<div class="s-tabs" style="display: none;">
-    <p class="dexs" style="padding: 15px; margin: 0;">${story}</p>
+<div class="s-tabs">
+    <p class="dexs">${story}</p>
 </div>
-
-<div class="s-tabs" style="display: none;">
-    <div class="download-container" style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
-        <!-- Download buttons will be added here -->
+<div class="s-tabs">
+    <div class="download-container">
+        <a class="download-button" href="https://smallshorts.com/480p">Download 480p</a>
+        <a class="download-button" href="https://smallshorts.com/720p">Download 720p</a>
+        <a class="download-button" href="https://smallshorts.com/1080p">Download 1080p</a>
     </div>
 </div>
 </div>
@@ -384,60 +385,59 @@
                     const year = data.first_air_date ? data.first_air_date.split("-")[0] : "Unknown";
                     const rating = data.vote_average ? data.vote_average.toFixed(1) : "N/A";
                     const genres = data.genres.length ? data.genres.map(g => g.name).join(", ") : "N/A";
-                    const cast = data.credits.cast.slice(0, 2).map(actor => actor.name).join(", ") || "N/A";
+                    const cast = data.credits.cast.slice(0, 2).map(actor => `<a href="https://www.themoviedb.org/person/${actor.id}">${actor.name}</a>`).join(", ") || "N/A";
                     const posterUrl = data.poster_path ? `https://image.tmdb.org/t/p/original${data.poster_path}` : "https://via.placeholder.com/533x800?text=No+Image";
                     const story = data.overview || "No storyline available.";
                     const seasons = data.number_of_seasons || "Unknown";
                     const episodes = data.number_of_episodes || "Unknown";
                     const status = data.status === "Ended" ? "" : "<b>{ongoing}</b>";
 
-                    const seriesHTML = `<div class="separator" style="clear: both;">
-    <img alt="${title}" border="0" loading="lazy" src="${posterUrl}" />
+                    const seriesHTML = `
+<div class="separator" style="clear: both;">
+        <img alt="${title}" border="0" data-original-height="800" data-original-width="533" src="${posterUrl}" loading="lazy" />
+    </a>
 </div>
 
 <span class="hcl">
     <b>{speak}=khmer</b> <b>{episode}=EP.1</b> <b>{type}=Drama</b> ${status}
 </span>
 
-<div style="height: 0; overflow: hidden; padding-bottom: 56.25%; position: relative; background: #000;">
-  <iframe allow="autoplay; encrypted-media" allowfullscreen scrolling="no" 
-          src="#" 
-          style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
-</div>
+<div style="height: 0px; overflow: hidden; padding-bottom: 56.25%; position: relative;">
 
+  <iframe allow="autoplay; encrypted-media" allowfullscreen="" scrolling="no" src="#" style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
+</div>
 <div class="m-tabs">
-<ul class="b-tabs" style="display: flex; justify-content: space-between; padding: 0 10px; margin: 0; list-style: none;">
-    <li class="active" style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid #e50914; color: #e50914; cursor: pointer;">Info</li>
-    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Story</li>
-    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Download</li>
+<ul class="b-tabs">
+    <li>Info</li>
+    <li>Story</li>
+    <li>Download</li>
 </ul>
-
 <div class="c-tabs">
-<div class="s-tabs" style="display: block;">
+<div class="s-tabs">
 <div class="boxInfo">
-<div class="box-i" style="padding: 15px;">
-    <span style="display: block; margin-bottom: 8px;"><b>● Title:</b> ${title}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Duration:</b> Not Available</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Year:</b> ${year}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Genre:</b> ${genres}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Lead Cast:</b> ${cast}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Rating:</b> ⭐${rating}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Director:</b> Not Available</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Type:</b> Series</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Seasons:</b> ${seasons}</span>
-    <span style="display: block; margin-bottom: 8px;"><b>● Total Episodes:</b> ${episodes}</span>
+<div class="box-i">
+    <span><b>● Title:</b> ${title}</span>
+    <span><b>● Duration:</b> Not Available</span>
+    <span><b>● Year:</b> ${year}</span>
+    <span><b>● Genre:</b> ${genres}</span>
+    <span><b>● Lead Cast:</b> ${cast}</span>
+    <span><b>● Rating:</b> ⭐${rating}</span>
+    <span><b>● Director:</b> Not Available</span>
+    <span><b>● Type:</b> Series</span>
+    <span><b>● Seasons:</b> ${seasons}</span>
+    <span><b>● Total Episodes:</b> ${episodes}</span>
 </div>
 </div>
 </div>
-
-<div class="s-tabs" style="display: none;">
-    <p class="dexs" style="padding: 15px; margin: 0;">${story}</p>
+<div class="s-tabs">
+    <p class="dexs">${story}</p>
 </div>
-
-<div class="s-tabs" style="display: none;">
-    <h2 style="text-align:center; margin-bottom: 15px;">Season 1</h2>
-    <div class="download-container" style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
-        <!-- Download buttons will be added here -->
+<div class="s-tabs">
+    <h2 style="text-align:center">Season 1</h2>
+    <div class="download-container">
+        <a class="download-button" href="#link-480p">Episode 1</a>
+        <a class="download-button" href="#link-720p">Episode 2</a>
+        <a class="download-button" href="#link-1080p">Episode 3</a>
     </div>
 </div>
 </div>
@@ -446,6 +446,31 @@
                 }
             } catch (error) {
                 alert("Error fetching details. Please try again.");
+                console.error(error);
+            }
+        }
+
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                const textarea = document.getElementById("outputHTML");
+                textarea.value = text;
+                textarea.readOnly = false;
+                alert("Code pasted from clipboard!");
+            } catch (error) {
+                alert("Failed to paste from clipboard. Please try manually pasting with Ctrl+V.");
+                console.error(error);
+            }
+        }
+
+        async function pasteTMDBId() {
+            try {
+                const text = await navigator.clipboard.readText();
+                const input = document.getElementById("tmdbId");
+                input.value = text.trim();
+                alert("TMDB ID pasted!");
+            } catch (error) {
+                alert("Failed to paste TMDB ID. Please try manually pasting with Ctrl+V.");
                 console.error(error);
             }
         }
