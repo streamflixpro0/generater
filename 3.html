@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Complete Post Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            touch-action: manipulation;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --bg-dark: linear-gradient(135deg, #1e1e2f, #2a2a4a, #3b3b5f);
+            --container-dark: rgba(40, 40, 60, 0.9);
+            --text-dark: #e0e0e0;
+            --accent-dark: #ff4e7e;
+            --btn-dark-1: linear-gradient(90deg, #ff4e7e, #ff8e53);
+            --btn-dark-2: linear-gradient(90deg, #4ecca3, #56ccf2);
+            --btn-dark-3: linear-gradient(90deg, #9575cd, #ba68c8);
+            --input-dark: rgba(255, 255, 255, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-dark);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-dark);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .generator-container {
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 40px var(--shadow-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--container-dark);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-dark);
+            text-shadow: 0 2px 10px rgba(255, 78, 126, 0.3);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--input-dark);
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            height: 200px;
+            resize: none;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.5;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-primary { background: var(--btn-dark-1); }
+        .btn-secondary { background: var(--btn-dark-2); }
+        .btn-tertiary { background: var(--btn-dark-3); }
+
+        .toggle-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .toggle-btn.active {
+            background: var(--accent-dark);
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            background: #e50914;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            .generator-container {
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .button-group, .toggle-group {
+                flex-direction: column;
+            }
+            
+            button, .toggle-btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('post-generator')">Post Generator</button>
+            <button class="tab-btn" onclick="switchTab('download-generator')">Download Buttons</button>
+        </div>
+
+        <!-- Post Generator Section -->
+        <div id="post-generator" class="content-section active">
+            <div class="generator-container">
+                <h2>Movie & Series Post Generator</h2>
+                <div class="input-group">
+                    <input type="text" id="tmdbId" placeholder="Enter TMDB Movie ID">
+                </div>
+                <div class="toggle-group">
+                    <button class="toggle-btn active" id="movieToggle" onclick="toggleType('movie')">Movie</button>
+                    <button class="toggle-btn" id="seriesToggle" onclick="toggleType('series')">Series</button>
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="generateHTML()">Generate HTML</button>
+                    <button class="btn-secondary" onclick="copyToClipboard('outputHTML')">Copy Code</button>
+                </div>
+                <textarea id="outputHTML" placeholder="Generated post HTML will appear here..."></textarea>
+            </div>
+        </div>
+
+        <!-- Download Button Generator Section -->
+        <div id="download-generator" class="content-section">
+            <div class="generator-container">
+                <h2>Download Button Generator</h2>
+                <div class="input-group">
+                    <input type="text" id="resolution" placeholder="Resolution (e.g. 480p, 720p)">
+                    <input type="text" id="link" placeholder="Download link (https://...)">
+                </div>
+                <div class="button-group">
+                    <button class="btn-tertiary" onclick="addDownload()">Add Button</button>
+                    <button class="btn-secondary" onclick="copyToClipboard('downloadOutput')">Copy Code</button>
+                    <button class="btn-primary" onclick="resetDownloadGenerator()">Reset</button>
+                </div>
+                <textarea id="downloadOutput" placeholder="Generated download buttons HTML will appear here..."></textarea>
+                <div id="downloadPreview" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+
+        <div class="copyright">© 2023 streamflixpro.fun - All Rights Reserved</div>
+    </div>
+
+    <script>
+        // Disable zooming and scrolling
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            if (!e.target.classList.contains('scrollable')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Tab switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Post Generator Functions
+        const apiKey = "bef32038953bef7647b4a5862532fe95";
+        let contentType = "movie";
+
+        function toggleType(type) {
+            contentType = type;
+            document.getElementById("movieToggle").classList.toggle("active", type === "movie");
+            document.getElementById("seriesToggle").classList.toggle("active", type === "series");
+            document.getElementById("tmdbId").placeholder = `Enter TMDB ${type === "movie" ? "Movie" : "Series"} ID`;
+        }
+
+        async function generateHTML() {
+            const tmdbId = document.getElementById("tmdbId").value.trim();
+            if (!tmdbId) {
+                alert("Please enter a valid TMDB ID");
+                return;
+            }
+
+            const apiUrl = contentType === "movie"
+                ? `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${apiKey}&append_to_response=videos,credits`
+                : `https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${apiKey}&append_to_response=credits`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (!data.name && !data.title) {
+                    alert("Invalid TMDB ID. Try again.");
+                    return;
+                }
+
+                if (contentType === "movie") {
+                    const title = data.title;
+                    const year = data.release_date ? data.release_date.split("-")[0] : "Unknown";
+                    const rating = data.vote_average ? data.vote_average.toFixed(1) : "N/A";
+                    const duration = data.runtime ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m` : "Unknown";
+                    const genres = data.genres.length ? data.genres.map(g => g.name).join(", ") : "N/A";
+                    const director = data.credits.crew.find(person => person.job === "Director")?.name || "Unknown";
+                    const cast = data.credits.cast.slice(0, 2).map(actor => actor.name).join(", ") || "N/A";
+                    const posterUrl = data.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face${data.poster_path}` : "https://via.placeholder.com/220x330?text=No+Image";
+                    const story = data.overview || "No storyline available.";
+                    const trailer = data.videos?.results.find(video => video.type === "Trailer");
+                    let trailerLink = "https://thegdplayer.blogspot.com/?player=plyr&provider=yt&link=";
+                    trailerLink += trailer ? trailer.key : "dQw4w9WgXcQ";
+
+                    const movieHTML = `<div class="separator" style="clear: both;">
+    <img alt="${title} (${year})" border="0" loading="lazy" src="${posterUrl}" />
+</div>
+
+<span class="hcl">
+    <b>{year}=${year}</b> <b>{rating}=${rating}</b> <b>{type}=Movie</b> <b>{khdub}</b>
+</span>
+
+<div style="height: 0; overflow: hidden; padding-bottom: 56.25%; position: relative; background: #000;">
+  <iframe allow="autoplay; encrypted-media" allowfullscreen scrolling="no" 
+          src="${trailerLink}" 
+          style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
+</div>
+
+<div class="m-tabs">
+<ul class="b-tabs" style="display: flex; justify-content: space-between; padding: 0 10px; margin: 0; list-style: none;">
+    <li class="active" style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid #e50914; color: #e50914; cursor: pointer;">Info</li>
+    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Story</li>
+    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Download</li>
+</ul>
+
+<div class="c-tabs">
+<div class="s-tabs" style="display: block;">
+<div class="boxInfo">
+<div class="box-i" style="padding: 15px;">
+    <span style="display: block; margin-bottom: 8px;"><b>● Title:</b> ${title}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Duration:</b> ${duration}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Year:</b> ${year}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Genre:</b> ${genres}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Lead Cast:</b> ${cast}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Rating:</b> ⭐${rating}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Director:</b> ${director}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Type:</b> Movie</span>
+</div>
+</div>
+</div>
+
+<div class="s-tabs" style="display: none;">
+    <p class="dexs" style="padding: 15px; margin: 0;">${story}</p>
+</div>
+
+<div class="s-tabs" style="display: none;">
+    <div class="download-container" style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
+        <!-- Download buttons will be added here -->
+    </div>
+</div>
+</div>
+</div>`;
+                    document.getElementById("outputHTML").value = movieHTML;
+                } else {
+                    const title = data.name;
+                    const year = data.first_air_date ? data.first_air_date.split("-")[0] : "Unknown";
+                    const rating = data.vote_average ? data.vote_average.toFixed(1) : "N/A";
+                    const genres = data.genres.length ? data.genres.map(g => g.name).join(", ") : "N/A";
+                    const cast = data.credits.cast.slice(0, 2).map(actor => actor.name).join(", ") || "N/A";
+                    const posterUrl = data.poster_path ? `https://image.tmdb.org/t/p/original${data.poster_path}` : "https://via.placeholder.com/533x800?text=No+Image";
+                    const story = data.overview || "No storyline available.";
+                    const seasons = data.number_of_seasons || "Unknown";
+                    const episodes = data.number_of_episodes || "Unknown";
+                    const status = data.status === "Ended" ? "" : "<b>{ongoing}</b>";
+
+                    const seriesHTML = `<div class="separator" style="clear: both;">
+    <img alt="${title}" border="0" loading="lazy" src="${posterUrl}" />
+</div>
+
+<span class="hcl">
+    <b>{speak}=khmer</b> <b>{episode}=EP.1</b> <b>{type}=Drama</b> ${status}
+</span>
+
+<div style="height: 0; overflow: hidden; padding-bottom: 56.25%; position: relative; background: #000;">
+  <iframe allow="autoplay; encrypted-media" allowfullscreen scrolling="no" 
+          src="#" 
+          style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
+</div>
+
+<div class="m-tabs">
+<ul class="b-tabs" style="display: flex; justify-content: space-between; padding: 0 10px; margin: 0; list-style: none;">
+    <li class="active" style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid #e50914; color: #e50914; cursor: pointer;">Info</li>
+    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Story</li>
+    <li style="flex: 1; text-align: center; padding: 12px 5px; font-size: 14px; white-space: nowrap; border-bottom: 2px solid transparent; color: #aaa; cursor: pointer;">Download</li>
+</ul>
+
+<div class="c-tabs">
+<div class="s-tabs" style="display: block;">
+<div class="boxInfo">
+<div class="box-i" style="padding: 15px;">
+    <span style="display: block; margin-bottom: 8px;"><b>● Title:</b> ${title}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Duration:</b> Not Available</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Year:</b> ${year}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Genre:</b> ${genres}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Lead Cast:</b> ${cast}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Rating:</b> ⭐${rating}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Director:</b> Not Available</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Type:</b> Series</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Seasons:</b> ${seasons}</span>
+    <span style="display: block; margin-bottom: 8px;"><b>● Total Episodes:</b> ${episodes}</span>
+</div>
+</div>
+</div>
+
+<div class="s-tabs" style="display: none;">
+    <p class="dexs" style="padding: 15px; margin: 0;">${story}</p>
+</div>
+
+<div class="s-tabs" style="display: none;">
+    <h2 style="text-align:center; margin-bottom: 15px;">Season 1</h2>
+    <div class="download-container" style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
+        <!-- Download buttons will be added here -->
+    </div>
+</div>
+</div>
+</div>`;
+                    document.getElementById("outputHTML").value = seriesHTML;
+                }
+            } catch (error) {
+                alert("Error fetching details. Please try again.");
+                console.error(error);
+            }
+        }
+
+        // Download Button Generator Functions
+        let downloadButtonsHTML = `<div class="s-tabs">\n  <div class="download-container">\n`;
+
+        function addDownload() {
+            const resolution = document.getElementById('resolution').value.trim();
+            const link = document.getElementById('link').value.trim();
+
+            if (!resolution || !link) {
+                alert("Please enter both resolution and link");
+                return;
+            }
+
+            const buttonHTML = `    <a class="download-button" href="${link}" style="display: block; padding: 12px; background: #e50914; color: white; text-align: center; text-decoration: none; border-radius: 4px; font-weight: bold;">Download ${resolution}</a>\n`;
+            
+            downloadButtonsHTML += buttonHTML;
+            document.getElementById('downloadOutput').value = downloadButtonsHTML + "  </div>\n</div>";
+            
+            // Update preview
+            const previewContainer = document.getElementById('downloadPreview');
+            const newButton = document.createElement('a');
+            newButton.className = 'download-btn';
+            newButton.href = link;
+            newButton.textContent = `Download ${resolution}`;
+            newButton.style.margin = '5px';
+            newButton.style.display = 'inline-block';
+            previewContainer.appendChild(newButton);
+            
+            document.getElementById('resolution').value = '';
+            document.getElementById('link').value = '';
+        }
+
+        function resetDownloadGenerator() {
+            downloadButtonsHTML = `<div class="s-tabs">\n  <div class="download-container">\n`;
+            document.getElementById('downloadOutput').value = '';
+            document.getElementById('downloadPreview').innerHTML = '';
+            document.getElementById('resolution').value = '';
+            document.getElementById('link').value = '';
+        }
+
+        // Common Functions
+        function copyToClipboard(elementId) {
+            const textarea = document.getElementById(elementId);
+            textarea.select();
+            document.execCommand("copy");
+            alert("Code copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
