@@ -248,7 +248,7 @@
                     <label>Add Episodes</label>
                     <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                         <input type="text" id="episodeName" placeholder="Episode name" style="flex: 2;">
-                        <input type="text" id="episodeUrl" placeholder="Embed URL" style="flex: 3;">
+                        <input type="text" id="episodeUrl" placeholder="Embed URL (e.g., https://example.com/embed/xyz)" style="flex: 3;">
                         <button id="addEpisode" class="btn">Add</button>
                     </div>
                     
@@ -256,7 +256,7 @@
                         <div class="episode-item">
                             <div class="episode-inputs">
                                 <div><strong>Episode 1</strong></div>
-                                <div style="font-size: 12px; opacity: 0.8; overflow: hidden; text-overflow: ellipsis;">https://dhcplay.com/e/6r4y5ga4bf14</div>
+                                <div style="font-size: 12px; opacity: 0.8; overflow: hidden; text-overflow: ellipsis;">https://www.youtube.com/embed/dQw4w9WgXcQ</div>
                             </div>
                             <button class="remove-episode" data-index="0">×</button>
                         </div>
@@ -302,7 +302,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const episodes = [
-                { name: "Episode 1", url: "https://dhcplay.com/e/6r4y5ga4bf14" }
+                { name: "Episode 1", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
             ];
             let showTitle = "Squid Game";
             
@@ -326,13 +326,24 @@
             // Add new episode
             addEpisodeBtn.addEventListener('click', function() {
                 const name = episodeNameInput.value.trim();
-                const url = episodeUrlInput.value.trim();
+                let url = episodeUrlInput.value.trim();
+                
+                // Ensure URL is properly formatted
+                if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
                 
                 if (name && url) {
-                    episodes.push({ name, url });
-                    renderEpisodes();
-                    episodeNameInput.value = '';
-                    episodeUrlInput.value = '';
+                    // Validate URL
+                    try {
+                        new URL(url);
+                        episodes.push({ name, url });
+                        renderEpisodes();
+                        episodeNameInput.value = '';
+                        episodeUrlInput.value = '';
+                    } catch (e) {
+                        alert('Please enter a valid URL (e.g., https://example.com/embed/xyz)');
+                    }
                 } else {
                     alert('Please enter both episode name and URL');
                 }
@@ -420,15 +431,19 @@
                     option.addEventListener('click', function() {
                         const url = this.getAttribute('data-src');
                         const title = this.textContent;
-                        player.src = url;
-                        playerPreview.querySelector('#currentEpisode').textContent = showTitle + ' - ' + title;
-                        playerPreview.querySelector('#episodeDropdown').style.display = 'none';
+                        const player = playerPreview.querySelector('#mainPlayer');
                         
-                        // Loading effect
-                        player.style.opacity = '0.7';
-                        setTimeout(() => {
-                            player.style.opacity = '1';
-                        }, 300);
+                        if (player) {
+                            player.src = url;
+                            playerPreview.querySelector('#currentEpisode').textContent = showTitle + ' - ' + title;
+                            playerPreview.querySelector('#episodeDropdown').style.display = 'none';
+                            
+                            // Loading effect
+                            player.style.opacity = '0.7';
+                            setTimeout(() => {
+                                player.style.opacity = '1';
+                            }, 300);
+                        }
                     });
                 });
             }
@@ -452,7 +467,7 @@
             resetBtn.addEventListener('click', function() {
                 if (confirm('Are you sure you want to reset all settings?')) {
                     episodes.length = 0;
-                    episodes.push({ name: "Episode 1", url: "https://dhcplay.com/e/6r4y5ga4bf14" });
+                    episodes.push({ name: "Episode 1", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" });
                     showTitleInput.value = "Squid Game";
                     episodeNameInput.value = '';
                     episodeUrlInput.value = '';
@@ -536,30 +551,34 @@ if (episodeBtn && episodeDropdown) {
   });
 }
 
-// Change episode function
-function changeEpisode(url, title) {
-  const player = document.getElementById('mainPlayer');
-  const episodeTitle = document.getElementById('currentEpisode');
-  
-  if (player && episodeTitle) {
-    // Show loading effect
-    player.style.opacity = '0.7';
+// Handle episode changes
+document.querySelectorAll('.episode-option').forEach(option => {
+  option.addEventListener('click', function() {
+    const url = this.getAttribute('data-src');
+    const title = this.textContent;
+    const player = document.getElementById('mainPlayer');
+    const episodeTitle = document.getElementById('currentEpisode');
     
-    // Change source
-    player.src = url;
-    episodeTitle.textContent = '${showTitle.replace(/'/g, "\\'")} - ' + title;
-    
-    // Hide dropdown
-    if (episodeDropdown) {
-      episodeDropdown.style.display = 'none';
+    if (player && episodeTitle) {
+      // Show loading effect
+      player.style.opacity = '0.7';
+      
+      // Change source
+      player.src = url;
+      episodeTitle.textContent = '${showTitle.replace(/'/g, "\\'")} - ' + title;
+      
+      // Hide dropdown
+      if (episodeDropdown) {
+        episodeDropdown.style.display = 'none';
+      }
+      
+      // Restore after load
+      setTimeout(() => {
+        player.style.opacity = '1';
+      }, 300);
     }
-    
-    // Restore after load
-    setTimeout(() => {
-      player.style.opacity = '1';
-    }, 300);
-  }
-}
+  });
+});
 <\/script>`;
             }
             
