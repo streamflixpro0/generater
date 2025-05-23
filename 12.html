@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamflixPro Player Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e50914;
+            --dark: #141414;
+            --light: #f5f5f5;
+            --gray: #333;
+            --border: #444;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: var(--light);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .generator-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary), #b00710);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-weight: 600;
+            font-size: 24px;
+        }
+        
+        .generator-body {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .config-section {
+            flex: 1;
+            min-width: 350px;
+            padding: 25px;
+            border-right: 1px solid var(--border);
+        }
+        
+        .preview-section {
+            flex: 1;
+            min-width: 350px;
+            padding: 25px;
+            background: #101010;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--gray);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--light);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(229,9,20,0.2);
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background: #f40612;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--gray);
+        }
+        
+        .btn-secondary:hover {
+            background: #3a3a3a;
+        }
+        
+        .episode-list {
+            margin-top: 15px;
+            border: 1px dashed var(--border);
+            border-radius: 5px;
+            padding: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        
+        .episode-item {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .episode-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .episode-inputs {
+            flex: 1;
+        }
+        
+        .remove-episode {
+            background: #ff4757;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .preview-container {
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .code-container {
+            background: #1e1e1e;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #f40612;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .generator-body {
+                flex-direction: column;
+            }
+            
+            .config-section {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="generator-container">
+        <div class="header">
+            <h1>StreamflixPro Player Generator</h1>
+        </div>
+        
+        <div class="generator-body">
+            <div class="config-section">
+                <div class="form-group">
+                    <label for="showTitle">TV Show Title</label>
+                    <input type="text" id="showTitle" placeholder="Enter show title (e.g., Squid Game)" value="Squid Game">
+                </div>
+                
+                <div class="form-group">
+                    <label>Add Episodes</label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" id="episodeName" placeholder="Episode name" style="flex: 2;">
+                        <input type="text" id="episodeUrl" placeholder="Embed URL" style="flex: 3;">
+                        <button id="addEpisode" class="btn">Add</button>
+                    </div>
+                    
+                    <div class="episode-list" id="episodeList">
+                        <div class="episode-item">
+                            <div class="episode-inputs">
+                                <div><strong>Episode 1</strong></div>
+                                <div style="font-size: 12px; opacity: 0.8; overflow: hidden; text-overflow: ellipsis;">https://dhcplay.com/e/6r4y5ga4bf14</div>
+                            </div>
+                            <button class="remove-episode" data-index="0">×</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="generateBtn" class="btn">
+                        Generate Player Code
+                    </button>
+                    <button id="resetBtn" class="btn btn-secondary">
+                        Reset
+                    </button>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <div class="section-title">
+                    Preview
+                </div>
+                
+                <div class="preview-container" id="playerPreview">
+                    <div style="text-align: center; color: #555; padding: 40px 20px;">
+                        Player preview will appear here
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    Generated Code
+                </div>
+                
+                <div class="code-container">
+                    <pre id="generatedCode">Configure your player and click "Generate Player Code"</pre>
+                </div>
+                
+                <button id="copyBtn" class="copy-btn">
+                    Copy to Clipboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const episodes = [
+                { name: "Episode 1", url: "https://dhcplay.com/e/6r4y5ga4bf14" }
+            ];
+            let showTitle = "Squid Game";
+            
+            // DOM elements
+            const showTitleInput = document.getElementById('showTitle');
+            const episodeNameInput = document.getElementById('episodeName');
+            const episodeUrlInput = document.getElementById('episodeUrl');
+            const addEpisodeBtn = document.getElementById('addEpisode');
+            const episodeList = document.getElementById('episodeList');
+            const generateBtn = document.getElementById('generateBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const playerPreview = document.getElementById('playerPreview');
+            const generatedCode = document.getElementById('generatedCode');
+            const copyBtn = document.getElementById('copyBtn');
+            
+            // Update show title
+            showTitleInput.addEventListener('input', function() {
+                showTitle = this.value.trim() || "Untitled Show";
+            });
+            
+            // Add new episode
+            addEpisodeBtn.addEventListener('click', function() {
+                const name = episodeNameInput.value.trim();
+                const url = episodeUrlInput.value.trim();
+                
+                if (name && url) {
+                    episodes.push({ name, url });
+                    renderEpisodes();
+                    episodeNameInput.value = '';
+                    episodeUrlInput.value = '';
+                } else {
+                    alert('Please enter both episode name and URL');
+                }
+            });
+            
+            // Render episodes list
+            function renderEpisodes() {
+                episodeList.innerHTML = '';
+                
+                if (episodes.length === 0) {
+                    episodeList.innerHTML = `
+                        <div style="text-align: center; color: #777; padding: 20px;">
+                            No episodes added yet
+                        </div>
+                    `;
+                    return;
+                }
+                
+                episodes.forEach((episode, index) => {
+                    const episodeItem = document.createElement('div');
+                    episodeItem.className = 'episode-item';
+                    episodeItem.innerHTML = `
+                        <div class="episode-inputs">
+                            <div><strong>${episode.name}</strong></div>
+                            <div style="font-size: 12px; opacity: 0.8; overflow: hidden; text-overflow: ellipsis;">${episode.url}</div>
+                        </div>
+                        <button class="remove-episode" data-index="${index}">×</button>
+                    `;
+                    episodeList.appendChild(episodeItem);
+                });
+            }
+            
+            // Remove episode
+            episodeList.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-episode')) {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    episodes.splice(index, 1);
+                    renderEpisodes();
+                }
+            });
+            
+            // Generate code
+            generateBtn.addEventListener('click', function() {
+                if (episodes.length === 0) {
+                    alert('Please add at least one episode');
+                    return;
+                }
+                
+                const code = generatePlayerCode();
+                generatedCode.textContent = code;
+                
+                // Update preview
+                playerPreview.innerHTML = code;
+                
+                // Reinitialize event listeners in preview
+                initPreviewPlayer();
+            });
+            
+            // Initialize player functionality in preview
+            function initPreviewPlayer() {
+                const episodeBtn = playerPreview.querySelector('#episodeBtn');
+                const episodeDropdown = playerPreview.querySelector('#episodeDropdown');
+                const player = playerPreview.querySelector('#mainPlayer');
+                
+                if (episodeBtn && episodeDropdown) {
+                    episodeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        episodeDropdown.style.display = episodeDropdown.style.display === 'block' ? 'none' : 'block';
+                    });
+                    
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function() {
+                        episodeDropdown.style.display = 'none';
+                    });
+                    
+                    // Prevent dropdown from closing when clicking inside
+                    episodeDropdown.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
+                }
+                
+                // Handle episode changes in preview
+                const episodeOptions = playerPreview.querySelectorAll('.episode-option');
+                episodeOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const url = this.getAttribute('data-src');
+                        const title = this.textContent;
+                        player.src = url;
+                        playerPreview.querySelector('#currentEpisode').textContent = showTitle + ' - ' + title;
+                        playerPreview.querySelector('#episodeDropdown').style.display = 'none';
+                        
+                        // Loading effect
+                        player.style.opacity = '0.7';
+                        setTimeout(() => {
+                            player.style.opacity = '1';
+                        }, 300);
+                    });
+                });
+            }
+            
+            // Copy to clipboard
+            copyBtn.addEventListener('click', async function() {
+                const code = generatedCode.textContent;
+                try {
+                    await navigator.clipboard.writeText(code);
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyBtn.textContent = 'Copy to Clipboard';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                    copyBtn.textContent = 'Error!';
+                }
+            });
+            
+            // Reset form
+            resetBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset all settings?')) {
+                    episodes.length = 0;
+                    episodes.push({ name: "Episode 1", url: "https://dhcplay.com/e/6r4y5ga4bf14" });
+                    showTitleInput.value = "Squid Game";
+                    episodeNameInput.value = '';
+                    episodeUrlInput.value = '';
+                    renderEpisodes();
+                    generatedCode.textContent = 'Configure your player and click "Generate Player Code"';
+                    playerPreview.innerHTML = `
+                        <div style="text-align: center; color: #555; padding: 40px 20px;">
+                            Player preview will appear here
+                        </div>
+                    `;
+                }
+            });
+            
+            // Generate player HTML code
+            function generatePlayerCode() {
+                const firstEpisode = episodes[0];
+                const episodeOptions = episodes.map(ep => 
+                    `<div class="episode-option" data-src="${ep.url}" style="padding:8px;cursor:pointer;border-radius:4px;margin-bottom:4px;background:rgba(255,255,255,0.1);font-size:13px;">
+                        ${ep.name}
+                    </div>`
+                ).join('\n        ');
+                
+                return `<div style="width:100%;max-width:680px;margin:20px auto;font-family:'Poppins',sans-serif;">
+
+  <!-- Video Player Container -->
+  <div style="background:#000;border-radius:8px 8px 0 0;overflow:hidden;position:relative;">
+    <div style="padding-bottom:56.25%;height:0;position:relative;">
+      <iframe
+        id="mainPlayer"
+        allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+        allowfullscreen
+        scrolling="no"
+        src="${firstEpisode.url}"
+        style="border:none;position:absolute;top:0;left:0;width:100%;height:100%;"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- Control Bar -->
+  <div style="background:linear-gradient(to right,#141414,#222);padding:12px 15px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;">
+    
+    <!-- Current Episode Info -->
+    <div style="color:white;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+      <span id="currentEpisode" style="color:#e50914;font-weight:600;">${showTitle} - ${firstEpisode.name}</span>
+    </div>
+    
+    <!-- Episode Selector Button -->
+    <button id="episodeBtn" style="background:#e50914;color:white;border:none;padding:6px 12px;border-radius:4px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 9l6 6 6-6"></path>
+      </svg>
+      Episodes
+    </button>
+  </div>
+
+  <!-- Episode Dropdown (Hidden by default) -->
+  <div id="episodeDropdown" style="display:none;background:#1a1a1a;border-radius:0 0 8px 8px;margin-top:-5px;padding:10px 15px;border-top:1px solid #333;">
+    ${episodeOptions}
+  </div>
+</div>
+
+<script>
+// Toggle episode dropdown
+const episodeBtn = document.getElementById('episodeBtn');
+const episodeDropdown = document.getElementById('episodeDropdown');
+
+if (episodeBtn && episodeDropdown) {
+  episodeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    episodeDropdown.style.display = episodeDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function() {
+    episodeDropdown.style.display = 'none';
+  });
+  
+  // Prevent dropdown from closing when clicking inside
+  episodeDropdown.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+}
+
+// Change episode function
+function changeEpisode(url, title) {
+  const player = document.getElementById('mainPlayer');
+  const episodeTitle = document.getElementById('currentEpisode');
+  
+  if (player && episodeTitle) {
+    // Show loading effect
+    player.style.opacity = '0.7';
+    
+    // Change source
+    player.src = url;
+    episodeTitle.textContent = '${showTitle.replace(/'/g, "\\'")} - ' + title;
+    
+    // Hide dropdown
+    if (episodeDropdown) {
+      episodeDropdown.style.display = 'none';
+    }
+    
+    // Restore after load
+    setTimeout(() => {
+      player.style.opacity = '1';
+    }, 300);
+  }
+}
+<\/script>`;
+            }
+            
+            // Initial render
+            renderEpisodes();
+        });
+    </script>
+</body>
+</html>
