@@ -10,9 +10,9 @@
       --bg-light: #ffffff;
       --text-dark: #f5f5f5;
       --text-light: #111111;
-      --card-dark: #1e1e1e;
-      --card-light: #ffffff;
-      --highlight: #1a73e8;
+      --highlight: #22d3ee;
+      --accent: #facc15;
+      --primary: #3b82f6;
     }
 
     body {
@@ -22,7 +22,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      padding: 20px;
       transition: background 0.3s, color 0.3s;
     }
 
@@ -32,83 +32,83 @@
     }
 
     h2 {
-      font-size: 30px;
-      margin-bottom: 20px;
+      font-size: 26px;
+      margin-bottom: 16px;
       color: var(--highlight);
+    }
+
+    .controls, .input-container, .details, .mode-toggle {
+      width: 100%;
+      max-width: 700px;
+      margin-bottom: 10px;
     }
 
     .controls {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      align-items: center;
     }
 
     .controls label {
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--accent);
     }
 
-    .input-container {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-    }
-
-    .search-box {
-      display: flex;
-      gap: 10px;
+    .controls button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     input[type="text"], input[type="number"] {
       width: 100%;
-      padding: 12px 16px;
-      font-size: 16px;
-      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 15px;
+      border-radius: 8px;
       border: none;
-      background-color: var(--card-dark);
+      margin-bottom: 8px;
+      background-color: rgba(255,255,255,0.1);
       color: var(--text-dark);
-      transition: background 0.3s, color 0.3s;
     }
 
     body.light input[type="text"], body.light input[type="number"] {
-      background-color: var(--card-light);
+      background-color: rgba(0,0,0,0.05);
       color: var(--text-light);
     }
 
     .suggestions {
-      position: absolute;
-      top: 100%;
-      left: 0;
       width: 100%;
-      background: var(--card-dark);
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
       z-index: 10;
-      margin-top: 4px;
-      max-height: 300px;
+      max-height: 250px;
       overflow-y: auto;
     }
 
-    body.light .suggestions {
-      background: var(--card-light);
-    }
-
     .suggestion-item {
-      padding: 10px;
+      padding: 6px 10px;
       cursor: pointer;
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       border-bottom: 1px solid #444;
+      transition: background 0.2s;
     }
 
-    body.light .suggestion-item {
-      border-bottom: 1px solid #ccc;
+    .suggestion-item:hover {
+      background: rgba(255,255,255,0.1);
     }
 
     .poster {
-      width: 40px;
-      height: 60px;
+      width: 36px;
+      height: 54px;
       object-fit: cover;
       border-radius: 4px;
     }
@@ -118,50 +118,37 @@
     }
 
     .copy-btn {
-      background-color: #3b82f6;
+      background-color: var(--primary);
       color: white;
       border: none;
-      padding: 5px 10px;
+      padding: 4px 8px;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 12px;
       cursor: pointer;
     }
 
-    .details {
-      margin-top: 20px;
-      width: 100%;
-      max-width: 600px;
-      background: var(--card-dark);
-      border-radius: 10px;
-      padding: 16px;
-      display: none;
-      transition: background 0.3s;
-    }
-
-    body.light .details {
-      background: var(--card-light);
-    }
-
     .details h3 {
-      margin-bottom: 10px;
+      margin-bottom: 6px;
+      color: var(--highlight);
+      font-size: 20px;
     }
 
     .details img {
       width: 100%;
-      max-width: 300px;
-      margin-bottom: 10px;
-      border-radius: 10px;
+      max-width: 280px;
+      margin-bottom: 8px;
+      border-radius: 8px;
     }
 
-    .mode-toggle {
-      margin-bottom: 15px;
+    .details p strong {
+      color: var(--accent);
     }
 
     .mode-toggle button {
-      background: #666;
+      background: #6366f1;
       color: white;
       border: none;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
     }
@@ -175,15 +162,14 @@
   </div>
 
   <div class="controls">
-    <label><input type="radio" name="type" value="movie" checked> 🎬 Movie</label>
-    <label><input type="radio" name="type" value="tv"> 📺 TV Show</label>
+    <label><input type="radio" name="type" value="movie" checked> 🎬 फ़िल्म</label>
+    <label><input type="radio" name="type" value="tv"> 📺 टीवी शो</label>
+    <button onclick="resetAll()">♻️ Reset</button>
   </div>
 
   <div class="input-container">
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Naam likho..." oninput="getSuggestions()" autocomplete="off" />
-      <input type="number" id="yearInput" placeholder="Year (optional)" oninput="getSuggestions()" />
-    </div>
+    <input type="text" id="searchInput" placeholder="नाम लिखें..." oninput="getSuggestions()" autocomplete="off" />
+    <input type="number" id="yearInput" placeholder="Year (optional)" oninput="getSuggestions()" />
     <div id="suggestions" class="suggestions"></div>
   </div>
 
@@ -223,13 +209,12 @@
         div.className = "suggestion-item";
         div.innerHTML = `
           <img src="${poster}" class="poster" alt="Poster">
-          <div class="suggestion-content">
+          <div class="suggestion-content" onclick="showDetails('${type}', '${id}')">
             <strong>${title}</strong> (${date ? date.split("-")[0] : "N/A"})<br>
-            ⭐ ${rating} | ID: ${id}
-            <button class="copy-btn" onclick="copyToClipboard('${id}')">📋 Copy</button>
+            ⭐ ${rating} | ID: <strong>${id}</strong>
           </div>
+          <button class="copy-btn" onclick="event.stopPropagation(); copyToClipboard('${id}')">📋 Copy</button>
         `;
-        div.onclick = () => showDetails(type, id);
         box.appendChild(div);
       });
     }
@@ -259,12 +244,20 @@
 
     function copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(() => {
-        alert("✅ Copy ho gaya: " + text);
+        alert("✅ Copy हो गया: " + text);
       });
     }
 
     function toggleMode() {
       document.body.classList.toggle("light");
+    }
+
+    function resetAll() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("yearInput").value = "";
+      document.getElementById("suggestions").innerHTML = "";
+      document.getElementById("details").style.display = "none";
+      document.getElementById("details").innerHTML = "";
     }
 
     document.addEventListener("click", function (event) {
