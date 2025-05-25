@@ -1,3 +1,21 @@
+<!-- Right click disable -->
+<script>
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+</script>
+
+<!-- Ctrl+U / Source view disable -->
+<script>
+document.onkeydown = function(e) {
+    if(event.keyCode == 123) { // F12 key
+        return false;
+    }
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
+        return false;
+    }
+}
+</script>
 <style>
     .hidden {display: none;}
     textarea {height: 400px; margin-top: 20px; width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd;}
