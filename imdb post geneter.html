@@ -271,12 +271,7 @@ function generateCombinedPost() {
 </div>
 
 <hr>
-<div class="mt-box color-4">👇Screenshots:</div>
-<br>
-<div class="center-image">
-  ${manual.screenshots.map(url => `<img src="${url}" alt="screenshot" style="width:100%;height:auto;margin-bottom:10px;">`).join('')}
-</div>
-<hr>
+
 <center>
   <h3>${movieData.Title} (${movieData.Year}) - Download now</h3>
   ${customBtns.map((btn,i)=>`<a href="${btn.link}" class="dbtn dbtn${i+1}" target="_blank">${btn.text}</a>`).join('')}
