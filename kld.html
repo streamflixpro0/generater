@@ -20,47 +20,46 @@ document.onkeydown = function(e) {
         --danger: #dc3545;
     }
     
+    * {
+        box-sizing: border-box;
+    }
+    
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f5f5f5;
         color: #333;
         line-height: 1.6;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
+        padding: 15px;
+        margin: 0;
+        -webkit-text-size-adjust: 100%;
     }
     
     .hidden {display: none;}
     textarea {
-        height: 400px; 
-        margin-top: 20px; 
+        height: 300px; 
+        margin-top: 15px; 
         width: 100%; 
-        padding: 15px; 
+        padding: 12px; 
         border-radius: 8px; 
         border: 1px solid #ddd;
         background-color: white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         font-family: monospace;
+        font-size: 14px;
+        resize: vertical;
     }
     
     .dbtn {
         background: linear-gradient(135deg, var(--primary), var(--secondary)); 
         color: white; 
-        padding: 12px 25px; 
-        border-radius: 8px; 
+        padding: 10px 15px; 
+        border-radius: 6px; 
         text-align: center; 
-        margin: 10px 10px 10px 0; 
+        margin: 8px 8px 8px 0; 
         display: inline-block; 
         font-weight: bold; 
         text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        border: none;
-        cursor: pointer;
-    }
-    .dbtn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        font-size: 14px;
+        white-space: nowrap;
     }
     
     .dbtn1 {background: linear-gradient(135deg, #ed0b0b, #f2d152);}
@@ -77,10 +76,9 @@ document.onkeydown = function(e) {
     .black-card {
         background: var(--dark); 
         color: white; 
-        border-radius: 12px; 
-        padding: 20px; 
-        margin: 20px 0;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        border-radius: 10px; 
+        padding: 15px; 
+        margin: 15px 0;
     }
     .black-card ul {
         margin: 0; 
@@ -88,108 +86,102 @@ document.onkeydown = function(e) {
         list-style: none;
     }
     .black-card li {
-        margin: 10px 0; 
-        padding: 8px 0; 
+        margin: 8px 0; 
+        padding: 6px 0; 
         border-bottom: 1px solid #333;
+        font-size: 14px;
     }
     .black-card li:last-child {
         border-bottom: none;
     }
     .movie-title {
-        font-size: 1.8em; 
+        font-size: 1.4em; 
         font-weight: bold; 
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         color: var(--accent);
     }
     .add-btn {
         background: var(--success); 
         color: white; 
         border: none; 
-        padding: 10px 20px; 
-        border-radius: 8px; 
+        padding: 10px 15px; 
+        border-radius: 6px; 
         cursor: pointer;
         font-weight: bold;
-        transition: all 0.3s ease;
-    }
-    .add-btn:hover {
-        background: #218838;
-        transform: translateY(-2px);
+        font-size: 14px;
     }
     .inline-group {
         display: flex; 
-        gap: 10px; 
-        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 8px; 
+        margin-bottom: 15px;
     }
     .inline-group input {
         flex: 1; 
-        padding: 12px; 
-        border-radius: 8px; 
+        min-width: 120px;
+        padding: 10px; 
+        border-radius: 6px; 
         border: 1px solid #ddd;
-        background: white;
+        font-size: 14px;
     }
     button {
-        padding: 12px 25px; 
-        border-radius: 8px; 
+        padding: 10px 15px; 
+        border-radius: 6px; 
         border: none; 
         cursor: pointer; 
         font-weight: bold;
-        transition: all 0.3s ease;
-    }
-    button:hover {
-        opacity: 0.9;
-        transform: translateY(-2px);
+        font-size: 14px;
     }
     input[type="text"] {
-        padding: 12px; 
-        border-radius: 8px; 
+        padding: 10px; 
+        border-radius: 6px; 
         border: 1px solid #ddd; 
         width: 100%; 
-        margin-bottom: 15px;
-        background: white;
+        margin-bottom: 12px;
+        font-size: 14px;
     }
     label {
         display: block; 
-        margin-bottom: 8px; 
+        margin-bottom: 6px; 
         font-weight: bold;
-        color: var(--dark);
+        font-size: 14px;
     }
     .grid {
         display: grid; 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 15px; 
-        margin-bottom: 20px;
+        grid-template-columns: 1fr; 
+        gap: 10px; 
+        margin-bottom: 15px;
     }
     h3 {
-        margin-top: 25px; 
-        margin-bottom: 15px;
-        color: var(--primary);
+        margin-top: 20px; 
+        margin-bottom: 12px;
+        font-size: 1.2em;
     }
     #finalOutput {
         width: 100%; 
-        min-height: 300px; 
-        padding: 15px; 
+        min-height: 250px; 
+        padding: 12px; 
         border-radius: 8px; 
         border: 1px solid #ddd;
-        background: white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        font-size: 14px;
     }
     #customBtnsPreview {
-        margin: 20px 0; 
+        margin: 15px 0; 
         display: flex; 
         flex-wrap: wrap; 
-        gap: 15px;
+        gap: 8px;
     }
     #extraListPreview {
-        margin: 20px 0; 
-        padding-left: 20px;
+        margin: 15px 0; 
+        padding-left: 15px;
+        font-size: 14px;
     }
     .backdrop {
         position: relative; 
-        height: 350px; 
+        height: 200px; 
         overflow: hidden; 
-        border-radius: 12px; 
-        margin-bottom: 30px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        border-radius: 10px; 
+        margin-bottom: 20px;
     }
     .backdrop-image {
         width: 100%; 
@@ -199,36 +191,22 @@ document.onkeydown = function(e) {
     }
     .poster {
         position: absolute; 
-        bottom: -50px; 
-        left: 30px; 
-        height: 250px; 
-        border-radius: 8px; 
-        box-shadow: 0 8px 16px rgba(0,0,0,0.3); 
+        bottom: -30px; 
+        left: 15px; 
+        height: 120px; 
+        border-radius: 6px; 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
         z-index: 2;
-        border: 3px solid white;
+        border: 2px solid white;
     }
     .mt-box {
         background: linear-gradient(135deg, var(--primary), var(--secondary)); 
         color: white; 
-        padding: 12px 20px; 
-        border-radius: 8px; 
+        padding: 8px 12px; 
+        border-radius: 6px; 
         display: inline-block; 
-        margin: 15px 0;
-        font-weight: bold;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .center-image {
-        display: flex; 
-        flex-wrap: wrap; 
-        gap: 15px; 
-        margin: 20px 0;
-    }
-    .center-image img {
-        flex: 1; 
-        min-width: 200px; 
-        max-width: 100%; 
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin: 12px 0;
+        font-size: 14px;
     }
     .imdb-rating-link {
         color: var(--accent); 
@@ -237,132 +215,154 @@ document.onkeydown = function(e) {
     }
     .movie-preview {
         background: white;
-        border-radius: 12px; 
-        padding: 20px; 
-        margin: 20px 0; 
+        border-radius: 10px; 
+        padding: 15px; 
+        margin: 15px 0; 
         border: 1px solid #dee2e6;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         display: flex;
-        align-items: center;
+        flex-direction: column;
     }
     .preview-poster {
-        height: 180px; 
-        border-radius: 8px; 
-        margin-right: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        height: 150px; 
+        border-radius: 6px; 
+        margin-bottom: 12px;
+        align-self: center;
     }
     .preview-details {
         flex: 1;
     }
     .preview-title {
-        font-size: 1.5em; 
+        font-size: 1.2em; 
         font-weight: bold; 
-        margin-bottom: 10px;
-        color: var(--primary);
+        margin-bottom: 6px;
     }
     .preview-year {
         color: #6c757d;
-        font-weight: bold;
+        font-size: 14px;
     }
     .preview-plot {
-        margin: 10px 0;
+        margin: 8px 0;
         color: #555;
+        font-size: 14px;
     }
     .preview-confirm {
-        margin-top: 20px; 
+        margin-top: 15px; 
         display: flex; 
-        gap: 15px;
+        gap: 8px;
+        flex-wrap: wrap;
     }
     .confirm-btn {
         background: var(--success); 
         color: white;
-        padding: 12px 25px;
-        font-weight: bold;
+        flex: 1;
+        min-width: 120px;
     }
     .reject-btn {
         background: var(--danger); 
         color: white;
-        padding: 12px 25px;
-        font-weight: bold;
+        flex: 1;
+        min-width: 120px;
     }
     
-    /* New Footer Styles */
+    /* Footer Styles */
     .footer {
-        margin-top: 40px;
-        padding: 20px 0;
+        margin-top: 30px;
+        padding: 15px;
         text-align: center;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         color: white;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        font-size: 14px;
     }
     
     .footer-text {
-        font-size: 1.2em;
         font-weight: bold;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
         margin: 0;
-        padding: 10px;
     }
     
     .footer-text span {
         color: var(--accent);
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     
-    /* Improved Header */
+    /* Header */
     .header {
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
     
     .header h1 {
         color: var(--primary);
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-size: 1.8em;
+        margin-bottom: 8px;
     }
     
     .header p {
         color: #666;
-        font-size: 1.1em;
+        font-size: 14px;
     }
     
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
+    /* Responsive adjustments for tablets and larger phones */
+    @media (min-width: 480px) {
         .grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
         }
         
-        .inline-group {
-            flex-direction: column;
+        .backdrop {
+            height: 250px;
         }
         
-        .movie-preview {
-            flex-direction: column;
-            text-align: center;
+        .poster {
+            height: 150px;
+            bottom: -40px;
+        }
+    }
+    
+    /* Desktop styles */
+    @media (min-width: 768px) {
+        body {
+            padding: 20px;
         }
         
-        .preview-poster {
-            margin-right: 0;
-            margin-bottom: 20px;
+        .backdrop {
+            height: 300px;
+        }
+        
+        .poster {
+            height: 200px;
+            bottom: -50px;
+        }
+        
+        textarea, #finalOutput {
+            font-size: 15px;
+        }
+        
+        .black-card li, 
+        .preview-plot,
+        .preview-year,
+        .footer,
+        input[type="text"],
+        button {
+            font-size: 15px;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
         }
     }
 </style>
 
 <div class="header">
     <h1>Movie Post Generator</h1>
-    <p>Create beautiful movie download posts with just a few clicks</p>
+    <p>Create beautiful movie download posts with ease</p>
 </div>
 
 <div class="imdb-section">
     <label>Enter Movie Name:</label>
-    <div style="display: flex; gap: 10px; margin: 10px 0;">
+    <div class="inline-group">
         <input type="text" id="movieName" placeholder="Avengers: Endgame">
-        <button onclick="fetchMovieData()" style="background: var(--accent); color: #000; font-weight: bold;">Fetch Movie Data</button>
+        <button onclick="fetchMovieData()" style="background: var(--accent); color: #000;">Fetch Movie Data</button>
     </div>
 </div>
 
@@ -375,8 +375,8 @@ document.onkeydown = function(e) {
             <div id="previewType" style="font-weight: bold; color: var(--secondary);"></div>
             <div class="preview-plot" id="previewPlot"></div>
             <div class="preview-confirm">
-                <button class="confirm-btn" onclick="confirmMovieSelection()">Yes, This is Correct</button>
-                <button class="reject-btn" onclick="rejectMovieSelection()">No, Try Another</button>
+                <button class="confirm-btn" onclick="confirmMovieSelection()">Yes, Correct</button>
+                <button class="reject-btn" onclick="rejectMovieSelection()">No, Try Again</button>
             </div>
         </div>
     </div>
@@ -384,7 +384,7 @@ document.onkeydown = function(e) {
 
 <div id="manualFields" class="hidden">
     <h3>Movie Description</h3>
-    <textarea id="customDescription" placeholder="Custom Description (Optional, will override OMDb Plot if filled)"></textarea>
+    <textarea id="customDescription" placeholder="Custom Description (Optional)"></textarea>
 
     <h3>Download Info</h3>
     <div class="grid">
@@ -418,26 +418,26 @@ document.onkeydown = function(e) {
 
     <h3>Add Download Button</h3>
     <div class="inline-group">
-        <input type="text" id="customBtnText" placeholder="Button Text (e.g. Download 720p)">
+        <input type="text" id="customBtnText" placeholder="Button Text">
         <input type="text" id="customBtnLink" placeholder="Button Link">
         <button class="add-btn" onclick="addCustomButton()">Add Button</button>
     </div>
     <div id="customBtnsPreview"></div>
 
-    <h3>Add Extra Info List Item</h3>
+    <h3>Add Extra Info</h3>
     <div class="inline-group">
-        <input type="text" id="extraName" placeholder="Item Name (e.g. Subtitle)">
-        <input type="text" id="extraValue" placeholder="Item Value (e.g. English)">
+        <input type="text" id="extraName" placeholder="Item Name">
+        <input type="text" id="extraValue" placeholder="Item Value">
         <button class="add-btn" onclick="addExtraListItem()">Add Item</button>
     </div>
     <ul id="extraListPreview"></ul>
 
-    <button onclick="generateCombinedPost()" style="width: 100%; margin: 20px 0; background: var(--accent); color: #000; padding: 15px; font-size: 18px; font-weight: bold;">Generate Final Post</button>
+    <button onclick="generateCombinedPost()" style="width: 100%; margin: 20px 0; background: var(--accent); color: #000; padding: 12px; font-size: 16px;">Generate Final Post</button>
 </div>
 
 <h3>Generated Post HTML</h3>
 <textarea id="finalOutput"></textarea>
-<button onclick="copyToClipboard()" style="width: 100%; margin: 10px 0; background: var(--success); color: white; padding: 15px; font-size: 18px; font-weight: bold;">Copy to Clipboard</button>
+<button onclick="copyToClipboard()" style="width: 100%; margin: 10px 0; background: var(--success); color: white; padding: 12px; font-size: 16px;">Copy to Clipboard</button>
 
 <div class="footer">
     <p class="footer-text">DEVELOPED BY <span>KULDEEP RAI SANATANI</span></p>
@@ -618,7 +618,6 @@ function generateCombinedPost() {
     const postHtml = `
 <div class="backdrop">
     <img class="poster" src="${movieData.Poster}" loading="lazy" alt="${movieData.Title}">
-    <img class="poster" src="${movieData.Poster}" loading="lazy" alt="${movieData.Title}">
     <img alt="cover image" class="backdrop-image" src="${backdropImg}" loading="lazy">
 </div>
 <br>
@@ -650,8 +649,8 @@ function generateCombinedPost() {
 ${manual.tags.length ? `<p>🏷&#65039; Tags: ${manual.tags.join(', ')}</p>` : ''}
 
 <!-- DEVELOPED BY KULDEEP RAI SANATANI -->
-<div style="text-align:center; margin-top:30px; padding:15px; background:linear-gradient(135deg,#6a11cb,#2575fc); color:white; border-radius:8px;">
-    <p style="margin:0; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">DEVELOPED BY <span style="color:#f5c518;">KULDEEP RAI SANATANI</span></p>
+<div style="text-align:center; margin-top:20px; padding:12px; background:linear-gradient(135deg,#6a11cb,#2575fc); color:white; border-radius:6px;">
+    <p style="margin:0; font-weight:bold; letter-spacing:0.5px; text-transform:uppercase; font-size:14px;">DEVELOPED BY <span style="color:#f5c518;">KULDEEP RAI SANATANI</span></p>
 </div>`;
     
     document.getElementById('finalOutput').value = postHtml;
