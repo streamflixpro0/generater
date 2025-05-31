@@ -1,0 +1,370 @@
+<!-- Ctrl+U / Source view disable -->
+<script>
+document.onkeydown = function(e) {
+    if(event.keyCode == 123) { // F12 key
+        return false;
+    }
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
+        return false;
+    }
+}
+</script>
+<style>
+    .hidden {display: none;}
+    textarea {height: 400px; margin-top: 20px; width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd;}
+    .dbtn {background: linear-gradient(135deg, #0ebac3, #09d261); color: white; padding: 10px 20px; border-radius: 5px; text-align: center; margin: 10px 10px 10px 0; display: inline-block; font-weight: bold; text-decoration: none;}
+    .dbtn1 {background: linear-gradient(135deg, #ed0b0b, #f2d152);}
+    .dbtn2 {background: linear-gradient(135deg, #2ea1cf, #ff19d0);}
+    .dbtn3 {background: linear-gradient(135deg, #ff00f1 0%, cyan 100%);}
+    .dbtn4 {background: linear-gradient(135deg, gold, green);}
+    .dbtn5 {background: linear-gradient(135deg, #ff7e5f, #feb47b);}
+    .dbtn6 {background: linear-gradient(135deg, #43cea2, #185a9d);}
+    .dbtn7 {background: linear-gradient(135deg, #f7971e, #ffd200);}
+    .dbtn8 {background: linear-gradient(135deg, #6a11cb, #2575fc);}
+    .dbtn9 {background: linear-gradient(135deg, #f953c6, #b91d73);}
+    .dbtn10 {background: linear-gradient(135deg, #00c6ff, #0072ff);}
+    
+    .black-card {background: #222; color: #fff; border-radius: 12px; padding: 18px 24px; margin: 20px 0;}
+    .black-card ul {margin: 0; padding: 0; list-style: none;}
+    .black-card li {margin: 8px 0; padding: 6px 0; border-bottom: 1px solid #333;}
+    .black-card li:last-child {border-bottom: none;}
+    .movie-title {font-size: 1.5em; font-weight: bold; margin-bottom: 10px;}
+    .add-btn {background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;}
+    .add-btn:hover {background: #218838;}
+    .inline-group {display: flex; gap: 10px; margin-bottom: 15px;}
+    .inline-group input {flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #ddd;}
+    button {padding: 8px 15px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold;}
+    button:hover {opacity: 0.9;}
+    input[type="text"] {padding: 8px; border-radius: 5px; border: 1px solid #ddd; width: 100%; margin-bottom: 10px;}
+    label {display: block; margin-bottom: 5px; font-weight: bold;}
+    .grid {display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px;}
+    h3 {margin-top: 20px; margin-bottom: 10px;}
+    #finalOutput {width: 100%; min-height: 300px; padding: 10px; border-radius: 5px; border: 1px solid #ddd;}
+    #customBtnsPreview {margin: 15px 0; display: flex; flex-wrap: wrap; gap: 10px;}
+    #extraListPreview {margin: 15px 0; padding-left: 20px;}
+    .backdrop {position: relative; height: 300px; overflow: hidden; border-radius: 10px; margin-bottom: 20px;}
+    .backdrop-image {width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5);}
+    .poster {position: absolute; bottom: -50px; left: 20px; height: 200px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 2;}
+    .mt-box {background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; padding: 8px 15px; border-radius: 5px; display: inline-block; margin: 10px 0;}
+    .center-image {display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0;}
+    .center-image img {flex: 1; min-width: 200px; max-width: 100%; border-radius: 5px;}
+    .imdb-rating-link {color: #f5c518; text-decoration: none; font-weight: bold;}
+    .movie-preview {background: #f8f9fa; border-radius: 8px; padding: 15px; margin: 15px 0; border: 1px solid #dee2e6;}
+    .preview-poster {height: 150px; border-radius: 5px; margin-right: 15px;}
+    .preview-details {flex: 1;}
+    .preview-title {font-size: 1.2em; font-weight: bold; margin-bottom: 5px;}
+    .preview-year {color: #6c757d;}
+    .preview-confirm {margin-top: 15px; display: flex; gap: 10px;}
+    .confirm-btn {background: #28a745; color: white;}
+    .reject-btn {background: #dc3545; color: white;}
+</style>
+
+<div class="imdb-section">
+  <label>Enter Movie Name:</label>
+  <div style="display: flex; gap: 10px; margin: 10px 0;">
+    <input type="text" id="movieName" placeholder="Avengers: Endgame">
+    <button onclick="fetchMovieData()" style="background: #f5c518; color: #000;">Fetch Movie Data</button>
+  </div>
+</div>
+
+<div id="moviePreview" class="hidden">
+  <div class="movie-preview" style="display: flex;">
+    <img id="previewPoster" class="preview-poster" src="" alt="Movie Poster">
+    <div class="preview-details">
+      <div class="preview-title" id="previewTitle"></div>
+      <div class="preview-year" id="previewYear"></div>
+      <div id="previewType"></div>
+      <div id="previewPlot"></div>
+      <div class="preview-confirm">
+        <button class="confirm-btn" onclick="confirmMovieSelection()">Yes, This is Correct</button>
+        <button class="reject-btn" onclick="rejectMovieSelection()">No, Try Another</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="manualFields" class="hidden">
+  <h3>Movie Description</h3>
+  <textarea id="customDescription" placeholder="Custom Description (Optional, will override OMDb Plot if filled)"></textarea>
+
+  <h3>Download Info</h3>
+  <div class="grid">
+    <div>
+      <label for="quality">Quality</label>
+      <input type="text" id="quality" placeholder="e.g. 1080p, 720p, 480p">
+    </div>
+    <div>
+      <label for="fileSize">File Size</label>
+      <input type="text" id="fileSize" placeholder="e.g. 1.5GB, 2.7GB">
+    </div>
+    <div>
+      <label for="season">Season (if applicable)</label>
+      <input type="text" id="season" placeholder="e.g. Season 1, S02">
+    </div>
+    <div>
+      <label for="tags">Tags (comma separated)</label>
+      <input type="text" id="tags" placeholder="e.g. Hollywood, Action, Adventure">
+    </div>
+  </div>
+
+  <h3>Screenshots URLs (Max 6)</h3>
+  <div class="grid">
+    <input type="text" id="ss1" placeholder="Screenshot 1 URL">
+    <input type="text" id="ss2" placeholder="Screenshot 2 URL">
+    <input type="text" id="ss3" placeholder="Screenshot 3 URL">
+    <input type="text" id="ss4" placeholder="Screenshot 4 URL">
+    <input type="text" id="ss5" placeholder="Screenshot 5 URL">
+    <input type="text" id="ss6" placeholder="Screenshot 6 URL">
+  </div>
+
+  <h3>Add Download Button</h3>
+  <div class="inline-group">
+    <input type="text" id="customBtnText" placeholder="Button Text (e.g. Download 720p)">
+    <input type="text" id="customBtnLink" placeholder="Button Link">
+    <button class="add-btn" onclick="addCustomButton()">Add</button>
+  </div>
+  <div id="customBtnsPreview"></div>
+
+  <h3>Add Extra Info List Item</h3>
+  <div class="inline-group">
+    <input type="text" id="extraName" placeholder="Item Name (e.g. Subtitle)">
+    <input type="text" id="extraValue" placeholder="Item Value (e.g. English)">
+    <button class="add-btn" onclick="addExtraListItem()">Add</button>
+  </div>
+  <ul id="extraListPreview"></ul>
+
+  <button onclick="generateCombinedPost()" style="width: 100%; margin: 20px 0; background: #f5c518; color: #000; padding: 12px; font-size: 16px;">Generate Final Post</button>
+</div>
+
+<h3>Generated Post HTML</h3>
+<textarea id="finalOutput"></textarea>
+<button onclick="copyToClipboard()" style="width: 100%; margin: 10px 0; background: #4CAF50; color: white; padding: 12px; font-size: 16px;">Copy to Clipboard</button>
+
+<script>
+const OMDB_KEY = '684fefc5';
+const YT_KEY = 'AIzaSyDMJDSiqd78g52t6W0F0BAMUij5xSynDe0';
+let movieData = {};
+let customBtns = [];
+let extraListItems = [];
+let currentImdbId = '';
+
+async function fetchMovieData() {
+  const movieName = document.getElementById('movieName').value.trim();
+  if(!movieName) return alert('Please enter movie name');
+  
+  try {
+    // Show loading state
+    document.getElementById('movieName').disabled = true;
+    document.querySelector('button[onclick="fetchMovieData()"]').disabled = true;
+    document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Loading...';
+    
+    // First search by title to get the IMDb ID
+    const searchRes = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}`);
+    const searchData = await searchRes.json();
+    
+    if(searchData.Response === 'False' || !searchData.Search || searchData.Search.length === 0) {
+      throw new Error('Movie not found');
+    }
+    
+    // Get the first result's IMDb ID
+    currentImdbId = searchData.Search[0].imdbID;
+    
+    // Now fetch full details using the IMDb ID
+    const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&apikey=${OMDB_KEY}`);
+    const omdb = await omdbRes.json();
+    
+    if(omdb.Response === 'False') {
+      throw new Error(omdb.Error || 'Failed to fetch movie data');
+    }
+    
+    // Show preview to user
+    document.getElementById('previewPoster').src = omdb.Poster;
+    document.getElementById('previewTitle').textContent = omdb.Title;
+    document.getElementById('previewYear').textContent = omdb.Year;
+    document.getElementById('previewType').textContent = omdb.Type === 'movie' ? 'Movie' : 'TV Series';
+    document.getElementById('previewPlot').textContent = omdb.Plot;
+    
+    document.getElementById('moviePreview').classList.remove('hidden');
+    
+  } catch(err) {
+    alert('Error fetching data: ' + err.message);
+    // Reset loading state
+    document.getElementById('movieName').disabled = false;
+    document.querySelector('button[onclick="fetchMovieData()"]').disabled = false;
+    document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Fetch Movie Data';
+  }
+}
+
+async function confirmMovieSelection() {
+  try {
+    document.getElementById('moviePreview').classList.add('hidden');
+    document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Loading...';
+    
+    // Fetch full details again (in case we need fresh data)
+    const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&apikey=${OMDB_KEY}`);
+    const omdb = await omdbRes.json();
+    
+    const ytRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(omdb.Title + " trailer")}&key=${YT_KEY}&maxResults=1`);
+    const ytData = await ytRes.json();
+    
+    movieData = {
+      ...omdb,
+      trailerId: ytData.items?.[0]?.id?.videoId || '',
+      imdbUrl: `https://www.imdb.com/title/${currentImdbId}/`
+    };
+    
+    document.getElementById('manualFields').classList.remove('hidden');
+    
+    // Pre-fill some fields
+    document.getElementById('quality').value = '1080p, 720p, 480p';
+    document.getElementById('fileSize').value = '1.5GB, 800MB';
+    document.getElementById('tags').value = omdb.Genre.split(', ').join(', ');
+    
+    // Reset loading state
+    document.getElementById('movieName').disabled = false;
+    document.querySelector('button[onclick="fetchMovieData()"]').disabled = false;
+    document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Fetch Movie Data';
+    
+  } catch(err) {
+    alert('Error confirming selection: ' + err.message);
+  }
+}
+
+function rejectMovieSelection() {
+  document.getElementById('moviePreview').classList.add('hidden');
+  document.getElementById('movieName').disabled = false;
+  document.querySelector('button[onclick="fetchMovieData()"]').disabled = false;
+  document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Fetch Movie Data';
+  document.getElementById('movieName').focus();
+}
+
+function addCustomButton() {
+  const text = document.getElementById('customBtnText').value.trim();
+  const link = document.getElementById('customBtnLink').value.trim();
+  if (!text || !link) return alert('Please fill both fields');
+  
+  customBtns.push({text, link});
+  document.getElementById('customBtnText').value = '';
+  document.getElementById('customBtnLink').value = '';
+  renderCustomBtnsPreview();
+}
+
+function renderCustomBtnsPreview() {
+  const preview = document.getElementById('customBtnsPreview');
+  preview.innerHTML = customBtns.map((btn, i) =>
+    `<a href="${btn.link}" class="dbtn dbtn${i+1}" target="_blank">${btn.text}</a>`
+  ).join('');
+}
+
+function addExtraListItem() {
+  const name = document.getElementById('extraName').value.trim();
+  const value = document.getElementById('extraValue').value.trim();
+  if (!name || !value) return alert('Please fill both fields');
+  
+  extraListItems.push({name, value});
+  document.getElementById('extraName').value = '';
+  document.getElementById('extraValue').value = '';
+  renderExtraListPreview();
+}
+
+function renderExtraListPreview() {
+  const preview = document.getElementById('extraListPreview');
+  preview.innerHTML = extraListItems.map(item =>
+    `<li><b>${item.name}:</b> ${item.value}</li>`
+  ).join('');
+}
+
+function generateCombinedPost() {
+  if (!movieData.Title) return alert('Please fetch movie data first');
+  
+  const manual = {
+    customDescription: document.getElementById('customDescription').value.trim(),
+    quality: document.getElementById('quality').value,
+    fileSize: document.getElementById('fileSize').value,
+    season: document.getElementById('season').value,
+    tags: document.getElementById('tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    screenshots: [
+      document.getElementById('ss1').value,
+      document.getElementById('ss2').value,
+      document.getElementById('ss3').value,
+      document.getElementById('ss4').value,
+      document.getElementById('ss5').value,
+      document.getElementById('ss6').value
+    ].filter(url => url)
+  };
+  
+  const backdropImg = manual.screenshots[0] || movieData.Poster;
+  const summaryText = manual.customDescription || movieData.Plot;
+  
+  let infoList = [
+    {name: "&#11088; Rating", value: `<a href="${movieData.imdbUrl}" class="imdb-rating-link" target="_blank" rel="noopener">${movieData.imdbRating}/10</a>`},
+    {name: "🎙&#65039; Language", value: `<u style="color:#d1c4e9;">${movieData.Language}</u>`},
+    {name: "🗓&#65039; Released", value: movieData.Released},
+    {name: "🎚&#65039; Runtime", value: movieData.Runtime},
+    {name: "📇 Starcast", value: movieData.Actors},
+    {name: "🎭 Genre", value: `<u style="color:#d1c4e9;">${movieData.Genre}</u>`},
+    {name: "🎬 Director", value: movieData.Director},
+    {name: "&#9997;&#65039; Writer", value: movieData.Writer},
+  ];
+  
+  if (manual.season) infoList.push({name:"🏷&#65039; Season", value: manual.season});
+  if (manual.quality) infoList.push({name:"📀 Quality", value: manual.quality});
+  if (manual.fileSize) infoList.push({name:"💾 File Size", value: manual.fileSize});
+  infoList = infoList.concat(extraListItems);
+
+  const postHtml = `
+<div class="backdrop">
+  <img class="poster" src="${movieData.Poster}" loading="lazy" alt="${movieData.Title}">
+  <img alt="cover image" class="backdrop-image" src="${backdropImg}" loading="lazy">
+</div>
+<br>
+
+<ul><li>${summaryText}</li></ul>
+<hr>
+
+<div class="movie-widget">
+  <div class="black-card">
+    <div class="movie-title">💳 Full Name: ${movieData.Title} [<span style="color:#fdd835;">${movieData.Year}</span>]</div>
+    <div class="listm">
+      ${infoList.map(item=>`<li><b>${item.name}:</b> ${item.value}</li>`).join('')}
+      <li style="font-size:0.01px; opacity:0"><a href="https://www.streamflixpro.fun/">made by Kuldeep Sanatani Developer</a></li>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<center>
+  <h3>${movieData.Title} (${movieData.Year}) - Download now</h3>
+  ${customBtns.map((btn,i)=>`<a href="${btn.link}" class="dbtn dbtn${i+1}" target="_blank">${btn.text}</a>`).join('')}
+</center>
+<hr>
+<div class="mt-box color-7">📺 MOVIE</div>
+<div id="dkplyr"></div>
+<br><hr>
+<link rel="stylesheet" href="https://streamflixpro0.github.io/generater/New%20folder/mvt.css"/> <script src='https://streamflixpro0.github.io/generater/New%20folder/plyrimbd.js'/><br>
+<p>&#9989; Download <strong style="color:Green;">${movieData.Title} ${movieData.Year}</strong>. Available in ${manual.quality || '1080p, 720p, 480p'}. Genre: <strong>${movieData.Genre}</strong>.</p>
+${manual.tags.length ? `<p>🏷&#65039; Tags: ${manual.tags.join(', ')}</p>` : ''}`;
+  
+  document.getElementById('finalOutput').value = postHtml;
+}
+
+function copyToClipboard() {
+  const output = document.getElementById('finalOutput');
+  if (!output.value) return alert('Nothing to copy! Generate the post first.');
+  
+  output.select();
+  document.execCommand('copy');
+  
+  // Show feedback
+  const button = document.querySelector('button[onclick="copyToClipboard()"]');
+  const originalText = button.textContent;
+  button.textContent = 'Copied!';
+  button.style.backgroundColor = '#2E7D32';
+  
+  setTimeout(() => {
+    button.textContent = originalText;
+    button.style.backgroundColor = '#4CAF50';
+  }, 2000);
+}
+</script>
