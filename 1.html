@@ -623,7 +623,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>Created By Kuldeep Rai</h1>
+        <h1>Movie Post Generator</h1>
         <p>Create beautiful movie download posts with ease</p>
     </div>
 
@@ -737,6 +737,7 @@
         let currentImdbId = '';
         let searchResults = [];
 
+        // Enhanced movie search with multiple fallbacks
         async function fetchMovieData() {
             const movieName = document.getElementById('movieName').value.trim();
             if(!movieName) return alert('Please enter movie name');
@@ -748,33 +749,49 @@
                 fetchBtn.disabled = true;
                 fetchBtn.textContent = 'Loading...';
                 
-                // First search by title to get the IMDb ID
-                const searchRes = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}&type=movie`);
-                const searchData = await searchRes.json();
+                // Try different search approaches
+                let searchData = await trySearchApproaches(movieName);
                 
-                if(searchData.Response === 'False') {
-                    // Try again without the type filter if no results found
-                    const searchRes2 = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}`);
-                    const searchData2 = await searchRes2.json();
-                    
-                    if(searchData2.Response === 'False' || !searchData2.Search || searchData2.Search.length === 0) {
-                        throw new Error('Movie not found. Try being more specific.');
-                    }
-                    
-                    searchResults = searchData2.Search;
-                } else {
-                    searchResults = searchData.Search;
+                if(searchData.Response === 'False' || !searchData.Search || searchData.Search.length === 0) {
+                    throw new Error('Movie not found. Try being more specific.');
                 }
                 
-                // Show search results to user
+                searchResults = searchData.Search;
                 showSearchResults(searchResults);
-                
                 document.getElementById('moviePreview').classList.remove('hidden');
                 
             } catch(err) {
-                alert('Error fetching data: ' + err.message);
+                alert('Error: ' + err.message);
                 resetLoadingState();
             }
+        }
+
+        // Try multiple search approaches to find the movie
+        async function trySearchApproaches(movieName) {
+            // Try exact match first
+            let response = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}`);
+            let data = await response.json();
+            
+            if(data.Response === 'True') {
+                // If exact match found, return it as a single result
+                return { Search: [data], Response: 'True' };
+            }
+            
+            // Try search with year if available (format: "Movie Name (2023)")
+            const yearMatch = movieName.match(/(.+)\s\((\d{4})\)$/);
+            if(yearMatch) {
+                response = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(yearMatch[1].trim())}&y=${yearMatch[2]}&apikey=${OMDB_KEY}`);
+                data = await response.json();
+                if(data.Response === 'True') {
+                    return { Search: [data], Response: 'True' };
+                }
+            }
+            
+            // Try general search
+            response = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}`);
+            data = await response.json();
+            
+            return data;
         }
 
         function showSearchResults(results) {
@@ -813,50 +830,17 @@
 
         async function showMovieDetails(imdbID) {
             try {
-                // Show loading state
                 const singlePreview = document.getElementById('singleMoviePreview');
                 singlePreview.classList.remove('hidden');
                 singlePreview.innerHTML = '<div style="padding: 20px; text-align: center;">Loading movie details...</div>';
                 
-                // Fetch full details using the IMDb ID
+                // Fetch full details with extended plot
                 const omdbRes = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_KEY}&plot=full`);
                 const omdb = await omdbRes.json();
                 
                 if(omdb.Response === 'False') {
                     throw new Error(omdb.Error || 'Failed to fetch movie data');
                 }
-                
-                // Update the preview with actual content
-                singlePreview.innerHTML = `
-                    <img id="previewPoster" class="preview-poster" src="${omdb.Poster}" alt="Movie Poster" loading="lazy">
-                    <div class="preview-details">
-                        <div class="preview-title">${omdb.Title}</div>
-                        <div class="preview-year">${omdb.Year}</div>
-                        <div style="font-weight: 600; color: var(--secondary);">${omdb.Type === 'movie' ? '🎬 MOVIE' : '📺 TV SERIES'}</div>
-                        <div class="preview-plot">${omdb.Plot}</div>
-                        <div class="preview-confirm">
-                            <button class="confirm-btn" onclick="confirmMovieSelection()">Yes, Correct</button>
-                            <button class="reject-btn" onclick="rejectMovieSelection()">No, Try Again</button>
-                        </div>
-                    </div>
-                `;
-                
-            } catch(err) {
-                alert('Error fetching movie details: ' + err.message);
-                resetLoadingState();
-                document.getElementById('searchResults').classList.remove('hidden');
-                document.getElementById('singleMoviePreview').classList.add('hidden');
-            }
-        }
-
-        async function confirmMovieSelection() {
-            try {
-                document.getElementById('moviePreview').classList.add('hidden');
-                document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Loading...';
-                
-                // Fetch full details again (in case we need fresh data)
-                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&apikey=${OMDB_KEY}&plot=full`);
-                const omdb = await omdbRes.json();
                 
                 // Try to get trailer from YouTube
                 let trailerId = '';
@@ -868,22 +852,47 @@
                     console.log('YouTube API error:', ytErr);
                 }
                 
+                // Update preview
+                singlePreview.innerHTML = `
+                    <img id="previewPoster" class="preview-poster" src="${omdb.Poster}" alt="Movie Poster" loading="lazy">
+                    <div class="preview-details">
+                        <div class="preview-title">${omdb.Title}</div>
+                        <div class="preview-year">${omdb.Year} • ${omdb.Runtime} • ${omdb.Genre}</div>
+                        <div style="font-weight: 600; color: var(--secondary);">${omdb.Type === 'movie' ? '🎬 MOVIE' : '📺 TV SERIES'}</div>
+                        <div class="preview-plot">${omdb.Plot}</div>
+                        <div class="preview-confirm">
+                            <button class="confirm-btn" onclick="confirmMovieSelection()">Yes, Correct</button>
+                            <button class="reject-btn" onclick="rejectMovieSelection()">No, Try Again</button>
+                        </div>
+                    </div>
+                `;
+                
+            } catch(err) {
+                alert('Error fetching movie details: ' + err.message);
+                document.getElementById('searchResults').classList.remove('hidden');
+                document.getElementById('singleMoviePreview').classList.add('hidden');
+            }
+        }
+
+        async function confirmMovieSelection() {
+            try {
+                document.getElementById('moviePreview').classList.add('hidden');
+                document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Loading...';
+                
+                // Get fresh movie data
+                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&apikey=${OMDB_KEY}&plot=full`);
+                const omdb = await omdbRes.json();
+                
+                // Store movie data
                 movieData = {
                     ...omdb,
-                    trailerId: trailerId,
                     imdbUrl: `https://www.imdb.com/title/${currentImdbId}/`
                 };
                 
                 document.getElementById('manualFields').classList.remove('hidden');
-                
-                // Pre-fill some fields
                 document.getElementById('tags').value = omdb.Genre.split(', ').join(', ');
                 
-                // Reset loading state
-                document.getElementById('movieName').disabled = false;
-                const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
-                fetchBtn.disabled = false;
-                fetchBtn.textContent = 'Fetch Movie Data';
+                resetLoadingState();
                 
             } catch(err) {
                 alert('Error confirming selection: ' + err.message);
@@ -893,10 +902,7 @@
         function rejectMovieSelection() {
             document.getElementById('singleMoviePreview').classList.add('hidden');
             document.getElementById('searchResults').classList.remove('hidden');
-            document.getElementById('movieName').disabled = false;
-            const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
-            fetchBtn.disabled = false;
-            fetchBtn.textContent = 'Fetch Movie Data';
+            resetLoadingState();
             document.getElementById('movieName').focus();
         }
 
@@ -908,10 +914,8 @@
         }
 
         function addDefaultQualityButtons() {
-            // Clear existing buttons first
             customBtns = [];
             
-            // Add quality buttons with actual links if provided
             const link480p = document.getElementById('link480p').value.trim();
             const link720p = document.getElementById('link720p').value.trim();
             const link1080p = document.getElementById('link1080p').value.trim();
@@ -923,7 +927,7 @@
             if (link4k) customBtns.push({text: "4K 2160p Download", link: link4k});
             
             renderCustomBtnsPreview();
-            alert('Download buttons generated! You can add more custom buttons below if needed.');
+            alert('Download buttons generated!');
         }
 
         function addCustomButton() {
@@ -1054,7 +1058,6 @@ ${manual.tags.length ? `<p>🏷️ Tags: ${manual.tags.join(', ')}</p>` : ''}
             output.select();
             document.execCommand('copy');
             
-            // Show feedback
             const button = document.querySelector('button[onclick="copyToClipboard()"]');
             const originalText = button.textContent;
             button.textContent = 'Copied!';
