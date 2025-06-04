@@ -749,21 +749,21 @@
                 fetchBtn.textContent = 'Loading...';
                 
                 // First search by title to get the IMDb ID
-                const searchRes = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}`);
+                const searchRes = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}&type=movie`);
                 const searchData = await searchRes.json();
                 
-                if(searchData.Response === 'False' || !searchData.Search || searchData.Search.length === 0) {
-                    throw new Error('Movie not found');
-                }
-                
-                // Store all search results
-                searchResults = searchData.Search;
-                
-                // If only one result found, proceed directly
-                if(searchResults.length === 1) {
-                    currentImdbId = searchResults[0].imdbID;
-                    showMovieDetails(currentImdbId);
-                    return;
+                if(searchData.Response === 'False') {
+                    // Try again without the type filter if no results found
+                    const searchRes2 = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}`);
+                    const searchData2 = await searchRes2.json();
+                    
+                    if(searchData2.Response === 'False' || !searchData2.Search || searchData2.Search.length === 0) {
+                        throw new Error('Movie not found. Try being more specific.');
+                    }
+                    
+                    searchResults = searchData2.Search;
+                } else {
+                    searchResults = searchData.Search;
                 }
                 
                 // Show search results to user
@@ -819,7 +819,7 @@
                 singlePreview.innerHTML = '<div style="padding: 20px; text-align: center;">Loading movie details...</div>';
                 
                 // Fetch full details using the IMDb ID
-                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_KEY}`);
+                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_KEY}&plot=full`);
                 const omdb = await omdbRes.json();
                 
                 if(omdb.Response === 'False') {
@@ -855,15 +855,22 @@
                 document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Loading...';
                 
                 // Fetch full details again (in case we need fresh data)
-                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&apikey=${OMDB_KEY}`);
+                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&apikey=${OMDB_KEY}&plot=full`);
                 const omdb = await omdbRes.json();
                 
-                const ytRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(omdb.Title + " trailer")}&key=${YT_KEY}&maxResults=1`);
-                const ytData = await ytRes.json();
+                // Try to get trailer from YouTube
+                let trailerId = '';
+                try {
+                    const ytRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(omdb.Title + " official trailer")}&key=${YT_KEY}&maxResults=1`);
+                    const ytData = await ytRes.json();
+                    trailerId = ytData.items?.[0]?.id?.videoId || '';
+                } catch(ytErr) {
+                    console.log('YouTube API error:', ytErr);
+                }
                 
                 movieData = {
                     ...omdb,
-                    trailerId: ytData.items?.[0]?.id?.videoId || '',
+                    trailerId: trailerId,
                     imdbUrl: `https://www.imdb.com/title/${currentImdbId}/`
                 };
                 
@@ -914,8 +921,6 @@
             if (link720p) customBtns.push({text: "720p Download", link: link720p});
             if (link1080p) customBtns.push({text: "1080p Download", link: link1080p});
             if (link4k) customBtns.push({text: "4K 2160p Download", link: link4k});
-            
-           
             
             renderCustomBtnsPreview();
             alert('Download buttons generated! You can add more custom buttons below if needed.');
