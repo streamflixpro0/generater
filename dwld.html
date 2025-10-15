@@ -1,0 +1,2022 @@
+
+
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' media='print' onload='if(media!="all")media="all"' rel='stylesheet'/>
+<noscript><link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'/></noscript>
+<style id='page-skin-1' type='text/css'><!--
+
+:root {
+--bs-font-sans-serif: system-ui,-apple-system,Segoe UI,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+--bs-body-bg: #f7fcff;
+--bs-body-color: #000000;
+--jt-primary: #005cf4;
+--jt-heading-color: #000000;
+--jt-heading-link: #000000;
+--jt-heading-hover: #005cf4;
+--jt-link-color: #005cf4;
+--jt-link-hover: #f638b3;
+--jt-blockquote: #0f9d58;
+--jt-btn-primary: #0066ff;
+--jt-btn-primary-hover: #f638b3;
+--jt-btn-light-hover: #000000;
+--jt-border-light: #C6DAFC;
+--jt-bg-light: #f3f7f9;
+--jt-archive-bg: #ffffff;
+--jt-nav-color: #ffffff;
+--jt-nav-hover: #00ff99;
+--jt-nav-selected: #fff700;
+--jt-dropdown-bg: #212529;
+--jt-dropdown-color: #ffffff;
+--jt-dropdown-hover: #00f496;
+--jt-dropdown-selected: #fff700;
+--jt-header-bg: #212529;
+--jt-header-color: #FFFFFF;
+--jt-header-border: #efefef;
+--jt-footer-bg: #212529;
+--jt-footer-color: #ffffff;
+--jt-footer-link: #0066ff;
+--jt-footer-border: #323539;
+--jt-socket-bg: transparent;
+--jt-socket-color: #FFFFFF;
+--gd-bg:linear-gradient(to left, #006cff 0%, #ff00c7 100%);
+--grdt:linear-gradient(135deg,#ff1a75 0%,#7d2ae8 40%,#00c4cc 95%);
+--ftr:radial-gradient( circle at 20% 100%, rgba(184, 184, 184, 0.1) 0%, rgba(184, 184, 184, 0.1) 33%, rgba(96, 96, 96, 0.1) 33%, rgba(96, 96, 96, 0.1) 66%, rgba(7, 7, 7, 0.1) 66%, rgba(7, 7, 7, 0.1) 99% ), linear-gradient(40deg, #040a22, #162561, #202e64, #6f7aa6);
+--heads:linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);}
+.dark-mode{
+--jt-heading-hover:yellow;
+--jt-primary:yellow;
+--bs-body-bg:#09191d;
+--bs-body-color: white;
+--jt-heading-color:white;
+--jt-heading-link:#fff;
+--jt-btn-light-hover:hsl(210,11%,85%);
+--jt-link-color:#00ff57;
+--jt-border-light:gray;
+--jt-bg-light:hsl(210,11%,20%);
+--jt-archive-bg:transparent;
+--jt-nav-color:#ffffff;
+--jt-dropdown-bg:hsl(210,11%,18%);
+--jt-dropdown-color:#ffffff;
+--jt-header-bg:hsl(210,11%,15%);
+--jt-header-color:#ffffff;
+--jt-header-border:hsl(210,11%,20%);
+--jt-footer-bg:hsl(210,11%,15%);
+--jt-footer-color: white;
+--jt-footer-border:hsl(210,11%,20%);
+--jt-socket-bg: transparent;
+--jt-socket-color:#ffffff;
+--gd-bg:linear-gradient(45deg, rgb(255, 255, 0), rgb(0, 255, 255));
+--heads:linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+--grdt:black;
+--ftr:radial-gradient(circle at 39% 47%, rgba(107, 107, 107,0.08) 0%, rgba(107, 107, 107,0.08) 33.333%,rgba(72, 72, 72,0.08) 33.333%, rgba(72, 72, 72,0.08) 66.666%,rgba(36, 36, 36,0.08) 66.666%, rgba(36, 36, 36,0.08) 99.999%),radial-gradient(circle at 53% 74%, rgba(182, 182, 182,0.08) 0%, rgba(182, 182, 182,0.08) 33.333%,rgba(202, 202, 202,0.08) 33.333%, rgba(202, 202, 202,0.08) 66.666%,rgba(221, 221, 221,0.08) 66.666%, rgba(221, 221, 221,0.08) 99.999%),radial-gradient(circle at 14% 98%, rgba(184, 184, 184,0.08) 0%, rgba(184, 184, 184,0.08) 33.333%,rgba(96, 96, 96,0.08) 33.333%, rgba(96, 96, 96,0.08) 66.666%,rgba(7, 7, 7,0.08) 66.666%, rgba(7, 7, 7,0.08) 99.999%),linear-gradient(45deg, rgb(97, 14, 117),rgb(20, 32, 127));
+}
+body {
+font: normal normal 16px system-ui,-apple-system,Segoe UI,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+color: var(--bs-body-color);
+background-color: var(--bs-body-bg);
+line-height: 1.5;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+text-rendering: optimizeLegibility;
+}
+.d-block {
+display:none;
+}
+.h1,.h2,.h3,.h4,.h5,.h6,
+h1,h2,h3,h4,h5,h6 {
+font: normal bold 40px var(--bs-font-sans-serif);
+}
+a {
+transition-property: background-color, border-color, color, fill, stroke;
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+transition-duration: .3s;
+text-decoration: none;
+color: var(--jt-link-color);
+}
+a:hover {
+color: var(--jt-link-hover);
+}
+.fs-7 {
+font-size: 0.875rem;
+}
+.fs-8 {
+font-size: 0.75rem;
+}
+.fs-9 {
+font-size: 0.7rem;
+}
+.btn{
+box-shadow: none !important
+}
+.btn-sm {
+min-width: 32px;
+min-height: 32px;
+}
+img,
+svg{
+max-width:100%
+}
+img {
+height:auto;
+object-fit:cover;
+}
+label {
+cursor: pointer;
+}
+.visually-hidden {
+position: unset !important;
+}
+.form-control:focus {
+box-shadow: none;
+border-color: var(--jt-primary);
+}
+.form-control::placeholder {
+opacity: 1;
+}
+.dropdown-toggle::after {
+border-width: 5px;
+}
+.dropdown-menu {
+margin: 0;
+padding: 0;
+}
+.px-3 {
+padding-right: 1rem;
+padding-left: 1rem;
+}
+.ratio:before{
+content: none;
+}
+.ratio-1x1 {
+padding-bottom: 100%;
+}
+.ratio-4x3 {
+padding-bottom: 56.25%;
+}
+.ratio-16x9 {
+padding-bottom: 56.25%;
+}
+.ratio-21x9 {
+padding-bottom: 56.25%;
+}
+.object-cover {
+object-fit: cover;
+}
+.jt-text-primary,
+.hover-text-primary:hover,
+input:checked ~ .check-text-primary {
+color: var(--jt-primary)!important
+}
+.jt-btn-primary,
+.jt-btn-outline-primary:hover {
+color: #fff;
+background-color: var(--jt-btn-primary);
+border-color: var(--jt-btn-primary);
+}
+.jt-btn-light {
+color: var(--bs-body-color);
+background-color: var(--jt-bg-light);
+border-color: var(--jt-bg-light);
+}
+.jt-btn-light:hover {
+color: var(--jt-btn-light-hover);
+}
+.jt-btn-primary:hover,
+.hover-btn-primary:hover,
+input:checked + .jt-btn-outline-primary {
+color: #fff !important;
+background-color: var(--jt-btn-primary-hover)!important;
+border-color: var(--jt-btn-primary-hover)!important
+}
+.jt-btn-outline-primary {
+color: var(--jt-btn-primary);
+border-color: var(--jt-btn-primary);
+}
+.jt-bg-primary {
+background-color: var(--jt-primary)
+}
+.jt-bg-light {
+background-color: var(--jt-bg-light)
+}
+.bg-archive {
+background-color: var(--jt-archive-bg)
+}
+.jt-border-light {
+border-color: var(--jt-border-light)!important;
+}
+input:checked ~ .d-block-check {
+display: block !important;
+}
+input:checked ~ .d-none-check {
+display: none !important;
+}
+.dropdown-menu,
+.accordion-item,
+.accordion-header {
+background-color: var(--bs-body-bg);
+color: var(--bs-body-color);
+border-color: var(--jt-border-light);
+}
+.lazyload {
+transition-property: opacity;
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+transition-duration: .3s;
+opacity: 0;
+}
+.lazyload.loaded {
+opacity: 1;
+}
+/* JetTheme Style */
+pre {
+background-color: var(--jt-bg-light);
+margin-bottom: 1rem;
+padding: 1rem;
+font-size: 0.75rem;
+}
+blockquote {
+border-left:  5px solid var(--jt-blockquote);
+color: inherit;
+font-size: 1.125rem;
+margin-bottom: 1.5rem;
+margin-top: 1.5rem;
+padding-left: 1rem;
+}
+.header-animate.header-hidden {
+transform: translateY(-100%);
+box-shadow: none !important;
+}
+#header {
+background-color: var(--jt-header-bg);
+color: var(--jt-header-color);
+transition-property: transform;
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+transition-duration: .3s;
+min-height: 50px;
+border-bottom: 1px solid var(--jt-header-border);
+}
+
+.blog-admin {
+display: none;
+}
+#pagination li + li {
+margin-left: 5px;
+}
+.no-items {
+display: none;
+}
+.feature-image,
+.separator,
+.tr-caption-container {
+margin-bottom: 1rem;
+}
+.tr-caption-container {
+width: 100%;
+}
+.separator a,
+.tr-caption-container a {
+margin: 0 !important;
+padding: 0 !important;
+border:none;
+}
+.tr-caption {
+font-size: 12px;
+font-style: italic;
+}
+.widget:last-child {
+margin-bottom: 0 !important;
+}
+#post-body .widget {
+margin-top: 1.5rem;
+}
+.item-title {
+color: var(--jt-heading-link);
+}
+.item-title:hover {
+color: var(--jt-heading-hover);
+}
+#comment-editor{
+width:100%
+}
+#primary .widget-title {
+font-weight: 300;
+text-transform: uppercase;
+}
+#footer .widget-title {
+text-transform: uppercase;
+}
+#footer .widget-title,
+#sidebar .widget-title {
+font-size: 13px !important;
+}
+#footer .widget-title:after {
+content: "";
+display: block;
+width: 50px;
+border-bottom: 2px solid var(--jt-primary);
+margin-top: 10px;
+}
+#primary .widget-title{
+position: relative;
+width: max-content;
+font-weight:bold;
+}
+.widget-title::after{
+content: '';
+position: absolute;
+height: 5px;
+Background:var(--gd-bg);
+width: 100%;
+bottom: -5px;
+left: 0;
+z-index: -1;
+border-radius: 0px 0px 3px 3px;
+}
+.send-success:not(.loading) .contact-form-msg,
+.send-error:not(.loading) .contact-form-msg {
+display:block !important;
+}
+.send-success .contact-form-msg{
+border-color: rgba(25,135,84,.3) !important;
+}
+.send-error .contact-form-msg{
+border-color: rgba(255,193,7,.3) !important;
+}
+.send-success .contact-form-msg:before{
+content: attr(data-success);
+}
+.send-error .contact-form-msg:before{
+content: attr(data-error);
+}
+hr.example-ads:before {
+content: "Advertisement here";
+}.hero-search .search-input::placeholder{color:var(--jt-heading-link);}.item-meta{display:flex;justify-content:space-around;font-size:1em}img{filter:saturate(1.2)}img:hover{filter:saturate(1)}.navbar-expand-lg{height:56px}#google_translate_element{padding:0}body{top:0!important}font{background:transparent!important;box-shadow:none!important}.goog-te-gadget-simple img,.goog-te-gadget-simple .VIpgJd-ZVi9od-xl07Ob-lTBxed span,#goog-gt-tt,.VIpgJd-ZVi9od-ORHb-OEVmcd{display:none!important}iframe.skiptranslate{border-left:none!important;border-top:none!important;border-bottom:none!important;border-right:none!important;border:none;box-shadow:none}.goog-te-gadget-simple{background-color:transparent!important;background:url(https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_Translate_logo.svg) center / 12px no-repeat;-webkit-transition:all .2s ease;transition:all .2s ease;background-size:20px 20px;display:inline-block;font-weight:400;line-height:1.8;padding:0 6px;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border-left:none!important;border-top:none!important;border-bottom:none!important;border-right:none!important;border-radius:4px}.dark-mode .goog-te-gadget-simple{background-color:transparent!important;background:url(https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_Translate_logo.svg) center / 12px no-repeat;-webkit-transition:all .2s ease;transition:all .2s ease;background-size:20px 20px}
+hr.example-ads {
+background-color: var(--jt-bg-light);
+border-radius: 0.25rem;
+font-size: 0.875rem;
+height: auto;
+margin: 0;
+opacity: 1;
+padding: 1.5rem 0;
+text-align: center;
+}
+body > .google-auto-placed {
+margin: 0 auto 1.5rem;
+max-width: 1108px;
+}
+.google-auto-placed > ins {
+margin: 0 !important;
+}
+/* TYPOGRAPY */
+.h1,h1{font-size:calc(1.375rem + 1.5vw)}
+.h2,h2{font-size:calc(1.315rem + .9vw)}
+.h3,h3{font-size:calc(1.2rem + .6vw)}
+.h4,h4{font-size:calc(1rem + .3vw)}
+.h5,h5{font-size:18px}
+.h6,h6{font-size:16px}
+.entry-title {
+color: var(--jt-heading-color);
+}
+.entry-text h1,
+.entry-text h2,
+.entry-text h3,
+.entry-text h4,
+.entry-text h5,
+.entry-text h6 {
+color: var(--jt-heading-color);
+padding-top: 1em;
+margin-bottom: 1rem;
+}
+.entry-text h1,.entry-text h2,.entry-text h3,.entry-text h4,.entry-text h5,.entry-text h6{padding-top:.5em;margin:1rem auto;}
+.entry-text li {
+margin-bottom: 0.5rem;
+}
+/* Responsive Style */
+@media (min-width: 576px) {
+.ratio-sm-4x3 {
+padding-bottom: 75%;
+}
+.ratio-sm-16x9 {
+padding-bottom: 56.25%;
+}
+.border-sm-end {
+border-right-width: 1px !important;
+border-right-style: solid;
+}
+#post-pager .next-page {
+border-left: 1px solid;
+}
+}
+@media (min-width: 768px) {
+.position-md-relative {
+position: relative;
+}
+.border-md-end {
+border-right-width: 1px !important;
+border-right-style: solid;
+}
+}
+@media (min-width: 992px) {
+.d-lg-flex {
+display: flex;
+}
+#header-main .jt-icon{width:1.4em;height:1.4em;}
+#Atnav{display:none;}
+.col-lg-4 {
+flex: 0 0 auto;
+width: 33.33333333%;
+}
+.col-lg-8 {
+flex: 0 0 auto;
+width: 66.66666667%;
+}
+.border-lg-end {
+border-right-width: 1px !important;
+border-right-style: solid;
+}
+#navbar .navbar-nav > .menu-item {
+display: flex;
+}
+#navbar .dropdown-menu {
+background-color:var(--jt-dropdown-bg);
+border-color: var(--jt-header-border);
+margin-top: -10px;
+display: block;
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
+box-shadow: 5px 10px 10px -5px rgba(0, 0, 0, 0.14);
+top:100%;
+min-width: 150px;
+}
+#navbar .dropdown-menu .nav-link {
+padding-right: 20px;
+font-size: 15px;
+color: var(--jt-dropdown-color);
+}
+#navbar .dropdown-menu .dropdown-toggle {
+position: absolute;
+right: 10px;
+top: 20px;
+}
+#navbar .dropdown-menu .dropdown-menu {
+left: 100%;
+top: -1px;
+}
+#navbar .dropdown-menu .menu-item:hover > .nav-link,
+#navbar .dropdown-menu .menu-item:hover > .dropdown-toggle {
+color:  var(--jt-dropdown-hover);
+}
+#navbar .dropdown-menu .menu-item > .nav-link.active,
+#navbar .dropdown-menu .menu-item > .active ~ .dropdown-toggle {
+color:  var(--jt-dropdown-selected);
+}
+#navbar .menu-item:hover > .dropdown-menu {
+opacity: 1;
+visibility: visible;
+pointer-events: unset;
+margin: 0;
+}
+#navbar .navbar-nav > .menu-item > .nav-link {
+padding: 1.5rem 1.2rem;
+white-space:nowrap;
+}
+#navbar .navbar-nav > .menu-item > .dropdown-toggle {
+bottom: 0;
+pointer-events: none;
+position: absolute;
+right: 5px;
+top: 3px;
+}
+#sidebar {
+width:34%;
+border-left: .5px solid;
+}
+#footer-widget .widget {
+margin-bottom: 0 !important;
+}
+}
+.padd{paddung:0px 15px;}
+.container{
+max-width: 1250px;
+}
+@media (min-width: 1200px){
+.container{
+max-width: 2000px;
+}
+.h1,h1{font-size:40px}
+.h2,h2{font-size:26px}
+.h3,h3{font-size:22px}
+.h4,h4{font-size:20px}
+}
+@media (max-width: 991.98px) {
+input:checked ~ .dropdown-menu {
+display: block;
+}
+input:checked + .dropdown-toggle {
+color: var(--jt-dropdown-selected);
+}
+.logo-wrap {
+width: 150px;
+}
+#search-header .dropdown-menu{
+width: 100%;
+}
+#navbar {
+background-color: var(--jt-header-bg);
+padding-top: 70px;
+padding-bottom: 30px;
+position: fixed;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+width: auto;
+}
+#navbar{width:70%;}
+.dropdown-menu li a{text-transform:capitalize; font-weight: 600;border:none;}
+.scrollable-tabs-container a:hover{
+box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;}
+#header-main .jt-icon{width:1.4em;height:1.4em;}
+#navbar.d-block {
+opacity: 0;
+transform: translateX(-20%);
+}
+#navbar.show {
+transform: translateX(0);
+opacity: 1;
+}
+#navbar .navbar-nav {
+max-height: 100%;
+overflow-y: auto;
+}
+#navbar-toggle:checked ~ #header-main #navbar {
+display:block;
+}
+#navbar .nav-link {
+font-size: 16px !important;
+color: var(--jt-dropdown-color);
+}
+#navbar .menu-item:hover > .nav-link {
+color: var(--jt-dropdown-hover);
+border:none;
+}
+#navbar .active > .nav-link {
+color: var(--jt-dropdown-selected);
+}
+#navbar .dropdown-toggle {
+height: 2.5rem;
+padding: 0 1rem;
+position: absolute;
+right: 0;
+top: 0;
+}
+#navbar .dropdown-menu {
+background-color: var(--jt-dropdown-bg);
+border: none;
+padding-left: 10px;
+}
+#sidebar {
+border-top: 1px solid;
+}}
+@media (max-width: 575.98px) {
+.feature-posts .item-thumbnail {
+margin-bottom: -150px;
+}
+.feature-posts .item-thumbnail a {
+border-radius: 0 !important;
+box-shadow: none !important;
+padding-bottom: 75%;
+}
+.feature-posts .item-content {
+background-color: var(--bs-body-bg);
+border: 5px solid;
+border-radius: 0.25rem;
+}
+#post-pager .prev-page + .next-page {
+border-top: 1px solid;
+}
+.full-width,
+.px-3 .google-auto-placed {
+margin-left: -1rem;
+margin-right: -1rem;
+width: auto !important;
+}
+#footer-widget .widget {
+padding-left: 1.5rem;
+padding-right: 1.5rem;
+}}
+/*Your custom CSS is here*/
+.ap{ display: block; width: 100%; max-width: 300px; margin: 5px auto; padding: 7px 10px; text-align: center; font-weight: bold; text-decoration: none; color: white; text-transform: uppercase; background: linear-gradient(180deg, #ffb200, #ff3400); filter: drop-shadow(0 5px 10px #ffeabf); border-radius: 35px; font-size: 20px; font-weight: bold; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; text-shadow: 1px 1px 0px black;
+}
+.nt{position:relative;padding:16px 20px 16px 50px; background: white;
+color:#fff; font-size:.85rem;font-family:inherit;line-height:1.6em;border-radius:20px;overflow:hidden;box-shadow:rgb(100 100 111 / 20%) 0px 4px 5px 0px} .nt::before{content:'';width:60px;height:60px;background:#fff;display:block;border-radius:50%;position:absolute;top:-12px;left:-12px;opacity:.1} .nt::after{content:'\002A';position:absolute;left:18px;top:16px; font-size:20px; min-width:15px;text-align:center;} .nt.wr{background:#ffff;color:#48525c;} .nt.wr::before{background:#fff;} .nt.wr::after{content:'\0021'}
+.joinbtn{ text-align: center; } .joinbtn a img{ width: 96%; Height:100%; margin-top: 15px; border-radius: 80px; border: 1px solid blue; box-shadow: 3px 3px 0px blue; } .joinbtn img:hover{ box-shadow: 0px 0px 30px blue; transition: box-shadow .7s ease;} .ttn {display: flex; justify-content: center; align-items: center; transition: all 1s ease; text-decoration: none; background: #0088cc; padding: 8px 8px; color: #fff; font-weight: bold; border-radius: 4px; } .ttn:hover { background: #00c0ff; color: white; box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 30px; }
+.note{position:relative;padding:16px 20px 16px 50px; background:#e1f5fe;color:#3c4043; font-size:.85rem;font-family:inherit;line-height:1.6em;border-radius:10px;overflow:hidden} .note::before{content:'';width:60px;height:60px;background:#81b4dc;display:block;border-radius:50%;position:absolute;top:-12px;left:-12px;opacity:.1} .note::after{content:'\002A';position:absolute;left:18px;top:16px; font-size:20px; min-width:15px;text-align:center} .note.wr{background:#ffdfdf;color:#48525c} .note.wr::before{background:#e65151} .note.wr::after{content:'\0021'}
+.btn1,.btn2,.btn3,.btn6,.btn7,.btn8,.btn9,.btn10{ background:linear-gradient(28deg,#AF40FF, #5B42F3 50%,#00DDEB); padding: 5px 10px; color: white; text-decoration: none; text-transform: uppercase; border-radius: 5px; font-weight: bold; }
+.popSc{position:fixed;z-index:999;top:0;bottom:0;left:0;right:0;padding:20px;background:#f3f5fe;display:flex;justify-content:center;align-items:center}
+.popSc.hidden{display:none} .popSc .popBo{position:relative;background:#fff;max-width:400px;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:30px;border-radius:30px} .popSc .popBo svg{display:block;width:50px;height:50px;fill:none !important;stroke:#08102b;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5} .popSc .popBo h2{margin:10px 0 15px 0;font-size:1.2rem;font-weight:800;color:#08102b} .popSc .popBo p{margin:0;line-height:1.7em;font-size:0.9rem;color:#08102b} .dark-mode .popSc{background:#1f1f1f} .dark-mode .popSc .popBo{background:#2c2d31} .dark-mode .popSc .popBo svg{stroke:#fefefe} .dark-mode .popSc .popBo p, .dark-mode .popSc .popBo h2{color:#fefefe}
+.pre{direction: ltr} .pre:not(.tb){position:relative;border-radius:3px;overflow:hidden;margin:1.7em auto;font-family:var(--fontC)} .pre pre{margin:0;} .pre:not(.tb)::before, .cmC i[rel=pre]::before{content:'';display:flex;justify-content:flex-end;position:absolute;right:0;top:0;width:100%;background:inherit;font-size:10px;padding:0 10px;z-index:2;line-height:30px} .pre:not(.tb).html::before{content:'.html'} .pre:not(.tb).css::before{content:'.css'} .pre:not(.tb).js::before{content:'.js'} .pre:not(.tb):hover::before{content:'Double click to copy | '} .pre:not(.tb).html:hover::before{content:'Double click to copy | .html'} .pre:not(.tb).css:hover::before{content:'Double click to copy | .css'} .pre:not(.tb).js:hover::before{content:'Double click to copy | .js'} .pre[data-text]:not([data-text='']):not(.tb)::before{content:attr(data-text)} .pre[data-text]:not([data-text='']):not(.tb):hover::before{content:'Double Click to Copy | ' attr(data-text)} pre, .cmC i[rel=pre]{display:block;position:relative;font-family:var(--fontC);font-size:13px;line-height:1.6em;border-radius:3px;background:var(--synxBg);color:var(--synxC);padding:30px 20px 20px;margin:1.7em auto; -moz-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none; overflow:auto;direction:ltr;white-space:pre} pre i{font-style:normal} code{display:inline;padding:5px;font-size:14px;border-radius:3px;line-height:inherit;}
+.pre,.pre pre{position:relative;border-radius:3px;direction:ltr}.pre,.preT{overflow:hidden}.preA,.preM{display:flex}.preA,.preT{white-space:nowrap}
+.pre{margin:1.7em auto}.pre pre{margin:0;display:block;font-size:13px;line-height:1.6em;padding:30px 20px 20px;-moz-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;overflow:auto;white-space:pre}
+.pre.adv{border-radius:10px}.pre.adv::before,.pre.str .prTl,.pre:not(.str) .prCd{display:none}.pre.adv pre{padding-top:70px}.preM{background:green;position:absolute;top:0;right:0;left:0;width:100%;padding:10px 10px 10px 20px;justify-content:space-between;align-items:center;flex-wrap:nowrap;z-index:2}.preT{font-size:15px;line-height:1rem;position:relative;text-overflow:ellipsis;padding-right:10px; color:#fff;}.preA{gap:8px}.preA button{outline:0;border:none;width:30px;height:30px;padding:0;margin:0;border-radius:50%;transition:border-radius .2s;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.preA button:hover{border-radius:40%}.preA button>svg{width:18px;height:18px;stroke:none;fill:#2e2e2e;transition:.5s}.pre.cpd .prCp svg,.pre.dwn .prDl svg,.pre.pnd .prDl svg{animation:1s jiggle}.pre.cpd .prCp svg .a,.pre.dwn .prDl svg .a,.pre.pnd .prDl svg .a,.pre:not(.cpd) .prCp svg .b,.pre:not(.dwn) .prDl svg .c,.pre:not(.pnd) .prDl svg .b{opacity:0}@keyframes jiggle{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(26deg)}40%,80%{transform:rotate(-26deg)}}@-webkit-keyframes jiggle{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(26deg)}40%,80%{transform:rotate(-26deg)}}
+.drK .preM{background:#2b2c2f}
+.drK .preA button{background:#252526}
+.drK .preA button svg{fill:#d5d5d5}
+pre{height: auto;}
+/* yt border  bg */.ytShdw{border-radius:10px;padding:10px;box-shadow:rgba(0,0,0,.24) 0 3px 8px;background-color:#fff}.ytShdw iframe{border-radius:10px;background-color:#ccf4fc}
+/* yt iframe */.youtube-player{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;background:#000;margin:0;border:1px solid gray;border-radius:10px}.youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.youtube-player img{object-fit:cover;display:block;left:0;bottom:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;cursor:pointer;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.youtube-player img:hover{-webkit-filter:brightness(75%);-moz-filter:brightness(75%);filter:brightness(75%)}.youtube-player .play{height:72px;width:72px;left:50%;top:50%;margin-left:-36px;margin-top:-36px;position:absolute;background:url(https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_play_button_icon_%282013%E2%80%932017%29.svg) no-repeat;cursor:pointer}
+/* yt dark-mode */.drK .ytShdw{background-color:#000}.drK .ytShdw{box-shadow:rgba(255,255,255,.24) 0 3px 8px}.drK .ytShdw iframe{border:1px solid #41b375}
+/* scroll menu */
+.scrollable-tabs-container .widget-title{display:none;}
+.scrollable-tabs-container {
+background: transparent; width: 100%; text-align:center;;margin:0px -10px -20px -10px; border-radius: 2px; overflow: hidden; position: relative;}
+.scrollable-tabs-container ul { display: flex; gap: 9px; padding: 9px 24px; margin: 0; list-style: none; overflow-x: scroll; -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; } .scrollable-tabs-container ul.dragging a { pointer-events: none; } .scrollable-tabs-container ul.dragging { scroll-behavior: auto; } .scrollable-tabs-container ul::-webkit-scrollbar { display: none; }
+.scrollable-tabs-container a { color: var(--jt-heading-link); text-decoration: none;  text-transform: capitalize;
+padding: 4px 8px; display: inline-block; border-radius: 10px; user-select: none; white-space: nowrap;
+font-weight: bold;
+Border: 1px solid #ccc;
+font-size: 14px;
+}
+footer{background:var(--ftr);
+} } @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.bx{ position:relative;margin:40px 2px;padding:40px 15px 15px;border:1px solid rgba(230,230,230,1);border-radius:5px;box-shadow:0 10px 20px 0 rgba(30,30,30,.07)}
+#google_translate_element{padding:0;}
+body{top:0!important}
+font{background:transparent!important;box-shadow:none!important}
+.goog-te-gadget-simple img,.goog-te-gadget-simple .VIpgJd-ZVi9od-xl07Ob-lTBxed span,#goog-gt-tt,.VIpgJd-ZVi9od-ORHb-OEVmcd{display:none!important}
+iframe.skiptranslate{border-left:none!important;border-top:none!important;border-bottom:none!important;border-right:none!important;border:none;box-shadow:none}
+.goog-te-gadget-simple{background-color:transparent!important;background:url("https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_Translate_logo.svg") center / 12px no-repeat;-webkit-transition:all .2s ease;transition:all .2s ease;background-size: 20px 20px;display:inline-block;font-weight:400;line-height: 1.8;padding:0 10px;text-align:center;white-space:nowrap;vertical-align: middle;-ms-touch-action: manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select: none;-moz-user-select:none;-ms-user-select:none;user-select:none;border-left:none!important;border-top:none!important;border-bottom:none!important;border-right:none!important;border-radius: 4px}
+.dark-mode .goog-te-gadget-simple{background-color:transparent!important;background:url("https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_Translate_logo.svg") center / 12px no-repeat;-webkit-transition:all .2s ease;transition:all .2s ease;background-size: 20px 20px;}
+@media screen and (min-width: 485px) {
+.scrollable-tabs-container{
+Width: 100%;
+Margin: 0; }
+.scrollable-tabs-container ul{justify-content:center;}
+}
+.rounded{
+border-radius:.5rem!important;
+} .p-4{padding:0.8rem!important;}
+.flx{
+display: flex;
+justify-content: space-between;
+margin: -10px 5px 8px 5px; } .ddemo{
+color:var(--jt-heading-color);
+padding: 6px 20px;
+border: 1.4px solid #ccc;
+border-radius: 4px;
+font-weight: bold;
+text-transform: capitalize;
+text-decoration: none;
+display: inline-block;
+}
+.ddemo:hover{
+background:#0057ff;
+color: #fff; transform:translateY(-2px); transition: .3s ease;}
+.price{color:red;}
+.ddemo svg{width:24px; height:24px;}
+.item-thumbnail:hover{ transform: scale(1.04); transition: .7s ease;}
+.categories ul li a{font-size:12px;}
+.brdr{border:1px solid #00689b;}
+#header{ background: var(--grdt);}
+#mainbx{background: transparent;} .dhanjeerdr{color:var(--hero-color);text-align:center;margin:0 0 30px} .dhanjeerdr h1{display:block;font-size:35px;font-weight:700;margin:0 0 13px} .dhanjeerdr p{display:block;font-size:16px;color:var(--jt-heading-color);margin:0} .hero-search{text-align:center;margin:0 0 13px} .hero-search .search-form{display:inline-block;position:relative;width:480px;max-width:100%;height:50px;border:0} .hero-search .search-input{background: var(--bs-body-bg);
+;float:left;width:100%;height:50px; overflow:hidden;font-size:14px;color:var(--jt-heading-link);font-family:inherit;font-weight:400;line-height:51px;padding:0 20px;border:2px solid var(--jt-heading-link);border-radius:4px}  .hero-search .search-input:focus{box-shadow:0 2px 8px rgba(0,0,0,0.1)} .hero-search .search-button{position:absolute;top:0;right:0;height:50px;background-color:transparent;overflow:hidden;font-size:14px;color:var(--jt-heading-color);text-align:center;line-height:51px;cursor:pointer;opacity:.85;padding:0 20px;border:0;border-radius:0 6px 6px 0} .hero-search .search-button:hover{background-color:rgba(155,155,155,0.1)}
+.rown{width:100%;max-width:100%;margin:0} .cntne{padding:0 15px}} @media screen and (max-width: 640px){ .dhanjeerdr h1 { font-size: 31px;}}
+.htitle{background: var(--gd-bg); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: capitalize; filter: drop-shadow(1px 2px 1px #b5b5b5):}
+.padding{padding-right:4px;}
+.navbar-collapse{
+margin: 10px;
+border-radius: 10px;
+}
+#onesignal-slidedown-allow-button{background-color:#063970!important}
+#onesignal-slidedown-container #onesignal-slidedown-dialog .primary.slidedown-button+.secondary.slidedown-button{color: #f09800!important;background-color:transparent!important}
+.dark-mode #onesignal-slidedown-container #onesignal-slidedown-dialog .slidedown-body-message {color:#fff!important}
+.dark-mode #onesignal-slidedown-container #onesignal-slidedown-dialog {background-color:#063970!important}
+.pre{font-family: "Courier";
+background:var(--bs-body-bg);border:.5px solid #ccc;} #alrt p{display:inline;font-size: 14px;}
+#alrt a{color: white;text-decoration: none;font-weight:bold;text-transform: capitalize; padding: 4px 10px;border-radius: 20px; font-size: 12px;}
+.closebtn{
+position: absolute;
+font-size: 24px;
+transition: .3s;
+right: 3px;
+top: -14px;}
+.btn-footer a,.anime,.item-tag a,.widget-title::after,.btn,.price{
+background:linear-gradient(135deg, #95003b 0%, #7d2ae8 40%, #00c4cc 95%);
+animation: bump 2s infinite alternate;
+animation-delay:3s;
+color:#fff;
+}
+.btn-footer a:hover,.anime:hover,.entry-label:hover,.widget-title::after:hover,.btn:hover,.price:hover{
+background: linear-gradient(45deg, crimson, #1c0032)!important;
+color:#fff;
+box-shadow: 0px 6px 15px -2px crimson;
+}
+@keyframes bump {
+0% {
+filter: saturate(1);
+background-size: 100%;
+}
+100% {
+filter: saturate(2);
+background-size: 140%;
+}
+}
+.closebtn:hover { color: #000; cursor: pointer;}
+#alrt .widget-title{display:none;}
+.alert{line-height:26px;}
+.tg{background:#0074da;}
+.whatsapp{background:green;}
+.fullbox{ background:var(--bs-body-bg);  display: flex; flex-direction: row; justify-content: space-around; align-items: center; padding: 2px; position: fixed; bottom: 5px; Left: 2px; Right: 2px; transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81); border-radius: 10px; z-index: 9999999999996; width: 96%; margin: 0 auto; box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px; } .icnre{ height: 40px!important; width: 40px!important; margin: 4px 19px; display: flex; flex-direction: column; justify-content: center; align-items: center; -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-tap-highlight-color: transparent; color: rgba(42, 52, 84, 1); text-decoration: none; } .share-button button{ border: none; background: transparent;} @media screen and (min-width: 485px) { .fullbox{ Width: 100%; } } @media screen and (min-width: 485px) { .icnre{ width: 50px; height: 50px; } } .hide-ATnav { display: none;} .fullbox { transition: all .5s ease; } .icnre svg{ width: 28px; } .dm{ display: block; width: 100%; max-width: 300px; margin: 10px auto; padding: 10px 10px; text-align: center; font-weight: bold; text-decoration: none; color: white; text-transform: uppercase; background: linear-gradient(180deg, #ffb200, #ff3400); filter: drop-shadow(0 5px 10px #ffeabf); border-radius: 35px; font-size: 20px; font-weight: bold; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; text-shadow: 1px 1px 0px black;} .dn{ display: block; width: 100%; max-width: 300px; margin: 15px auto; padding: 10px 10px; text-align: center; position: relative; text-transform: uppercase; text-decoration: none; color: #fff; background:linear-gradient(180deg, #e347ff, #7b41e0); filter: drop-shadow(0 5px 15px #ccc); border-radius: 45px; font-size: 20px; font-weight: bold; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; text-shadow: 1px 1px 0px black; position: relative; } .dn:hover{color: white; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; transform: scale(0.97); } .dm:hover{ transform: scale(0.97); box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; Color:white;} .separator img { Border:2px solid #fff; pointer-events: ; border-radius:7px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+.fullbox a,.share-button button,.fullbox label{color: var(--jt-heading-color); font-size: 10px;text-transform: capitalize;}
+pre{height:300px;}
+.item-meta {display:flex; justify-content:space-around; font-size:1em; }
+img{
+filter: saturate(1.2);
+}
+img:hover{
+filter: saturate(1);
+}
+.item-snippet{display:none;}
+.mygd .widget {
+display: flex;
+flex-direction: column-reverse;
+align-items: center;}
+.mygd .mb-4,.mygd .mb-3{margin:0!important;}
+.mygd .widget .widget-title::after{content"";position:relative; height:0;
+background:unset;}
+.mygd .widget .widget-title span{
+margin: 2px auto;
+font-size: 14px;
+font-weight: bold;
+text-transform: capitalize;}
+.mygd .widget:hover{
+transform: scale(.93);
+transition: .2s;
+background: linear-gradient(45deg, #ce00ff, #00eaff);
+border-radius: 6px;
+color: white;
+box-shadow: 0px 3px 10px #ff00f15b;
+}
+pre{font-family:monospace;}
+--></style>
+<!-- Your Style and Script before </head> is here -->
+<style>
+ .collapse,.navbar-collapse{transition:1.3s all ease;}
+    .dark-mode body{
+ background: linear-gradient(135deg,#25003a,#000d32,#25003a);background-attachment: fixed;}
+  
+ .dark-mode #header-main{  
+     background: rgb(0,0,0,.55);
+     }                
+ .entry-meta,.text-secondary{color:var(--jt-heading-link);} 
+  #main{display:block!important;}
+    
+   #mainbx{background: transparent;} .dhanjeerdr{color:var(--hero-color);text-align:center;margin:0 0 30px} .dhanjeerdr h1{display:block;font-size:35px;font-weight:700;margin:0 0 13px} .dhanjeerdr p{display:block;font-size:16px;color:var(--hero-text-color);margin:0} .hero-search{text-align:center;margin:0 0 13px} .hero-search .search-form{display:inline-block;position:relative;width:480px;max-width:100%;height:50px;border:0}
+  
+  
+  
+  @media screen and (max-width: 1030px) { .rown{width:100%;max-width:100%;margin:0} .cntne{padding:0 15px}} @media screen and (max-width: 640px){ .dhanjeerdr h1 { font-size: 31px;}} 
+  #alrt .widget-title{display:none;}
+   table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block; 
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    white-space: nowrap; }
+
+th {
+    
+    font-weight: bold;
+}
+ </style>
+<script type='text/javascript'>
+    var app_url = 'https://dktheme.online/';
+    var app_api_token = '8d8ea54fea6d1cccee24d1da0f75d957f6ebe4e9';
+    var app_advert = 2;
+    var app_domains = ["mega.nz","mediafire.com","drive.google.com"];
+</script>
+</head><body class="d-block is-page"><textarea disabled readonly id="element-h" style="display:none"><style>/*<link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=1619204270592959299&amp;zx=6ca1c1e7-9feb-4084-b85b-fe5fd491d33d' media='none' onload='if(media!=&#39;all&#39;)media=&#39;all&#39;' rel='stylesheet'/><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=1619204270592959299&amp;zx=6ca1c1e7-9feb-4084-b85b-fe5fd491d33d' rel='stylesheet'/></noscript>
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+
+
+*/</style></textarea>
+
+</a>
+</div><div class='widget LinkList d-flex align-self-stretch align-items-center order-lg-1 ms-auto' data-version='2' id='LinkList10'>
+
+</form>
+</div>
+</div>
+
+</div></div>
+</header>
+<div class='scrollable-tabs-container no-items section' id='scroll' name='scroll menu'></div>
+<!--Main Content-->
+<div class='mb-4' id='primary'>
+<div class='container'>
+<div class='alert rounded alert-primary alert-dismissible p-2 mb-0 mt-2 text-center section' id='alrt' name='alrrt'><div class='widget HTML position-relative mb-4' data-version='2' id='HTML50'>
+<span class='widget-title position-relative fs-6 mb-3'><span>
+</span></span>
+<div class='widget-content text-break'><div class="alrrt">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';"> &#215;</span>
+   
+ 
+
+<br />
+
+</div></div>
+</div></div>
+</div>
+<div class='d-lg-flex' id='main-content'>
+<div class='col-lg-8 px-3' id='main'>
+<article class='mb-5' id='page-content'>
+<header class='entry-header'>
+<h1 class='entry-title mb-4'>YouTube dowmknloader 2026</h1>
+</header>
+<div class='entry-text text-break mb-5'>
+
+  <style>
+    
+    
+  
+    .btn-gradient { background: linear-gradient(to right, #34d399, #06b6d4); border: none; color: #0f172a; font-weight: 600; }
+    .btn-gradient:hover { opacity: 0.9; }
+  </style>
+<body>
+ 
+
+  <main class="container py-5">
+    <div class="text-center mb-4">
+      <h1 class="fw-bold">YouTube Downloader</h1>
+      <p class="">Paste a YouTube link and get instant download links in multiple formats.</p>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-8">
+          <input class="form-control bg-dark text-white border-0" id="ytInput" placeholder="https://youtu.be/..." type="text" />
+        </div>
+        <div class="col-md-2 d-grid">
+          <button class="btn btn-gradient" id="fetchBtn">Fetch</button>
+        </div>
+        <div class="col-md-2 d-grid">
+          <button class="btn btn-outline-light" id="clearBtn">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert d-none" id="message" role="alert"></div>
+
+    <div id="result"></div>
+  </main>
+
+  <footer>
+    <p class="text small mb-0">Made with &#10084;&#65039; &#8212; Replace API endpoint if needed.</p>
+  </footer>
+
+  
+  <script>
+    const input = document.getElementById('ytInput');
+    const fetchBtn = document.getElementById('fetchBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const message = document.getElementById('message');
+    const result = document.getElementById('result');
+
+    function showMessage(text, type = 'info') {
+      message.classList.remove('d-none', 'alert-danger', 'alert-success', 'alert-info');
+      if (type === 'error') message.classList.add('alert-danger');
+      else if (type === 'success') message.classList.add('alert-success');
+      else message.classList.add('alert-info');
+      message.textContent = text;
+    }
+
+    function hideMessage() { message.classList.add('d-none'); }
+
+    function formatDuration(sec) {
+      const hrs = Math.floor(sec / 3600);
+      const mins = Math.floor((sec % 3600) / 60);
+      const secs = Math.floor(sec % 60);
+      return `${hrs ? hrs + ':' : ''}${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    }
+
+    fetchBtn.addEventListener('click', async () => {
+      const url = input.value.trim();
+      if (!url) return showMessage('Please enter a YouTube URL.', 'error');
+      hideMessage();
+      result.innerHTML = '';
+      showMessage('Fetching video info...', 'info');
+      fetchBtn.disabled = true;
+      try {
+        const api = `https://api.vidfly.ai/api/media/youtube/download?url=${encodeURIComponent(url)}`;
+        const res = await fetch(api);
+        const data = await res.json();
+        if (data.code !== 0) throw new Error(data.message || 'API error');
+        const meta = data.data;
+        hideMessage();
+        result.innerHTML = `
+          <div class='card p-3 mb-4'>
+            <div class='row g-3'>
+              <div class='col-md-4'>
+                <img src='${meta.cover}' alt='cover' class='img-fluid rounded shadow'>
+              </div>
+              <div class='col-md-8'>
+                <h4>${meta.title || meta.filename || 'Untitled video'}</h4>
+                <p class='text-white-50 mb-1'>Duration: ${formatDuration(meta.duration)}</p>
+              </div>
+            </div>
+          </div>
+          <h5 class='fw-bold mb-3'>Available Formats</h5>
+          <div class='row g-3'>
+            ${meta.items.map(it => `
+              <div class='col-md-6'>
+                <div class='card p-3 d-flex flex-column justify-content-between'>
+                  <div>
+                    <div class='fw-semibold'>${it.label || it.ext}</div>
+                    <small class='text-white-50'>${it.type || ''} &#8226; ${it.fps || '-'} fps</small>
+                  </div>
+                  <a href='${it.url}' target='_blank' class='btn btn-sm btn-gradient mt-3'>Download</a>
+                </div>
+              </div>`).join('')}
+          </div>`;
+      } catch (e) {
+        showMessage('Error: ' + e.message, 'error');
+      } finally {
+        fetchBtn.disabled = false;
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      result.innerHTML = '';
+      hideMessage();
+    });
+  </script>
+</body>
+</html>
+<hr /> <p>YouTube Downloaders in 2025: How to Safely Save Videos for Offline Use</p>
+<p>In today's digital age, YouTube has become a hub for entertainment, education, and inspiration. Whether you're a student, professional, or casual viewer, having the ability to download YouTube videos for offline access can be invaluable. This comprehensive guide explores the top YouTube downloader tools available in 2025, ensuring you can save your favorite content securely and efficiently.</p>
+<h2>🧠 Why Download YouTube Videos?</h2>
+<p>Downloading YouTube videos offers several benefits:</p>
+<ul>
+<li><strong>Offline Access</strong>: Watch videos without an internet connection, ideal for travel or areas with limited connectivity.</li>
+<li><strong>Data Savings</strong>: Save on mobile data usage by downloading videos when connected to Wi-Fi.</li>
+<li><strong>Archival Purposes</strong>: Keep a personal library of educational or inspirational content.</li>
+<li><strong>Enhanced Productivity</strong>: Create offline playlists for uninterrupted viewing during work or study sessions.</li>
+</ul>
+<hr />
+<h2>🔧 Top YouTube Downloader Tools in 2025</h2>
+<h3>1. <strong>YTD Video Downloader</strong></h3>
+<p>YTD Video Downloader remains a popular choice for many users due to its straightforward interface and reliable performance. It supports downloading videos in various formats and resolutions, making it versatile for different needs.</p>
+<h3>2. <strong>4K Video Downloader</strong></h3>
+<p>Ideal for users seeking high-quality downloads, 4K Video Downloader allows you to save videos, playlists, channels, and subtitles from YouTube. Its user-friendly interface and support for 4K and 8K resolutions make it a top pick for quality-conscious users.</p>
+<h3>3. <strong>JDownloader</strong></h3>
+<p>JDownloader is an open-source software that supports downloading from multiple video-sharing platforms, including YouTube. It offers features like batch downloading and automatic captcha solving, streamlining the downloading process.</p>
+<h3>4. <strong>ClipGrab</strong></h3>
+<p>ClipGrab is a free downloader and converter for YouTube videos. It supports various formats and resolutions, and its simple interface makes it accessible for beginners.</p>
+<h3>5. <strong>Online Video Converters</strong></h3>
+<p>For users who prefer not to install software, online video converters like Y2Mate and SaveFrom.net offer browser-based solutions. These tools allow you to download videos directly from your browser, though they may have limitations in terms of features and security.</p>
+<hr />
+<h2>🧩 How to Choose the Right YouTube Downloader</h2>
+<p>When selecting a YouTube downloader, consider the following factors:</p>
+<ul>
+<li><strong>Compatibility</strong>: Ensure the tool is compatible with your operating system (Windows, macOS, Linux).</li>
+<li><strong>Supported Formats</strong>: Check if the downloader supports the video formats and resolutions you require.</li>
+<li><strong>Safety and Security</strong>: Opt for tools that are free from malware and intrusive ads.</li>
+<li><strong>Ease of Use</strong>: A user-friendly interface can make the downloading process smoother.</li>
+<li><strong>Additional Features</strong>: Features like batch downloading, playlist support, and subtitle downloading can enhance the tool's utility.</li>
+</ul>
+<hr />
+<h2>&#9878;&#65039; Legal Considerations When Downloading YouTube Content</h2>
+<p>It's crucial to understand the legal implications of downloading YouTube videos:</p>
+<ul>
+<li><strong>YouTube's Terms of Service</strong>: According to YouTube's Terms of Service, downloading content without permission is prohibited unless a download button or link is clearly provided on the platform.</li>
+<li><strong>Fair Use</strong>: In some jurisdictions, downloading videos for personal, non-commercial use may fall under fair use. However, this varies by country and specific use case.</li>
+<li><strong>Copyright Laws</strong>: Always respect copyright laws and avoid downloading content that infringes on the rights of creators.</li>
+</ul>
+<p>To stay compliant, consider using YouTube's official features, such as YouTube Premium, which allows for legal offline viewing.</p>
+<hr />
+<h2>🛡&#65039; Best Practices for Safe and Efficient Downloading</h2>
+<p>To ensure a safe and efficient downloading experience:</p>
+<ul>
+<li><strong>Use Trusted Tools</strong>: Stick to reputable downloader tools with positive reviews and a history of reliability.</li>
+<li><strong>Avoid Suspicious Links</strong>: Be cautious of websites offering free downloads that seem too good to be true, as they may contain malware.</li>
+<li><strong>Check for Updates</strong>: Regularly update your downloader tools to benefit from the latest features and security patches.</li>
+<li><strong>Limit Download Speed</strong>: If downloading multiple videos, consider limiting the download speed to prevent network congestion.</li>
+<li><strong>Organize Downloads</strong>: Create folders to organize your downloaded videos for easy access.</li>
+</ul>
+<hr />
+<h2>&#9989; Conclusion</h2>
+<p>Downloading YouTube videos can enhance your viewing experience, providing offline access and saving data. By choosing the right downloader tool and adhering to legal guidelines, you can enjoy your favorite content safely and efficiently. Always prioritize security and respect for content creators when downloading videos.</p>
+<hr />
+<p><strong>Note</strong>: This article is for informational purposes only. Always ensure that your actions comply with local laws and YouTube's Terms of Service.</p>
+<hr />
+<p><strong>SEO Optimization Details</strong>:</p>
+<ul>
+<li><strong>Primary Keyword</strong>: YouTube Downloader</li>
+<li><strong>Secondary Keywords</strong>: Download YouTube videos, Best YouTube downloader tools, Legal YouTube downloading, Safe video downloading practices</li>
+<li><strong>Meta Description</strong>: Discover the top YouTube downloader tools in 2025. Learn how to safely and legally download YouTube videos for offline viewing with our comprehensive guide.</li>
+<li><strong>Alt Text for Images</strong>: Screenshots of top YouTube downloader tools, icons representing different formats (MP4, MP3), and images illustrating the downloading process.</li>
+</ul>
+<p><br /></p>
+</div>
+</article>
+<div class='position-fixed start-0 top-50 blog-admin pid-989340822'>
+<a class='d-block btn btn-sm jt-btn-light rounded-0' href='https://www.blogger.com/blog/pages/1619204270592959299' rel='nofollow noopener noreferrer' target='_blank' title='Dashboard'><svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-menu'></use></svg></a><a class='d-block btn btn-sm jt-btn-light rounded-0' href='https://www.blogger.com/blog/page/edit/1619204270592959299/6008434208933421506' rel='nofollow noopener noreferrer' target='_blank' title='Edit post'><svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-edit'></use></svg></a>
+</div>
+<div class='comments threaded mb-5' id='comments'>
+<div class='widget-title position-relative mb-3 text-uppercase fw-light'>
+</div>
+<div class='comments-content'>
+<ul class='list-unstyled'>
+</ul>
+</div>
+<div id='add-comment'>
+<div class='mt-3 px-2 pt-2 jt-bg-light rounded d-none' id='threaded-comment-form'>
+<a class='d-none' href='#' id='comment-editor-src'>comment url</a>
+<iframe class='blogger-iframe-colorize blogger-comment-from-post' data-resized='true' height='90' id='comment-editor' name='comment-editor'></iframe>
+<textarea disabled='disabled' id='comment-script' readonly='readonly' style='display:none'><script src='https://www.blogger.com/static/v1/jsbin/1212307205-comment_from_post_iframe.js' type='text/javascript'></script></textarea>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+<div class='col-lg-4 px-3 pb-5 jt-border-light separator-main position-relative ms-auto' content='itemid' id='sidebar' itemid='#sidebar' itemscope='itemscope' itemtype='https://schema.org/WPSideBar'>
+<div class='pt-4 section' id='sidebar-static'><div class='widget PopularPosts position-relative mb-4' data-version='2' id='PopularPosts10'>
+<span class='widget-title position-relative fs-6 mb-3'><span>Popular Posts</span></span>
+<div class='widget-content popular-posts'>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2025/02/filmyfly-clone-wp-theme.html'>
+<img alt='FilmyFly Clone WP Theme ' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimin757L9ACHOBWyq9Ddo7TN6wuBBSIimBdBG8teOHufl2r3aW9w2KDv9uY03KoaQpEekRw-GnwTg7I7tjIMPTh5qd_WtyLKbgHoLwruYG9VWzJ4BvqqKwHOPzdN3SGyNXvhIM1myCD1y4wuCtU3OkcKNgcDZ9rWUZvu-46VVAj7hEoommja1be5I6kZk/s16000/1000042081.jpg' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Paid?max-results=10' rel='tag'>
+Paid
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Wp%20movie%20theme?max-results=10' rel='tag'>
+Wp movie theme
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2025/02/filmyfly-clone-wp-theme.html'>FilmyFly Clone WP Theme </a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2024/04/pubg-mobile-lite-360-aim-bot-config.html'>
+<img alt='pubg mobile lite 360⁰ aim bot Config File, High Damage 2024' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEg5RvD1c6Enpq9Q4oAM6QUFNy8Q-fSp3YRxPVYLhXMGlomHNgWGzSbLx0OCoI1EYYuMgfe5Mz6ke-qpxieDzdZSsYOV9WDsLQb5LItHi72WtfPrCq6TVQE1iukUB4aSM3EhMX2rN60rPSD8txCq9lBS7svVWHKPg2bynUJpqBnuOOZui3NucZ2soRuIQ/s1600/Pubg%20mobile%20lite%20high%20damage%20360%E2%81%B0%20aim%20bot.webp' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Material?max-results=10' rel='tag'>
+Material
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2024/04/pubg-mobile-lite-360-aim-bot-config.html'>pubg mobile lite 360&#8304; aim bot Config File, High Damage 2024</a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2025/02/rich-mag-blogger-theme-best-news-portal.html'>
+<img alt='Rich Mag Blogger Theme – The best News Portal Template' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKH3l1-UxZfzb-ilk1fVYXMeauCNH1qNdpi9paiIRIEH6Yvxr02o6UkXLhIoQS8Xhl5n-f4jXjL0CNW9_kptyda6ZWy5Y-d3Pv5XxTVSX7Q2-vfdnzy6H71jL9RstkVv5nB2aiOwOOnskTCYEvZfUPP2l7sRHZ5SEJPflAlBDp8DjzKbT6kp1fVaQ8PpI/s16000/1000044615.jpg' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/News%20template%20%F0%9F%91%91?max-results=10' rel='tag'>
+News template 👑
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Paid?max-results=10' rel='tag'>
+Paid
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2025/02/rich-mag-blogger-theme-best-news-portal.html'>Rich Mag Blogger Theme &#8211; The best News Portal Template</a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2025/02/5-colourfull-css-animation-button.html'>
+<img alt='6 Colourfull css animation button ' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuvxngarfmnSIK-BMc_20bu-ascOdujwVSkrkGZ8gGbIChy8UNlLfHg9sQ1Iev3JBRhYcFIVQgCLwzrPDu06kw-2uRS2VtC2a68nlQvkIgMZxcYs7r7oVoMRDR9mOALzfbZ6bFrg45mhySZ-3NTVYkr4OfgxSU_us5i4DTXZsrF3F1bOthCj5IwbOecrQ/s16000/IMG_20250202_115017.jpg' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Codes%20for%20blogger?max-results=10' rel='tag'>
+Codes for blogger
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2025/02/5-colourfull-css-animation-button.html'>6 Colourfull css animation button </a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2025/08/tmdb-movie-streaming-blogger-template.html'>
+<img alt='Tmdb Movie Streaming Blogger Template – Create a Movie Site Without Posting Manually' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5_5mqFHGvYq8UduWx1u5pGF7FJXEDxpnBgEHIoJzbShqZZkkSuzzpuizQEqL5D2dWirTYqmFGr32uSM6hMjRk3fW2bIS3yjkmRwnJGo4flQXhdBIcQ4RxnPdVXE5ghcPNpCyQiFZVQCtOpgKJ4cxXAfO0Si3bS3DuID-4yxXY4m6boSMRUeAXY4bS2ik/s16000/1000113264.jpg' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Blogger%20Themes?max-results=10' rel='tag'>
+Blogger Themes
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/movie%20theme?max-results=10' rel='tag'>
+movie theme
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2025/08/tmdb-movie-streaming-blogger-template.html'>Tmdb Movie Streaming Blogger Template &#8211; Create a Movie Site Without Posting Manually</a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2025/07/vegamovies-original-v3-latest-wordpress.html'>
+<img alt='Vegamovies Original V3 Latest wordpress theme' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQT6tBuBTaAjzCVMn5ncQpXFjiyYKe9mpixFrhzJW1NzfJ9lc5fPiXDnYcmDqXpyDgrpPd4SUR2wwd-vOpawNklsuH38ut3_FwKQnCcKLf9EI2MkMvhd70RN39xSaZKQVHzhMcwT6CGAMMQJ5hbD-8uFbiRMWCtt9Ay0e0_Zyi0DTm5SExKlk0WklLW8E/s16000/1000098761.jpg' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Paid?max-results=10' rel='tag'>
+Paid
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Wp%20movie%20theme?max-results=10' rel='tag'>
+Wp movie theme
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2025/07/vegamovies-original-v3-latest-wordpress.html'>Vegamovies Original V3 Latest wordpress theme</a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2024/04/custom-contact-form-for-blogger.html'>
+<img alt='Custom contact form for blogger ' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi7Zq2g0CmRp4J6-WzbfQEuzIwK5XkwmeR98l0UU49z2Gni1OBLKtE5ckSaSuIeQcwJtsWHLy_rOpgmdPJCKMmYGhyphenhyphenwcvH5GqRWbpWIXi8l72CqtWhfMAnf_Ay_UCSz2ILMyS1e4yrvVKu0etAypJCEMBBKdXdDOKkcIhDSY9pngREYGn4h5wuuXRPl37w/s16000/contact%20form%20from%20dktechnozone.in%20by%20@dhanjeerider.webp' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Blogger?max-results=10' rel='tag'>
+Blogger
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Codes%20for%20blogger?max-results=10' rel='tag'>
+Codes for blogger
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2024/04/custom-contact-form-for-blogger.html'>Custom contact form for blogger </a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2025/01/luxmovies-wordpress-theme.html'>
+<img alt='LuxMovies WordPress Theme' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0DLwHjjREhknVtqn2lUoYnJIvXNXVNrMUR09-39KlYl26CIGighNO6X_qSEi_oeuXf9lHab7QT44ouN6xcfrVzw1t7LG6uMgoE9J5w6XT0YaRQ9hzVbc65df0KgYgD2TIvF3wSJDxpNvgCqsAdmV3bxhUetdfOUpqlBRk2Te8b1nWfIWHALu4WWoPi8E/s16000/Minimalist-Neutral-Multi-Device-Computer-Mockup-Website-Launch-Instagram-Po_20250108_202055_0000.jpg-scaled.webp' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Paid?max-results=10' rel='tag'>
+Paid
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Wp%20movie%20theme?max-results=10' rel='tag'>
+Wp movie theme
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2025/01/luxmovies-wordpress-theme.html'>LuxMovies WordPress Theme</a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2024/04/canva-pro-lifetime-invite-link-and.html'>
+<img alt='Canva pro lifetime free invite link and cookies daly update ' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj-ELZ8IAAa543Hy7F5k90Sa7AAQIZDSpBBVThRDwtj2Fg-CFJMP6KI027MkI7EpxmjebLHxKZBI2DPFYWYyhazLUhPgnnNHDQoMMqdmUrgRej1ZA6O-w3X7SnZgfrGXsK1GgU2XxILG-p1n3eV0YxgtBjtK3fNMO1XYs7tjXvtkr04EJW2TCe-xoIgb58/s1280/Canva%20pro%20lifetime%20invite%20link%20and%20cookies%20April%202024.webp' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Material?max-results=10' rel='tag'>
+Material
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Tips%20and%20tricks?max-results=10' rel='tag'>
+Tips and tricks
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2024/04/canva-pro-lifetime-invite-link-and.html'>Canva pro lifetime free invite link and cookies daly update </a></h3>
+</div>
+</div>
+<div class='item-post d-flex mb-3 border rounded p-1'>
+<div class='item-thumbnail me-3' style='width:155px'>
+<a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='https://www.dktechnozone.in/2024/02/vega-movies-blogger-template.html'>
+<img alt='Vega Movies Blogger Template' class='lazyload' data-src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiLhmY0MoBkj2y7FB9Pc9Lssy5f6b03AfsBZIoYYdowfY7HqwqUNAb_48VNpUWiiRF-cFjxYI8tRuJ3TomGyZ2qk_acpCN1bGfxGdEFu_nziVvPictP6rdiz2YFcevQKpdWxRU-EZSdfaggCEc7XcL9gRyp4ncrTea-aCh-Gd1H6O7iE9UlB3yl0ZtAa_k/s16000/vega%20movies%20clone%20blogger%20templates.webp' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/>
+</a>
+</div>
+<div class='item-content col overflow-hidden'>
+<div class='item-tag mb-2 fw-light fs-8 text-secondary text-nowrap text-truncate'>
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Blogger%20Themes?max-results=10' rel='tag'>
+Blogger Themes
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/movie%20theme?max-results=10' rel='tag'>
+movie theme
+</a>
+,
+<a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/search/label/Paid?max-results=10' rel='tag'>
+Paid
+</a>
+</div>
+<h3 class='item-title fs-7 mb-3'><a class='text-reset' href='https://www.dktechnozone.in/2024/02/vega-movies-blogger-template.html'>Vega Movies Blogger Template</a></h3>
+</div>
+</div>
+</div>
+</div><div class='widget HTML position-relative mb-4' data-version='2' id='HTML19'>
+<div class='widget-content text-break'><div class="nohome">
+<div data-title="Recent Post" class="custom-posts visually-hidden" data-items="12" data-func="sidebar_temp"></div></div></div>
+</div></div>
+<div class='position-sticky py-4 top-0 section' id='sidebar-sticky'><div class='widget HTML position-relative mb-4' data-version='2' id='HTML20'>
+<div class='widget-content text-break'><!-- Popup Form -->
+<div id="paymentPopup" class="popup">
+  <div class="popup-content">
+    <span class="close-btn" onclick="closeForm()">&times;</span>
+    <h2><i class="fa fa-credit-card"></i> Complete Your Order</h2>
+    <p class="notice" id='priceNotice'>
+    you are purchasing ${themeTitle}
+ total price ${numPrice} in inr and  $${usdPrice} in usdt</p>  क&#2371;पय&#2366; इस&#2375; भरकर अपन&#2366; भ&#2369;गत&#2366;न UPI/PayPal स&#2375; कर&#2375;&#2306; और स&#2381;क&#2381;र&#2368;नश&#2377;ट हम&#2375;&#2306; WhatsApp पर भ&#2375;ज&#2375;&#2306;&#2404;
+    
+
+    <form id="orderForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <input type="text" id="address" placeholder="Your Address" required />
+      
+      <input type="text" id="question" placeholder="Any Question?" />
+
+      <div class="pay-buttons">
+        <button type="button" id="upiBtn" class="upi">
+          <i class="fa fa-university"></i> Pay with UPI
+        </button>
+        <button type="button" id="paypalBtn" class="paypal">
+          <i class="fa fa-paypal"></i> Pay with PayPal
+        </button>
+      </div>
+
+      <button type="button" id="whatsappBtn" class="whatsapp">
+       <i class="fa-brands fa-whatsapp"></i> Send Deal on WhatsApp
+      </button>
+    </form>
+  </div>
+</div>
+<style>
+/* Popup Base */
+.popup {display:none;position:fixed;left:0;top:40px;width:100%;height:100%;background:var(--bs-body-bg);}
+
+.popup-content {max-width:500px;margin:5% auto;padding:20px;border-radius:12px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.2);}
+.close-btn {position:absolute;top:12px;right:15px;font-size:32px;cursor:pointer;}
+.notice {font-size:14px;padding:10px;border-radius:8px; border:1px dotted green; margin-bottom:15px;}
+form input,form textarea {width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:14px;background: unset;}
+form textarea {height:70px;resize:none;}
+.pay-buttons {display:flex;justify-content:space-between;gap:10px;margin-top:10px;}
+.pay-buttons button {flex:1;padding:12px;border:none;border-radius:10px;font-size:15px;cursor:pointer;color:#fff;}
+.upi {background:#ff9d00;}
+.paypal {background:#0081ff;}
+.whatsapp {width:100%;margin-top:15px;background:#00d95c;padding:12px;border:none;border-radius:10px;color:#fff;font-size:15px;cursor:pointer;}
+#orderForm{z-index:99900;}
+</style>
+
+<script>function showForm(){
+  document.getElementById("paymentPopup").style.display="block";
+  prepareButtons();
+}
+function closeForm(){
+  document.getElementById("paymentPopup").style.display="none";
+}
+
+function prepareButtons(){
+  // Detect theme title & price from page
+  let themeTitle = document.querySelector('.entry-title')?.innerText || document.querySelector('h1')?.innerText || "Unknown Theme";
+  let rawPrice = document.querySelector('.price')?.innerText || "0";
+
+  // Extract number only
+  let numPrice = parseFloat(rawPrice.replace(/[^0-9.]/g,"")) || 0;
+  let usdPrice = (numPrice/89).toFixed(2);
+
+  // Show dynamic text
+  document.getElementById("priceNotice").innerHTML = 
+    `You are purchasing <b>${themeTitle}</b><br>
+     Total Price: <b>&#8377;${numPrice} INR</b> (&#8776; $${usdPrice} USDT)`;
+
+  // Update Pay buttons
+  document.getElementById("upiBtn").innerText = `Pay Rs ${numPrice} with UPI`;
+  document.getElementById("paypalBtn").innerText = `Pay $${usdPrice} with PayPal`;
+
+  // Handle UPI
+  document.getElementById("upiBtn").onclick = ()=>{
+    let upiUrl = `upi://pay?pn=Dhanjee%20Rider&pa=dhanjeerider@ybl&cu=INR&am=${numPrice}`;
+    window.open(upiUrl,"_blank");
+  };
+
+  // Handle PayPal
+  document.getElementById("paypalBtn").onclick = ()=>{
+    let paypalUrl = `https://www.paypal.com/paypalme/dhanjeerider/${usdPrice}`;
+    window.open(paypalUrl,"_blank");
+  };
+
+  // Handle WhatsApp
+  document.getElementById("whatsappBtn").onclick = ()=>{
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let address = document.getElementById("address").value;
+    let question = document.getElementById("question").value;
+
+    let msg = `Hello Admin of dk technozone, I need this theme:\n\nTheme: ${themeTitle}\nPrice: RS ${numPrice} or $${usdPrice} USDT\n\nName: ${name}\nEmail: ${email}\nAddress: ${address}\nQuestion: ${question}\nMy payment is done directly from site  here is my payment screenshot`;
+    let waUrl = `https://wa.me/917759060810?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl,"_blank");
+  }
+}</script></div>
+</div><div class='widget HTML position-relative mb-4' data-version='2' id='HTML4'>
+<div class='widget-content text-break'><script>document.addEventListener("DOMContentLoaded", function () {
+      function checkTimeZone() {
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const blockedTimeZones = [
+          "Asia/Karachi",
+          "Asia/Islamabad",
+          "Asia/Lahore",
+          "Asia/Kabul",
+          "Asia/Jakarta",
+          "Asia/Jayapura",
+       "Asia/Makassar",
+"Asia/Quetta",
+"Asia/Peshawar",
+"Asia/Faisalabad",
+"Asia/Rawalpindi",
+"Asia/Dhaka",
+          "Asia/Pontianak"
+        ];
+
+        if (blockedTimeZones.includes(userTimeZone)) {
+          document.body.innerHTML = `
+            <div class="fNtf" style="display:flex;">
+              <div>
+                <svg class="line" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line class="svgC" x1="12" x2="12" y1="8" y2="12"></line>
+                  <line class="svgC" x1="12" x2="12.01" y1="16" y2="16"></line>
+                </svg>
+                <h5>Site is broken</h5>
+                <p>Sorry! This site is not responding due to critical error</p>
+              </div>
+            </div>
+            <style>
+              .fNtf {
+                pointer-events: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.85);
+                color: #fff;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Arial', sans-serif;
+                z-index: 999999;
+              }
+              .fNtf div {
+                pointer-events: none;
+                background: red;
+                padding: 25px;
+                border-radius: 10px;
+                max-width: 300px;
+                width: 90%;
+                text-align: center;
+                box-shadow: 0 4px 10px rgba(255, 77, 77, 0.5);
+                animation: fadeIn 0.5s ease-in-out;
+              }
+              .fNtf svg {
+                width: 40px;
+                height: 40px;
+                fill: none;
+                margin: 0 auto;
+                stroke: #fff;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+              }
+              .fNtf h5 {
+                font-size: 26px;
+                margin: 10px 0;
+                color: #fff;
+                font-weight: bold;
+                letter-spacing: 1px;
+              }
+              .fNtf p {
+                font-size: 16px;
+                line-height: 1.5;
+                margin: 0;
+              }
+              @keyframes fadeIn {
+                from { opacity: 0; transform: scale(0.9); }
+                to { opacity: 1; transform: scale(1); }
+              }
+              @media (max-width: 768px) {
+                .fNtf div { max-width: 80%; padding: 20px; }
+                .fNtf h5 { font-size: 20px; }
+                .fNtf p { font-size: 14px; }
+                .fNtf svg { width: 50px; height: 50px; }
+              }
+            </style>`;
+        }
+      }
+      checkTimeZone();
+    });</script></div>
+</div><div class='widget HTML position-relative mb-4' data-version='2' id='HTML3'>
+<div class='widget-content text-break'><style>
+.separator{pointer-events:none;}
+/*<![CDATA[*/
+@font-face{font-family:'Google Sans Text';font-style:normal;font-weight:500;font-display:swap;src:local('Google Sans Text'),local('Google-Sans-Text'),url(https://fonts.gstatic.com/s/googlesanstext/v16/5aUu9-KzpRiLCAt4Unrc-xIKmCU5qEp2iw.woff2) format('woff2')} @font-face{font-family:'Google Sans Text';font-style:normal;font-weight:900;font-display:swap;src:local('Google Sans Text'),local('Google-Sans-Text'),url(https://fonts.gstatic.com/s/googlesanstext/v16/5aUp9-KzpRiLCAt4Unrc-xIKmCU5oPFTnmhjtg.woff2) format('woff2')} @font-face{font-family:'Google Sans Mono';font-style:normal;font-weight:400;font-display:swap;src:local('Google Sans Mono'),local('Google-Sans-Mono'),url(https://fonts.gstatic.com/s/googlesansmono/v4/P5sUzYWFYtnZ_Cg-t0Uq_rfivrdYH4RE8-pZ5gQ1abT53wVQGrk.woff2) format('woff2')}
+/*]]>*/
+
+.entry-title,*{font-family: "Google Sans Text",Poppins, Mukta, Sans serif;}
+#post-body{display:block;-khtml-user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none}
+pre,em{
+-webkit-user-select: text !important;
+-moz-user-select: text !important;
+-ms-user-select: text !important;
+user-select: text !important;
+}
+
+.entry-text h1,h2,h3,h4{font-family: "Google Sans Text",Poppins, Mukta, Sans serif;}
+   .lota{
+      position: fixed;
+      top: 50%;
+      right: 0px;
+      animation: bola 13s;
+     width: 70px;
+      Z-index:999;     
+   }
+   
+   @keyframes bola {
+     0%{
+     top: 10px;
+      right: 0px;   
+     }     
+     100%{
+     bottom: -20px;
+      right: 0px;   
+     }
+   }
+.countdown {text-align: center;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.pleaseWait-text,
+.manualDownload-text {text-align: center;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: none;
+}
+</style>
+  <script type='text/javascript'>
+// <![CDATA[
+function externalLinks() {
+ for(var c = document.getElementsByTagName("a"), a = 0;a < c.length;a++) {
+  var b = c[a];
+  b.getAttribute("href") && b.hostname !== location.hostname && (b.target = "_blank", b.rel = "nofollow")
+ }
+}
+externalLinks();
+// ]]>
+</script>
+
+<style>
+        .bottom-alert {
+            position: fixed;
+            bottom: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            color: #fff;
+            padding: 4px;
+            text-align: center;
+            display: none;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+           z-index: 999999999999;
+        }
+    </style>
+<div class='bottom-alert' id='bottomAlert'>Code Copied!</div>
+
+<script>
+    var codeElements = document.querySelectorAll("pre");
+    codeElements.forEach(function(element) {
+        element.addEventListener("dblclick", function() {
+            copyToClipboard(element);
+        });
+    });
+    function copyToClipboard(element) {
+        var tempTextArea = document.createElement("textarea");
+        tempTextArea.value = element.textContent;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        tempTextArea.setSelectionRange(0, 99999); 
+        document.execCommand("copy");
+        document.body.removeChild(tempTextArea);
+        
+        showBottomAlert();
+    }
+    function showBottomAlert() {
+        var bottomAlert = document.getElementById("bottomAlert");
+        bottomAlert.style.display = "block";
+        setTimeout(function() {
+            bottomAlert.style.display = "none";
+        }, 3000);
+    }
+</script>
+<style> 
+.item-tag a{
+padding:5px 9px;
+color:#fff !important;
+border-radius: 1px 100px / 120px;
+margin-right:3px; font-weight:500;
+}
+footer li a{font-weight:bold; text-transform: capitalize;}
+</style>
+<noscript>
+<style>
+body, html{overflow:hidden}
+     #JsEnable {display:none}
+/* Enable Javascript Popup by key2blogging */
+		 #Key2bloggingNoscript {background:rgba(0,0,0,0.85);padding:0;position:fixed;bottom:0;left:0;top:-100px;right:0;z-index:1000;opacity:1;visibility:visible;height:auto;}
+		 #Key2bloggingNoscript svg {width:100px; height:100px}
+		 #Key2bloggingNoscript svg path {fill:#fff}
+		 #Key2bloggingNoscript .isiNoscript{background-color:#34495E;color:#fff;position:absolute;text-align:center;padding:0 30px 30px 30px;margin:auto;top:30%;left:0;right:0;font-size:1.5rem;font-weight:400;line-height:1.5em;max-width:670px;box-shadow:0 20px 10px -10px rgba(0,0,0,0.15);border:15px solid rgba(0,0,0,.07); overflow:hidden; transition:all .6s cubic-bezier(.25,.8,.25,1); -webkit-transform:translateZ(0); transform:translateZ(0); backface-visibility:visible; transition:all .2s ease-in-out,visibility 0s; transform-origin:bottom center; pointer-events:auto; transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1); opacity:1; animation:key2BloggingWobble .5s; -moz-animation: key2BloggingWobble .5s; -webkit-animation:key2BloggingWobble .5s; -o-animation:key2BloggingWobble .5s}
+		 #Key2bloggingNoscript .isiNoscript:hover{box-shadow:0 20px 10px -10px rgba(0,0,0,0.2);}
+		 #Key2bloggingNoscript .isiNoscript h4, #Key2bloggingNoscript .isiNoscript .JSEnable{display:inline-block;background:rgba(0,0,0,.07);padding:5px 25px 15px 25px;font-size:2.2rem;font-weight:500;margin-bottom:20px}
+	</style>
+</noscript>
+
+<noscript>
+<div id='Key2bloggingNoscript'>
+<div class='isiNoscript'><span class='JSEnable'>Enable Javascript</span>
+<br/>
+<svg viewbox='0 0 24 24'>
+<path d='M3,3H21V21H3V3M7.73,18.04C8.13,18.89 8.92,19.59 10.27,19.59C11.77,19.59 12.8,18.79 12.8,17.04V11.26H11.1V17C11.1,17.86 10.75,18.08 10.2,18.08C9.62,18.08 9.38,17.68 9.11,17.21L7.73,18.04M13.71,17.86C14.21,18.84 15.22,19.59 16.8,19.59C18.4,19.59 19.6,18.76 19.6,17.23C19.6,15.82 18.79,15.19 17.35,14.57L16.93,14.39C16.2,14.08 15.89,13.87 15.89,13.37C15.89,12.96 16.2,12.64 16.7,12.64C17.18,12.64 17.5,12.85 17.79,13.37L19.1,12.5C18.55,11.54 17.77,11.17 16.7,11.17C15.19,11.17 14.22,12.13 14.22,13.4C14.22,14.78 15.03,15.43 16.25,15.95L16.67,16.13C17.45,16.47 17.91,16.68 17.91,17.26C17.91,17.74 17.46,18.09 16.76,18.09C15.93,18.09 15.45,17.66 15.09,17.06L13.71,17.86Z'/>
+</path></svg>
+<br/>Javascript is disabled on your Browser. To use <data:blog.title.escaped/> turn on Javascript in the browser settings.</data:blog.title.escaped></div>
+</div>
+</noscript></div>
+</div><div class='widget Label position-relative mb-4' data-version='2' id='Label1'>
+<span class='widget-title position-relative fs-6 mb-3'><span>Categories</span></span>
+<div class='widget-content categories'>
+<ul class='list d-flex flex-wrap list-unstyled'><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Blogger%20Themes?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Blogger Themes</span><span class='ms-1 fw-light fs-9'>[86]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Codes%20for%20blogger?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Codes for blogger</span><span class='ms-1 fw-light fs-9'>[67]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Tips%20and%20tricks?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Tips and tricks</span><span class='ms-1 fw-light fs-9'>[49]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Paid?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Paid</span><span class='ms-1 fw-light fs-9'>[47]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/News%20template%20%F0%9F%91%91?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+News template 👑</span><span class='ms-1 fw-light fs-9'>[45]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Blogging?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Blogging</span><span class='ms-1 fw-light fs-9'>[33]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Redesigned%20%F0%9F%96%8C%EF%B8%8F?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Redesigned 🖌&#65039;</span><span class='ms-1 fw-light fs-9'>[33]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/movie%20theme?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+movie theme</span><span class='ms-1 fw-light fs-9'>[31]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Blogpost%20theme%20%F0%9F%91%91?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Blogpost theme 👑</span><span class='ms-1 fw-light fs-9'>[24]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Material?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Material</span><span class='ms-1 fw-light fs-9'>[23]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Editing?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Editing</span><span class='ms-1 fw-light fs-9'>[20]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Knowledge%20%F0%9F%98%80?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Knowledge 😀</span><span class='ms-1 fw-light fs-9'>[20]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Wp%20theme?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Wp theme</span><span class='ms-1 fw-light fs-9'>[19]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Usefull%20Android%20app?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Usefull Android app</span><span class='ms-1 fw-light fs-9'>[18]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Whatssap%20amazing%20tricks.?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Whatssap amazing tricks.</span><span class='ms-1 fw-light fs-9'>[16]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Blogger?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Blogger</span><span class='ms-1 fw-light fs-9'>[13]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Instagram%20tips%20%E2%9A%A1?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Instagram tips &#9889;</span><span class='ms-1 fw-light fs-9'>[10]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Wp%20movie%20theme?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Wp movie theme</span><span class='ms-1 fw-light fs-9'>[10]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Safelink%20%E2%99%BB%EF%B8%8F?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Safelink &#9851;&#65039;</span><span class='ms-1 fw-light fs-9'>[8]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/portfolio?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+portfolio</span><span class='ms-1 fw-light fs-9'>[6]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Anime%20themes?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Anime themes</span><span class='ms-1 fw-light fs-9'>[5]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Tool-script?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Tool-script</span><span class='ms-1 fw-light fs-9'>[5]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Seo?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Seo</span><span class='ms-1 fw-light fs-9'>[4]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Autoemded%20script?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Autoemded script</span><span class='ms-1 fw-light fs-9'>[3]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Woocommerce%20themes?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Woocommerce themes</span><span class='ms-1 fw-light fs-9'>[3]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Review?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Review</span><span class='ms-1 fw-light fs-9'>[2]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/Magazine?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+Magazine</span><span class='ms-1 fw-light fs-9'>[1]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/elemntor%20kit?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+elemntor kit</span><span class='ms-1 fw-light fs-9'>[1]</span></a></li><li class='mb-2 pe-2 col-6'><a class='text-reset fw-bold hover-text-primary' href='https://www.dktechnozone.in/search/label/forum?max-results=10'><span class='align-middle'>
+<i class='fa-light fa-fingerprint' style='color: #00a6f2;'></i>
+forum</span><span class='ms-1 fw-light fs-9'>[1]</span></a></li></ul>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<!--Main Content End-->
+<footer content='itemid' id='footer' itemid='#footer' itemscope='itemscope' itemtype='https://schema.org/WPFooter'>
+<script src='https://dktczn.github.io/Dk/cdn/pgen.js'></script>
+<script src='https://dktczn.github.io/Dk/cdn/Vggen.js'></script>
+<script src='https://dktczn.github.io/Dk/cdn/browse.js'></script>
+<script src='https://dhanjeerider.github.io/pj/searchandgen.js'></script>
+<script src='https://dhanjeerider.github.io/pj/m3u8page.js'></script>
+<!--<script>(s=&gt;{s.dataset.zone=&#39;9728461&#39;,s.src=&#39;https://al5sm.com/tag.min.js&#39;})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement(&#39;script&#39;)))</script>-->
+<style>    .col-lg-8 {
+        
+        
+        margin: auto;
+    }
+
+            #sidebar,footer,.alert{display: none;}  </style>
+<div class='py-5 fs-7' id='footer-main'>
+<div class='container px-3'>
+<div class='row row-cols-sm-2 row-cols-lg-4 justify-content-evenly section' id='footer-widget'><div class='widget HTML position-relative mb-4' data-version='2' id='HTML21'>
+<span class='widget-title position-relative fs-6 mb-3'><span>About Us</span></span>
+<div class='widget-content text-break'><p>Dk Technozone offers premium Blogger templates, Android tips, social media tricks, app reviews, Instagram Filter downloads, Lightroom preset files, PixelLab PLP files, and other premium content. We also work for our clients to make attractive and eye catching website in cheap price with best seo and performance like our sites</p></div>
+</div><div class='widget LinkList ps-lg-5 position-relative mb-4' data-version='2' id='LinkList13'>
+<span class='widget-title position-relative fs-6 mb-3'><span>Learn More</span></span>
+<div class='widget-content'>
+<ul class='list-unstyled'><li class='mb-2'><a class='text-reset hover-text-primary' href='/p/jettheme-redesigned-premium-blogger.html'>
+🇮🇳 Jettheme Redesign</a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/2023/02/cheapest-website-design-service-for.html'>
+🌐 Web design service</a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/webp-converter-jpg-to-webp.html'>
+🖼&#65039; Webpe Converter </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/blog-page.html'>
+&#9851;&#65039; Currency converter </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/contact-us.html'>
+🤝 Contact us </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/about-us.html'>
+🧑&#8205;💻 About us </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='/p/sitemap.html'>
+🎁 Sitemap </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/privacy-and-policy.html'>
+Privacy policy </a></li></ul>
+</div>
+</div><div class='widget LinkList ps-lg-5 position-relative mb-4' data-version='2' id='LinkList15'>
+<span class='widget-title position-relative fs-6 mb-3'><span>Tools 🔭 and games 🎮</span></span>
+<div class='widget-content'>
+<ul class='list-unstyled'><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/free-custom-robot-txt-generator.html'>
+Robot Txt generator </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/website-responsiveness-chek.html'>
+Responsive chek</a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/free-faq-schema-genretor.html'>
+Faq schema generator </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/bubble-shooter.html'>
+Booble shooter 🤩</a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/html-paraser.html'>
+HTML Parser</a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/sidebar-staticsidebar-stickyfooterheader.html'>
+Game Quest</a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/tools.html'>
+All tools </a></li><li class='mb-2'><a class='text-reset hover-text-primary' href='https://www.dktechnozone.in/p/vega-movies-like-post-generator.html'>
+Vega 🎥 post generator</a></li></ul>
+</div>
+</div><div class='widget LinkList position-relative mb-4' data-version='2' id='LinkList14'>
+<span class='widget-title position-relative fs-6 mb-3'><span>Follow Us</span></span>
+<div class='widget-content social-media mb-3'>
+<a aria-label='telegram' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-telegram me-2' href='https://t.me/bloging_help' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-telegram'></use></svg></a><a aria-label='youtube' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-youtube me-2' href='https://m.youtube.com/dhanjeerider' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-youtube'></use></svg></a><a aria-label='github' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-github me-2' href='https://github.com/dktechnozone' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-github'></use></svg></a><a aria-label='facebook' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-facebook me-2' href='https://facebook.com/dktczn' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-facebook'></use></svg></a><a aria-label='instagram' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-instagram me-2' href='https://www.instagram.com/dhanjeerider1' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-instagram'></use></svg></a><a aria-label='linkedin' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-linkedin me-2' href='https://in.linkedin.com/in/dhanjeerider' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-linkedin'></use></svg></a><a aria-label='whatsapp' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-whatsapp me-2' href='https://whatsapp.com/channel/0029VaXnfPmH5JM270kPZq1i' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-whatsapp'></use></svg></a><a aria-label='news' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-news me-2' href='https://news.google.com/publications/CAAqBwgKMIbZtgswk_TNAw' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-news'></use></svg></a><a aria-label='phone' class='mb-2 btn btn-sm jt-btn-light hover-btn-primary rounded-pill jt-icon-center i-phone' href='https://t.me/dhanjeerider' rel='noopener' target='_blank'>
+<svg aria-hidden='true' class='jt-icon'><use xlink:href='#i-phone'></use></svg></a>
+</div>
+</div></div>
+</div>
+</div>
+<div class='py-3 fs-7 text-center' id='socket'>
+<div class='container px-3 section' id='copyright'><div class='widget HTML' data-version='2' id='HTML23'>
+<p class='mb-0'>Copyright 2018-25 Dk Technozone <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="cyan" class="bi bi-patch-check-fill" viewbox="0 0 16 16"> <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z" fill="#fff"></path> </svg> 
+<p>Binance paypal payment available you need to pay and take file after successful payment website design half charge will taken first full payment after file , refund is not available due to nature of digital download products </p>
+
+
+
+
+
+<script type="text/javascript">function labnolIframe(e){var t=document.createElement("iframe");t.setAttribute("src","https://www.youtube.com/embed/"+e.dataset.id+"?autoplay=1&rel=0"),t.setAttribute("frameborder","0"),t.setAttribute("allowfullscreen","1"),t.setAttribute("allow","accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),e.parentNode.replaceChild(t,e)}function initYouTubeVideos(){for(var e=document.getElementsByClassName("youtube-player"),t=0;t<e.length;t++){var a=e[t].dataset.id,r=document.createElement("div");r.setAttribute("data-id",a);var i=document.createElement("img");i.src="https://i.ytimg.com/vi_webp/ID/hqdefault.webp".replace("ID",a),r.appendChild(i);var n=document.createElement("div");n.setAttribute("class","play"),r.appendChild(n),r.onclick=function(){labnolIframe(this)},e[t].appendChild(r)}}document.addEventListener("DOMContentLoaded",initYouTubeVideos)</script>
+<div class ="fullbox" id="ATnav"> <a href="/" alt="home" title="home" class="icnre"> <svg xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 48 48" width="48px" height="48px"><lineargradient id="jv689zNUBazMNK6AOyXtga" x1="6" x2="42" y1="41" y2="41" gradientunits="userSpaceOnUse"><stop offset="0" stop-color="#c8d3de"/><stop offset="1" stop-color="#c8d3de"/></stop></stop></lineargradient><path fill="url(#jv689zNUBazMNK6AOyXtga)" d="M42,39H6v2c0,1.105,0.895,2,2,2h32c1.105,0,2-0.895,2-2V39z"/><lineargradient id="jv689zNUBazMNK6AOyXtgb" x1="14.095" x2="31.385" y1="10.338" y2="43.787" gradientunits="userSpaceOnUse"><stop offset="0" stop-color="#fcfcfc"/><stop offset=".495" stop-color="#f4f4f4"/><stop offset=".946" stop-color="#e8e8e8"/><stop offset="1" stop-color="#e8e8e8"/></stop></stop></stop></stop></lineargradient><path fill="url(#jv689zNUBazMNK6AOyXtgb)" d="M42,39H6V20L24,3l18,17V39z"/><path fill="#de490d" d="M13,25h10c0.552,0,1,0.448,1,1v17H12V26C12,25.448,12.448,25,13,25z"/><path d="M24,4c-0.474,0-0.948,0.168-1.326,0.503l-5.359,4.811L6,20v5.39L24,9.428L42,25.39V20L30.685,9.314	l-5.359-4.811C24.948,4.168,24.474,4,24,4z" opacity=".05"/><path d="M24,3c-0.474,0-0.948,0.167-1.326,0.5l-5.359,4.784L6,18.909v5.359L24,8.397l18,15.871v-5.359	L30.685,8.284L25.326,3.5C24.948,3.167,24.474,3,24,3z" opacity=".07"/><lineargradient id="jv689zNUBazMNK6AOyXtgc" x1="24" x2="24" y1="1.684" y2="23.696" gradientunits="userSpaceOnUse"><stop offset="0" stop-color="#d43a02"/><stop offset="1" stop-color="#b9360c"/></stop></stop></lineargradient><path fill="url(#jv689zNUBazMNK6AOyXtgc)" d="M44.495,19.507L25.326,2.503C24.948,2.168,24.474,2,24,2s-0.948,0.168-1.326,0.503	L3.505,19.507c-0.42,0.374-0.449,1.02-0.064,1.43l1.636,1.745c0.369,0.394,0.984,0.424,1.39,0.067L24,7.428L41.533,22.75	c0.405,0.356,1.021,0.327,1.39-0.067l1.636-1.745C44.944,20.527,44.915,19.881,44.495,19.507z"/><lineargradient id="jv689zNUBazMNK6AOyXtgd" x1="28.05" x2="35.614" y1="25.05" y2="32.614" gradientunits="userSpaceOnUse"><stop offset="0" stop-color="#33bef0"/><stop offset="1" stop-color="#0a85d9"/></stop></stop></lineargradient><path fill="url(#jv689zNUBazMNK6AOyXtgd)" d="M29,25h6c0.552,0,1,0.448,1,1v6c0,0.552-0.448,1-1,1h-6c-0.552,0-1-0.448-1-1v-6	C28,25.448,28.448,25,29,25z"/></path></path></path></path></path></path></path></svg>
+home</a> 
+
+
+
+
+<label aria-label="Toggle navigation" class="icnre" for="navbar-toggle" id="navbar-toggler"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewbox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
+href="https://blogger.googleusercontent.com/img/a/AVvXsEiFnj57UPIYg778_hycDmNL7KgkEc6ayeCukGXez4XyoxS09sC0TWcO-sVn_JynWuB0TD4sqI4dXL2ghRQwjpVcP88cQDlFODSjh9rcWAOK5RsUjmq0t7pSn3blDbrvciRVs_4GFNTQ3kEYxxKdA721-xDYBKwOt9VEw3FURcm1wAv9iBKa52bbSmQS_w0=s225" />
+</image></svg>Menu</label>
+
+
+ <label id="addToHomeBtn" class="icnre">
+  <img alt="download app" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgW8VHMcYwa_3QAF6l4Jx25qJMP50u9YZy0gR0hksVJqOgkVOO3OVWt8Ui1uhuNa1zz_Emr9qmNJAZVq28OEjnG4v-YXa3bA0DXnDgOieDTOuuxHbxcOv2AsgH66T3cZe1ZINT_LSL7E6xS_G0Kg8yNYJNX9_8aTpDr002bP06D9p-SkNmE14RQPl3fv-k/s320/1000090369.png" width="28px"/>
+  GetApp
+</label>
+<script>let deferredPrompt;
+
+// Browser "Add to Home Screen" event capture karega
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); // Default prompt rokega
+  deferredPrompt = e;
+  // Button show karega
+  document.getElementById('addToHomeBtn').style.display = 'block';
+});
+
+// Button pe click karne par prompt show karega
+document.getElementById('addToHomeBtn').addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response: ${outcome}`);
+    deferredPrompt = null;
+    document.getElementById('addToHomeBtn').style.display = 'none';
+  }
+});</script>
+
+ <div area-label="share" alt="home" title="home"  class="share-button"> <button aria-label="share" onclick="share()"> <svg xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 100 100" width="38px" height="38px"><rect width="48.754" height="10" x="26.123" y="35" fill="#ff8405" transform="rotate(-25.511 50.494 39.996)"/><rect width="9.999" height="48.995" x="45.75" y="36.253" fill="#ff8405" transform="rotate(-65.267 50.746 60.747)"/><circle cx="28.5" cy="50.5" r="13.5" fill="#4b4dff"/><path fill="#4343bf" d="M28.5,67C19.402,67,12,59.598,12,50.5S19.402,34,28.5,34S45,41.402,45,50.5S37.598,67,28.5,67z M28.5,40C22.71,40,18,44.71,18,50.5S22.71,61,28.5,61S39,56.29,39,50.5S34.29,40,28.5,40z"/><circle cx="72.5" cy="29.5" r="13.5" fill="#4b4dff"/><path fill="#4343bf" d="M72.5,46C63.402,46,56,38.598,56,29.5S63.402,13,72.5,13S89,20.402,89,29.5S81.598,46,72.5,46z M72.5,19C66.71,19,62,23.71,62,29.5S66.71,40,72.5,40S83,35.29,83,29.5S78.29,19,72.5,19z"/><circle cx="72.5" cy="70.5" r="13.5" fill="#4b4dff"/><path fill="#4343bf" d="M72.5,87C63.402,87,56,79.598,56,70.5S63.402,54,72.5,54S89,61.402,89,70.5S81.598,87,72.5,87z M72.5,60C66.71,60,62,64.71,62,70.5S66.71,81,72.5,81S83,76.29,83,70.5S78.29,60,72.5,60z"/><circle cx="28.5" cy="50.5" r="3.5" fill="#edf7f5"/><circle cx="72.5" cy="29.5" r="3.5" fill="#edf7f5"/><circle cx="72.5" cy="70.5" r="3.5" fill="#edf7f5"/></circle></circle></circle></path></circle></path></circle></path></circle></rect></rect></svg>share
+</button> </div> 
+
+<a href="#" alt="home" title="top"  class="icnre"><label aria-label="Toggle search" for="search-toggle" id="search-toggler">
+ <svg class="icon" fill="#000000" version="1.1" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M622.4 682.453333l60.330667-60.309333 256.405333 256.405333-60.330667 60.309334z" fill="#616161"></path><path d="M426.666667 426.666667m-341.333334 0a341.333333 341.333333 0 1 0 682.666667 0 341.333333 341.333333 0 1 0-682.666667 0Z" fill="#616161"></path><path d="M692.266667 753.92l60.309333-60.330667 185.514667 185.514667-60.330667 60.330667z" fill="#37474F"></path><path d="M426.666667 426.666667m-277.333334 0a277.333333 277.333333 0 1 0 554.666667 0 277.333333 277.333333 0 1 0-554.666667 0Z" fill="#64B5F6"></path><path d="M573.866667 302.933333c-36.266667-42.666667-89.6-68.266667-147.2-68.266666s-110.933333 25.6-147.2 68.266666c-8.533333 8.533333-6.4 23.466667 2.133333 29.866667 8.533333 8.533333 23.466667 6.4 29.866667-2.133333C341.333333 296.533333 381.866667 277.333333 426.666667 277.333333s85.333333 19.2 115.2 53.333334c4.266667 4.266667 10.666667 8.533333 17.066666 8.533333 4.266667 0 10.666667-2.133333 12.8-4.266667 8.533333-8.533333 8.533333-23.466667 2.133334-32z" fill="#BBDEFB"></path></g></svg></label>search</a> </div>
+ <script> document.addEventListener('DOMContentLoaded', function() { const dmbButton = document.querySelector('.DMB'); const body = document.body; dmbButton.addEventListener('click', function() { body.classList.toggle('dark-mode'); }); }); </script></p>
+</div></div>
+</div>
+</footer>
+<div class='position-fixed d-none' id='back-to-top' style='right:20px;bottom:60px'><a aria-label='Back to Top' class='btn btn-sm jt-btn-light rounded-circle border fs-5 jt-icon-center' href='#back-to-top' onclick='window.scroll({top:0,left: 0,behavior:&#39;smooth&#39;});'><svg aria-hidden='true' class='jt-icon' height='1.4em' width='1.4em'><use xlink:href='#i-arrow-t'></use></svg></a></div>
+<div class='d-none section' id='jet-options'><div class='widget HTML' data-version='2' id='HTML24'>
+<svg style='display:none' xmlns='http://www.w3.org/2000/svg'><symbol id="i-whatsapp" viewbox="0 0 512 512" stroke="none" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path></symbol>
+<symbol id="i-pinterest" viewbox="0 0 384 512" stroke="none" fill="currentColor"><path d="M204 6.5C101.4 6.5 0 74.9 0 185.6 0 256 39.6 296 63.6 296c9.9 0 15.6-27.6 15.6-35.4 0-9.3-23.7-29.1-23.7-67.8 0-80.4 61.2-137.4 140.4-137.4 68.1 0 118.5 38.7 118.5 109.8 0 53.1-21.3 152.7-90.3 152.7-24.9 0-46.2-18-46.2-43.8 0-37.8 26.4-74.4 26.4-113.4 0-66.2-93.9-54.2-93.9 25.8 0 16.8 2.1 35.4 9.6 50.7-13.8 59.4-42 147.9-42 209.1 0 18.9 2.7 37.5 4.5 56.4 3.4 3.8 1.7 3.4 6.9 1.5 50.4-69 48.6-82.5 71.4-172.8 12.3 23.4 44.1 36 69.3 36 106.2 0 153.9-103.5 153.9-196.8C384 71.3 298.2 6.5 204 6.5z"></path></symbol>
+<symbol id="i-tumblr" viewbox="0 0 320 512" stroke="none" fill="currentColor"><path d="M309.8 480.3c-13.6 14.5-50 31.7-97.4 31.7-120.8 0-147-88.8-147-140.6v-144H17.9c-5.5 0-10-4.5-10-10v-68c0-7.2 4.5-13.6 11.3-16 62-21.8 81.5-76 84.3-117.1.8-11 6.5-16.3 16.1-16.3h70.9c5.5 0 10 4.5 10 10v115.2h83c5.5 0 10 4.4 10 9.9v81.7c0 5.5-4.5 10-10 10h-83.4V360c0 34.2 23.7 53.6 68 35.8 4.8-1.9 9-3.2 12.7-2.2 3.5.9 5.8 3.4 7.4 7.9l22 64.3c1.8 5 3.3 10.6-.4 14.5z"></path></symbol>
+<symbol id="i-twitter" fill="currentColor" stroke="none" viewbox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></symbol>
+<symbol id="i-linkedin" fill="currentColor" stroke="none" viewbox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect height="12" width="4" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></symbol>
+<symbol id="i-facebook" fill="currentColor" stroke="none" viewbox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></symbol>
+<symbol id="i-arrow-b" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></symbol>
+<symbol id="i-arrow-l" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7"></path></symbol>
+<symbol id="i-arrow-r" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></symbol>
+<symbol id="i-arrow-t" viewbox="0 0 24 24"><path d="M5 15l7-7 7 7"></path></symbol>
+<symbol id="i-instagram" viewbox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></symbol>
+<symbol id="i-youtube" viewbox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon fill="currentColor" points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></symbol>
+<symbol id="i-user" viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></symbol>
+<symbol id="i-clock" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></symbol>
+<symbol id="i-comment" viewbox="0 0 24 24"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></symbol>
+<symbol id="i-menu" viewbox="0 0 24 24" stroke-width="1.5"><path d="M3 6h18M8 12h13M3 18h18"></path></symbol>
+<symbol id="i-mail" viewbox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></symbol>
+<symbol id="i-edit" viewbox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></symbol>
+<symbol id="i-close" viewbox="0 0 24 24" stroke-width="1"><path d="M6 18L18 6M6 6l12 12"></path></symbol>
+<symbol id="i-search" viewbox="0 0 24 24" stroke-width="1.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></symbol>
+<symbol id="i-check" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></symbol>
+<symbol id="i-github" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></symbol>
+<symbol id="i-telegram" stroke="none" fill="currentColor" viewbox="0 0 24 24"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 496 512"><path d="M248,8C111.033,8,0,119.033,0,256S111.033,504,248,504,496,392.967,496,256,384.967,8,248,8ZM362.952,176.66c-3.732,39.215-19.881,134.378-28.1,178.3-3.476,18.584-10.322,24.816-16.948,25.425-14.4,1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25,5.342-39.5,3.652-3.793,67.107-61.51,68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608,69.142-14.845,10.194-26.894,9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7,18.45-13.7,108.446-47.248,144.628-62.3c68.872-28.647,83.183-33.623,92.511-33.789,2.052-.034,6.639.474,9.61,2.885a10.452,10.452,0,0,1,3.53,6.716A43.765,43.765,0,0,1,362.952,176.66Z"/></path></svg></symbol>
+<symbol id="i-download" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></symbol>
+<symbol id="i-eye" viewbox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+<symbol id="i-news" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path></symbol>
+<symbol id="i-phone" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></symbol>
+<symbol id="i-sun" fill="#ffffff" stroke="#ffffff" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></symbol>
+<symbol id="i-sun" fill="#ffffff" stroke="#ffffff" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></symbol>
+<symbol id="i-moon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-width="2.1"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></symbol><symbol id="i-telegram" stroke="none" fill="currentColor" viewbox="0 0 24 24"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"/></path></svg></symbol>
+
+<script> const shareButton = document.querySelector('.share-button'); if (navigator.share) { shareButton.addEventListener('click', (event) => { event.preventDefault(); navigator.share({ title: document.title, url: window.location.href }) .then(() => console.log('Successful share')) .catch((error) => console.log('Error sharing:', error)); }); } else { console.log('Web Share API not supported'); } </script></svg>
+</div></div>
+<script>
+const siteUrl="https://www.dktechnozone.in/";
+const blogId="1619204270592959299";
+const blogTitle="Dk technozone";
+const titleSeparator=" - ";
+const autoTOC="true";
+const positionTOC="noscript";
+const isPreview="";
+const analyticId="G-P4LC0XZM31";
+const caPubAdsense="";
+
+/*<![CDATA[*/
+!function(r,i,t){var u,o=/^data-(.+)/,a='IntersectionObserver',c=/p/.test(i.readyState),s=[],f=s.slice,l='deferjs',n='load',e='pageshow',d='forEach',h='shift';function m(e){i.head.appendChild(e)}function v(e,n){f.call(e.attributes)[d](n)}function p(e,n,t,o){return o=(o=n?i.getElementById(n):o)||i.createElement(e),n&&(o.id=n),t&&(o.onload=t),o}function y(e,n){return f.call((n||i).querySelectorAll(e))}function b(t,e){y('source',t)[d](b),v(t,function(e,n){(n=o.exec(e.name))&&(t[n[1]]=e.value)}),e&&(t.className+=' '+e),n in t&&t[n]()}function I(e){u(function(o){o=y(e||'[type=deferjs]'),function e(n,t){(n=o[h]())&&(n.parentNode.removeChild(n),(t=p(n.nodeName)).text=n.text,v(n,function(e){'type'!=e.name&&t.setAttribute(e.name,e.value)}),t.src&&!t.hasAttribute('async')?(t.onload=t.onerror=e,m(t)):(m(t),e()))}()})}(u=function(e,n){c?t(e,n):s.push(e,n)}).all=I,u.js=function(n,t,e,o){u(function(e){(e=p('SCRIPT',t,o)).src=n,m(e)},e)},u.css=function(n,t,e,o){u(function(e){(e=p('LINK',t,o)).rel='stylesheet',e.href=n,m(e)},e)},u.dom=function(e,n,t,z,o,i){function c(e){o&&!1===o(e)||b(e,t)}u(function(t){t=a in r&&new r[a](function(e){e[d](function(e,n){e.isIntersecting&&(n=e.target)&&(z&&z(n),t.unobserve(n),c(n))})},i),y(e||'[data-src]')[d](function(e){l in e||(e[l]=1,t?t.observe(e):c(e))})},n)},u.reveal=b,r.Defer=u,r.addEventListener('on'+e in r?e:n,function(){for(I();s[0];t(s[h](),s[h]()))c=1})}(this,document,setTimeout);'IntersectionObserver'in window||document.write('<script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"><\/script>');
+
+function related_temp(t){return(t.title?"<div class='widget-title position-relative  mb-3 text-uppercase fw-light'><span>"+t.title+"</span></div>":"")+"<div class='row row-cols-sm-2'>"+t.posts.map(function(t,e){return"<article class='mb-4'><div class='h-100 overflow-hidden rounded position-relative border jt-border-light bg-archive shadow-sm'>"+(t.img?"<div class='item-thumbnail'><a class='jt-bg-light d-block ratio ratio-21x9' href='"+t.url+"'><img alt='"+t.title+"' class='object-cover lazy-"+t.grup_id+" lazyload' data-src='"+t.img+"' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/></a></div>":"")+"<div class='item-content p-4'><h2 class='item-title fs-6 mb-2' itemprop='headline'><a class='text-reset' href='"+t.url+"'>"+t.title+"</a></h2><div class='item-meta text-secondary d-flex flex-wrap fw-light'>"+("Unknown"!=t.author?"<small class='me-2'><svg aria-hidden='true' class='me-1 jt-icon'><use xlink:href='#i-user'/></svg>"+t.author+"</small>":"")+"<small class='me-2'><svg aria-hidden='true' class='me-1 jt-icon'><use xlink:href='#i-clock'/></svg>"+t.date+"</small></div></div></div></article>"}).join("")+"</div>"}
+
+function sitemap_temp(t){return"<div class='accordion'>"+t.categories.map(function(t,e){return"<div class='accordion-item'><input "+(0==e?"checked":"")+" id='sitemap-list-"+e+"' name='sitemap' type='radio' class='d-none'/><label for='sitemap-list-"+e+"' class='accordion-header accordion-button collapsed'>"+t.term+"</label><div class='accordion-collapse collapse border-top jt-border-light d-block-check'><div class='accordion-body'><div class='sitemap-list' data-label='"+t.term+"' data-func='sitemap_list_temp' data-items='9999'><div class='text-center'><div class='spinner-grow text-light' role='status'><span class='visually-hidden'>Loading...</span></div></div></div></div></div></div>"}).join("")+"</div>"}function sitemap_list_temp(t){return"<ul class='list-unstyled fs-7'>"+t.posts.map(function(t,e){return"<li class='mb-2'><a href='"+t.url+"'>"+t.title+"</a></li>"}).join("")+"</ul>"}function sitemap_cb(t){var e=".sitemap-list";null!==document.querySelector(e)&&Defer.dom(e,100,"loaded",jo.loadCustomPosts)}function related_inline_temp(t){return"<div class='px-3 py-2 mb-4 border border-3 jt-border-light rounded'>"+(t.title?"<div class='fw-light pb-3'><span>"+t.title+"</span></div>":"")+"<ul class='ps-3 fw-bold'>"+t.posts.map(function(t,e){return"<li class='mb-2'><a href='"+t.url+"'>"+t.title+"</a></li>"}).join("")+"</ul></div>"}
+
+function sidebar_temp(t){return(t.title?"<div class='widget-title position-relative fs-6 mb-3'><span>"+t.title+"</span></div>":"")+"<div class='mb-4'>"+t.posts.map(function(t,e){return"<div class='border rounded item-post d-flex mb-3 p-1'>"+(t.img?"<div class='item-thumbnail me-3' style='width:155px'><a class='rounded jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='"+t.url+"'><img alt='"+t.title+"' class='object-cover lazy-"+t.grup_id+" lazyload' data-src='"+t.img+"' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/></a></div>":"")+"<div class='item-content col'><h3 class='item-title fs-7 mb-2' itemprop='headline'><a class='text-reset' href='"+t.url+"'>"+t.title+"</a></h3><div class='item-meta text-secondary d-flex flex-wrap fs-8'><small class='me-2'><svg aria-hidden='true' class='me-1 jt-icon'><use xlink:href='#i-clock'/></svg>"+t.date+"</small></div></div></div>"}).join("")+"</div>"}
+function toc_temp(o){var r=0,d=1;return"<div id='toc-post' class='d-inline-block border px-3 py-2 mb-2 jt-bg-light rounded'><input id='toc-toggle' class='d-none' autocomplete='off' type='checkbox'/><label for='toc-toggle' class='toc-toggler d-flex align-items-center'><span class='fw-light pe-3'>Table of content</span><span class='dropdown-toggle ms-auto'></span></label>"+o.map(function(t,e){var i=t.level,l="";if(0==e)l+='<ul class="ps-3 pt-3 d-none d-block-check fs-7">';else if(r<i)l+='<ul class="ps-3 pt-2 fs-8"><li>',d++;else if(i<r&&1<d){for(var s=0;s<r-i;s++)l+="</li></ul>";d--}if(r=i,l+=0<e?"</li>":"",l+='<li class="mb-2">',l+='<a class="text-reset hover-text-primary" href="#'+t.id+'">'+t.title+"</a>",e==o.length-1)for(var a=1;a<r;a++)l+="</li></ul>";return l}).join("").replace(/<li>\s*<\/li>/gi,"")+"</div>"}
+
+
+
+function sidebar(t){return(t.title?"<div class='border-bottom position-relative fs-6 mb-3'><span>"+t.title+"</span></div>":"")+"<div class='mb-4 border-bottom'>"+t.posts.map(function(t,e){return"<div class='item-post d-flex mb-3 p-1 '>"+(t.img?"<div class='item-thumbnail me-3' style='width:120px'><a class='jt-bg-light overflow-hidden d-block ratio ratio-16x9' href='"+t.url+"'><img alt='"+t.title+"' class='object-cover lazy-"+t.grup_id+" lazyload' data-src='"+t.img+"' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/></a></div>":"")+"<div class='item-content col'><p class='item-title fs-7 fw-bold mb-2' itemprop='headline'><a class='text-reset' href='"+t.url+"'>"+t.title+"</a></h3><div class='item-meta d-none text-secondary d-flex flex-wrap fs-8'><small class='me-2'><svg aria-hidden='true' class='me-1 jt-icon'><use xlink:href='#i-clock'/></svg>"+t.date+"</small></div></div></div>"}).join("")+"</div>"}
+
+
+function layout2_temp(e) {
+   return '' + (e.title ? '<div class="widget-title mb-3 text-uppercase fw-light"><span>' + e.title + '</span></div>' : '') + '<div class="widget-content row">' + e.posts.map(function (data, i) {
+    return i == 0 ? '<article class="mb-4"><div class="d-sm-flex overflow-hidden rounded-3 border jt-border-light bg-archive shadow-sm">' + (data.img ? ' <div class="item-thumbnail col-sm-6"> <a class="d-block jt-bg-light overflow-hidden rounded-3 ratio ratio-21x9 ratio-sm-4x3" href="' + data.url + '"> <img alt="' + data.title + '" class="lazy-' + data.grup_id + ' lazyload" data-src="' + data.img + '" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/> </a> </div>' : '') + '<div class="item-content col p-4"><h3 class="item-title fs-6 fs-md-4 mb-3"><a class="text-reset" href="' + data.url + '">' + data.title + '</a></h3><p class="item-snippet d-none d-md-block mb-3">' + (data.summary.length > 100 ? data.summary.substr(0, 150) + '...' : data.summary) + '</p><div class="item-meta text-secondary d-flex flex-wrap fw-light">' + (data.author != 'Unknown' ? '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-user"/></svg>' + data.author + '</small>' : '') + '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-clock"/></svg>' + data.date + '</small></div></div></div></article>' : '<article class="col-md-6 mb-4"><div class="d-flex h-100 overflow-hidden rounded-3 border jt-border-light bg-archive shadow-sm">' + (data.img ? ' <div class="item-thumbnail m-1" style="width:155px"> <a class="d-block jt-bg-light overflow-hidden rounded-3 ratio ratio-4x3" href="' + data.url + '"> <img alt="' + data.title + '" class="lazy-' + data.grup_id + ' lazyload" data-src="' + data.img + '" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/> </a> </div>' : '') + '<div class="item-content col py-2 px-3 align-self-center"><h3 class="item-title fs-7 mb-1"><a class="text-reset" href="' + data.url + '">' + data.title + '</a></h3><div class="item-meta fw-light text-secondary d-flex flex-wrap fs-8">' + (data.author != 'Unknown' ? '<small class="d-none me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-user"/></svg>' + data.author + '</small>' : '') + '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-clock"/></svg>' + data.date + '</small></div></div>\n</div></article>';
+  }).join('') + '</div>';
+}
+
+
+
+function custom(e) {
+  return '' + (e.title ? '<div class="widget-title mb-3 text-uppercase fw-light"><span>' + e.title + '</span></div>' : '') + '<div class="widget-content row ">' + e.posts.map(function (data, i) {
+    return i == 0 ? '<article class="mb-2 d-none"><div class="d-sm-flex overflow-hidden rounded-3 border jt-border-light bg-archive shadow-sm">' + (data.img ? ' <div class="item-thumbnail col-sm-6"> <a class="d-block jt-bg-light overflow-hidden rounded-3 ratio ratio-21x9 ratio-sm-4x3" href="' + data.url + '"> <img alt="' + data.title + '" class="lazy-' + data.grup_id + ' lazyload" data-src="' + data.img + '" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/> </a> </div>' : '') + '<div class="item-content col p-4"><h3 class="item-title fs-6 fs-md-4 mb-md-3"><a class="text-reset" href="' + data.url + '">' + data.title + '</a></h3><p class="item-snippet d-none d-md-block mb-3">' + (data.summary.length > 100 ? data.summary.substr(0, 150) + '...' : data.summary) + '</p><div class="item-meta text-secondary d-flex flex-wrap fw-light">' + (data.author != 'Unknown' ? '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-user"/></svg>' + data.author + '</small>' : '') + '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-clock"/></svg>' + data.date + '</small></div></div></div></article>' : '<article class="col-xl-3 col-12 col-sm-4 my-2"><div class="d-flex h-100 overflow-hidden flex-column rounded-3 border jt-border-light bg-archive shadow-sm p-2">' + (data.img ? ' <div class="item-thumbnail w-100"> <a class="d-block jt-bg-light overflow-hidden ratio rounded-top ratio-4x3" href="' + data.url + '"> <img alt="' + data.title + '" class="lazy-' + data.grup_id + ' lazyload" data-src="' + data.img + '" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/> </a> </div>' : '') + '<div class="item-content col m-2"><h3 class="item-title fs-6 text-wrap text-center"><a class="text-reset" href="' + data.url + '">' + data.title + '</a></h3><div class="item-meta fw-light text-secondary flex-wrap fs-8">' + (data.author != 'Unknown' ? '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-user"/></svg>' + data.author + '</small>' : '') + '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-clock"/></svg>' + data.date + '</small></div></div>\n</div></article>';
+  }).join('') + '</div>';
+}
+
+
+
+
+function cstm(t){return(t.title?"<div class='widget-title position-relative  mb-3 text-uppercase fw-light'><span>"+t.title+"</span></div>":"")+"<div class='row row-cols-sm-2'>"+t.posts.map(function(t,e){return"<article class='mb-4'><div class='h-100 overflow-hidden rounded position-relative border jt-border-light bg-archive shadow-sm'>"+(t.img?"<div class='item-thumbnail'><a class='jt-bg-light d-block ratio ratio-21x9' href='"+t.url+"'><img alt='"+t.title+"' class='object-cover lazy-"+t.grup_id+" lazyload' data-src='"+t.img+"' loading='lazy' src='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='/></a></div>":"")+"<div class='item-content p-4'><h2 class='item-title fs-6 mb-2' itemprop='headline'><a class='text-reset' href='"+t.url+"'>"+t.title+"</a></h2><div class='item-meta text-secondary d-flex flex-wrap fw-light'>"+("Unknown"!=t.author?"<small class='me-2'><svg aria-hidden='true' class='me-1 jt-icon'><use xlink:href='#i-user'/></svg>"+t.author+"</small>":"")+"<small class='me-2'><a class='p-1 border rounded text-secondry m-auto me-2' href='https://t.me/dhanjeerider'>Buy</a><svg aria-hidden='true' class='me-1 jt-icon'><use xlink:href='#i-clock'/></svg>"+t.date+"</small></div></div></div></article>"}).join("")+"</div>"}
+
+
+function grid(e) {
+  return '' + (e.title ? '<div class="widget-title mb-3 text-uppercase fw-light"><span>' + e.title + '</span></div>' : '') + '<div class="widget-content row">' + e.posts.map(function (data, i) {
+    return i == 0 ? '<article class="mb-2 d-md-none"><div class="d-sm-flex overflow-hidden rounded-3 border jt-border-light bg-archive shadow-sm">' + (data.img ? ' <div class="item-thumbnail col-sm-6"> <a class="d-block jt-bg-light overflow-hidden rounded-3 ratio ratio-21x9 ratio-sm-4x3" href="' + data.url + '"> <img alt="' + data.title + '" class="lazy-' + data.grup_id + ' lazyload" data-src="' + data.img + '" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/> </a> </div>' : '') + '<div class="item-content col p-4"><h3 class="item-title fs-6 fs-md-4 mb-md-3"><a class="text-reset" href="' + data.url + '">' + data.title + '</a></h3><p class="item-snippet d-none d-md-block mb-3">' + (data.summary.length > 100 ? data.summary.substr(0, 150) + '...' : data.summary) + '</p><div class="item-meta text-secondary d-flex flex-wrap fw-light">' + (data.author != 'Unknown' ? '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-user"/></svg>' + data.author + '</small>' : '') + '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-clock"/></svg>' + data.date + '</small></div></div></div></article>' : '<article class="col-6 col-sm-4 my-2"><div class="d-flex h-100 overflow-hidden flex-column rounded-3 border jt-border-light bg-archive shadow-sm p-sm-2">' + (data.img ? ' <div class="item-thumbnail w-100"> <a class="d-block jt-bg-light overflow-hidden ratio rounded-top ratio-4x3" href="' + data.url + '"> <img alt="' + data.title + '" class="lazy-' + data.grup_id + ' lazyload" data-src="' + data.img + '" loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/> </a> </div>' : '') + '<div class="item-content col mt-2 m-sm-2"><h3 class="item-title fs-7 text-wrap text-center "><a class="text-reset" href="' + data.url + '">' + data.title + '</a></h3><div class="item-meta fw-light text-secondary flex-wrap fs-8">' + (data.author != 'Unknown' ? '<small class="me-2 d-none"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-user"/></svg>' + data.author + '</small>' : '') + '<small class="me-2"><svg aria-hidden="true" class="me-1 jt-icon"><use xlink:href="#i-clock"/></svg>' + data.date + '</small></div></div>\n</div></article>';
+  }).join('') + '</div>';
+}
+document.addEventListener('DOMContentLoaded', function () {
+    var closeBtn = document.querySelector('.closebtn');
+    var alertBox = document.querySelector('#alrt');
+
+    closeBtn.addEventListener('click', function () {
+      alertBox.style.display = 'none';
+    });
+  });
+function jtCallback(){
+/*Your Script is here to maintain performance.*/
+
+// the example below if you use url.
+Defer.css('https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css','your-style-id',100);
+// Defer.js('','your-script-id',100);
+}
+/*]]>*/</script>
+<script src='https://cdn.jsdelivr.net/gh/dhanjeerider/me@main/main.js'></script>
+<!-- Your Style and Script before </body> is here -->
+<script type='application/ld+json'>{        "@context": "https://schema.org/",
+
+        "@type": "CreativeWorkSeries",
+
+        "name": "Dk technozone",
+
+        "aggregateRating": {
+
+            "@type": "AggregateRating",
+
+            "ratingValue": "4.9",
+
+            "bestRating": "5",
+
+            "ratingCount": "4970"
+        }
+    }</script>
+<div class='fld'>
+<button class='btn fw-bold btn-prymary m-auto anime btnb' onclick='showForm()'>Buy Now Via <i class='fa-brands fa-whatsapp'></i>
+<i class='fa-solid fa-paper-plane'></i>
+</button>
+</div>
+<style>
+      .fld{display:flex;justify-content:center; position: fixed;
+            Bottom:33px;
+            left: 50%;
+            transition: all 1s ease;
+            transform: translate(-50%, -50%);z-index:99;}
+        </style>
+<script>/*<![CDATA[*/
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+            pageLanguage: 'zh',
+            includedLanguages: 'en,id,hi,mr,ne,bn,sr,vi,zh,bh,',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        },
+        'google_translate_element'
+    )
+};
+
+function translateOnload(){var script = document.createElement('script');script.async = true;script.src = 'https://cdn.wendycode.com/blogger/widget/google-translate-free.js?cb=googleTranslateElementInit';document.body.appendChild(script);}function wcTjLzy(){translateOnload();localStorage.setItem("wcGoogleTj","true");}var wcTjStrg = localStorage.getItem("wcGoogleTj");if ("true" != wcTjStrg){var t_wcTj = false;var e_wcTj = false;window.addEventListener("scroll",() =>{if ((document.documentElement.scrollTop != 0 && !t_wcTj) || (document.body.scrollTop != 0 && !t_wcTj)){wcTjLzy();t_wcTj = true;e_wcTj = true;}},true);window.addEventListener("click",() =>{if (!e_wcTj && !e_wcTj){wcTjLzy();e_wcTj = true;t_wcTj = true;}},true);}if ("true" === wcTjStrg){translateOnload();}
+/*]]>*/
+</script>
+<script>/*<![CDATA[*/
+
+const codeBox = {
+      img: "https:www.dktechnozone.in/favicon.ico", /* Your favicon url */
+      title: "by dk technozone" /* Your blog title */
+};
+/* Code_Box@main.js */ 0<document.querySelectorAll("div.pre.cdBox").length&&(()=>{let e=document.querySelectorAll("div.pre.cdBox");function t(e,t,a){if(a="string"==typeof a?a:"text/plain",t="string"==typeof t?t:"File_"+(new Date).getTime()+".txt",e){if(a=new Blob([e],{type:a}),navigator.msSaveBlob)return navigator.msSaveBlob(a,t);{let e=window.URL.createObjectURL(a),l=document.createElement("a");l.classList.add("hidden"),l.href=e,l.download=t,document.body.appendChild(l),l.click(),l.remove(),window.URL.revokeObjectURL(e)}}}for(let a=0;a<e.length;a++){let l=e[a];l.classList.add("adv");let n=l.dataset.text||"File_"+(new Date).getTime(),s=l.dataset.file||n,d=l.dataset.lang||".txt",i=void 0!==l.dataset.time?isNaN(Number(l.dataset.time))?"false"===l.dataset.time?0:10:Number(l.dataset.time):10,o=void 0===l.dataset.download||"true"==l.dataset.download,r=void 0===l.dataset.copy||"true"==l.dataset.copy,c=void 0===l.dataset.view||"true"==l.dataset.view,p=l.querySelector("pre"),m=p.innerText;l.insertAdjacentHTML("afterbegin","<div class='preM'><div class='preT'><span class='prTl'>"+(null==n?"&lt;/&gt;":n)+"</span><span class='prCd'></span></div><div class='preA'>"+(c?"\x3c!--[ Preview ]--\x3e<button class='prVw' aria-label='blob Button'><svg viewBox='0 0 24 24'><path d='M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z'/></svg></button>":"")+(o?"\x3c!--[ Download ]--\x3e<button class='prDl' aria-label='Download Button'><svg viewBox='0 0 24 24'><path class='a' d='M8 17V15H16V17H8M16 10L12 14L8 10H10.5V6H13.5V10H16M12 2C17.5 2 22 6.5 22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4Z'/><path class='b' d='M13,2.03C17.73,2.5 21.5,6.25 21.95,11C22.5,16.5 18.5,21.38 13,21.93V19.93C16.64,19.5 19.5,16.61 19.96,12.97C20.5,8.58 17.39,4.59 13,4.05V2.05L13,2.03M11,2.06V4.06C9.57,4.26 8.22,4.84 7.1,5.74L5.67,4.26C7.19,3 9.05,2.25 11,2.06M4.26,5.67L5.69,7.1C4.8,8.23 4.24,9.58 4.05,11H2.05C2.25,9.04 3,7.19 4.26,5.67M2.06,13H4.06C4.24,14.42 4.81,15.77 5.69,16.9L4.27,18.33C3.03,16.81 2.26,14.96 2.06,13M7.1,18.37C8.23,19.25 9.58,19.82 11,20V22C9.04,21.79 7.18,21 5.67,19.74L7.1,18.37M12,16.5L7.5,12H11V8H13V12H16.5L12,16.5Z'/><path class='c' d='M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M7,15H17V17H7V15M10.3,11.2L8.4,9.3L7,10.7L10.3,14L17,7.3L15.6,5.9L10.3,11.2Z'/></svg></button>":"")+(r?"\x3c!--[ Copy ]--\x3e<button class='prCp' aria-label='copy Button'><svg viewBox='0 0 24 24'><path class='a' d='M20,16V4H8V16H20M22,16A2,2 0 0,1 20,18H8C6.89,18 6,17.1 6,16V4C6,2.89 6.89,2 8,2H20A2,2 0 0,1 22,4V16M16,20V22H4A2,2 0 0,1 2,20V7H4V20H16Z'/><path class='b' d='M20,16V10H22V16A2,2 0 0,1 20,18H8C6.89,18 6,17.1 6,16V4C6,2.89 6.89,2 8,2H16V4H8V16H20M10.91,7.08L14,10.17L20.59,3.58L22,5L14,13L9.5,8.5L10.91,7.08M16,20V22H4A2,2 0 0,1 2,20V7H4V20H16Z'/></svg></button>":"")+"</div></div>");let v=l.querySelector(".prVw"),L=l.querySelector(".prDl"),w=l.querySelector(".prCp"),u=l.querySelector(".prCd");null!==v&&v.addEventListener("click",(()=>{var e="#252526",t=codeBox.img;e="<!DOCTYPE html><html><head><title>"+s.replace(/\./g,"").replace(/ /g,"_")+d+"</title><meta content='width=device-width,initial-scale=1,user-scalable=1,minimum-scale=1,maximum-scale=5' name='viewport'/><meta content='"+e+"' name='theme-color'/><meta content='"+e+"' name='msapplication-navbutton-color'/><meta content='"+e+"' name='apple-mobile-web-app-status-bar-style'/><link rel='shortcut icon' type='image/png' href='"+t+"'><style>body{min-height:100vh;background:#fff;color:#000}*{margin:0;padding:0}html{line-height:1em;background:#1d1f21;color:#c5c8c6}pre{white-space:pre-wrap;word-wrap:break-word;word-break:break-all;padding:12px}pre i{font-style:normal}</style></head><body><div class='pre'>"+p.outerHTML+"</div></body></html>",e=new Blob([e],{type:"text/html"}),window.navigator.msSaveOrOpenBlob?window.navigator.msSaveOrOpenBlob(blobObject,fileName):(e=window.URL.createObjectURL(e),window.open(e,"_blank"),window.URL.revokeObjectURL(e))})),null!==L&&L.addEventListener("click",(()=>{L.disabled=!0;let e=i;l.classList.add("pnd","str"),u.innerHTML=0!==i?"Please wait "+e+"s...":"Please wait...";let a=setInterval((()=>{0!==i&&--e,0!==i&&(u.innerHTML="Please wait "+e+"s..."),e<=0&&(clearInterval(a),setTimeout((()=>{u.innerHTML="Downloading...",setTimeout((()=>{l.classList.remove("pnd"),l.classList.add("dwn"),t(m,s.replace(/\./g,"").replace(/ /g,"_")+codeBox.title+d,"text/plain"),u.innerHTML="Download started...",setTimeout((()=>{l.classList.remove("dwn","str"),L.disabled=!1}),3e3)}),2e3)}),1e3))}),1e3)})),null!==w&&w.addEventListener("click",(()=>{var e=getSelection(),t=document.createRange();t.selectNodeContents(p),e.removeAllRanges(),e.addRange(t),document.execCommand("copy"),e.removeAllRanges(),w.disabled=!0,l.classList.add("cpd"),setTimeout((function(){l.classList.remove("cpd"),w.disabled=!1}),3e3)}))}})();
+/*]]>*/</script>
+<script>
+   // <![CDATA[
+    function addAttributes() {
+      var links = document.getElementsByTagName('a');
+      for (var i = 0; i < links.length; i++) {
+        if (links[i].hostname !== window.location.hostname) {
+          links[i].setAttribute('rel', 'nofollow noopener noreferrer');
+        }
+      }
+    }
+    window.onload = addAttributes;
+    // ]]>
+</script>
+<script>
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+      document.getElementById("ATnav").style.bottom = "10px";
+    } else {
+      document.getElementById("ATnav").style.bottom = "-80px";
+    }
+    prevScrollpos = currentScrollPos;
+  };
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    if (!document.querySelector(".price")) {
+        const buyBtn = document.querySelector(".btnb");
+        if (buyBtn) {
+            buyBtn.style.display = "none";
+        }
+    }
+});
+</script>
+<script src='https://dktheme.online/js/full-page-script.js'></script>
+<script type='text/javascript'>
+//<![CDATA[
+document.addEventListener("DOMContentLoaded", function() {
+  var images = document.querySelectorAll("img");
+  var pageTitle = document.title;
+  for (var i = 0; i < images.length; i++) {
+    if (!images[i].hasAttribute("alt") || images[i].getAttribute("alt").trim() === "") {
+      images[i].setAttribute("alt", pageTitle);
+    }
+    if (!images[i].hasAttribute("title") || images[i].getAttribute("title").trim() === "") {
+      images[i].setAttribute("title", pageTitle);
+    }
+  }
+});
+//]]>
+</script>
+<textarea disabled readonly id="element-b" style="display:none"><style>/*
+<div class='d-none section' id='jet-last'><div class='widget HTML' data-version='2' id='HTML25'>
+<svg style='display:none' xmlns='http://www.w3.org/2000/svg'>
+</svg>
+</div></div>
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/3878540743-widgets.js"></script>
+<script type='text/javascript'>
+window['__wavt'] = 'AOuZoY6LaX_36CPI0HckkB8LUwI1w4WfqA:1760532233520';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d1619204270592959299','//www.dktechnozone.in/p/youtube-downloader-2026.html','1619204270592959299');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '1619204270592959299', 'title': 'Dk technozone', 'url': 'https://www.dktechnozone.in/p/youtube-downloader-2026.html', 'canonicalUrl': 'https://www.dktechnozone.in/p/youtube-downloader-2026.html', 'homepageUrl': 'https://www.dktechnozone.in/', 'searchUrl': 'https://www.dktechnozone.in/search', 'canonicalHomepageUrl': 'https://www.dktechnozone.in/', 'blogspotFaviconUrl': 'https://www.dktechnozone.in/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': true, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': 'G-P4LC0XZM31', 'analytics4': true, 'encoding': 'UTF-8', 'locale': 'en-GB', 'localeUnderscoreDelimited': 'en_gb', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'isDynamicViewsAvailable': true, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Dk technozone - Atom\x22 href\x3d\x22https://www.dktechnozone.in/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22Dk technozone - RSS\x22 href\x3d\x22https://www.dktechnozone.in/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Dk technozone - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/1619204270592959299/posts/default\x22 /\x3e\n', 'meTag': '', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': false, 'adsenseAutoAds': false, 'boqCommentIframeForm': true, 'loginRedirectParam': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/fe77985009f43787', 'plusOneApiSrc': 'https://apis.google.com/js/platform.js', 'disableGComments': true, 'interstitialAccepted': false, 'sharing': {'platforms': [{'name': 'Get link', 'key': 'link', 'shareMessage': 'Get link', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Share to Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'X', 'key': 'twitter', 'shareMessage': 'Share to X', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Share to Pinterest', 'target': 'pinterest'}, {'name': 'Email', 'key': 'email', 'shareMessage': 'Email', 'target': 'email'}], 'disableGooglePlus': true, 'googlePlusShareButtonWidth': 0, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27en_GB\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': false, 'jumpLinkMessage': 'Read more', 'pageType': 'static_page', 'pageId': '6008434208933421506', 'pageName': 'YouTube downloader 2026', 'pageTitle': 'Dk technozone: YouTube downloader 2026', 'metaDescription': 'Discover the best YouTube downloader tools in 2025. Learn how to safely download videos offline, save data, and enjoy high-quality content easily.'}}, {'name': 'features', 'data': {}}, {'name': 'messages', 'data': {'edit': 'Edit', 'linkCopiedToClipboard': 'Link copied to clipboard', 'ok': 'Ok', 'postLink': 'Post link'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': 'Custom', 'isResponsive': true, 'isAlternateRendering': false, 'isCustom': true}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'YouTube downloader 2026', 'description': 'Discover the best YouTube downloader tools in 2025. Learn how to safely download videos offline, save data, and enjoy high-quality content easily.', 'featuredImage': 'https://lh3.googleusercontent.com/blogger_img_proxy/AEn0k_uKxOqyqMOIO8jbX_IzQdRd3bXAQilnRkGqqxjwbdTYpgUI_urv2aKC4JQ3q6HsI4krrPV_WQ', 'url': 'https://www.dktechnozone.in/p/youtube-downloader-2026.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': true, 'isPost': false, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'pageId': 6008434208933421506}}, {'name': 'widgets', 'data': [{'title': 'Dk technozone', 'type': 'HTML', 'sectionId': 'header-main', 'id': 'HTML10'}, {'title': 'Icons, Dark, Search', 'type': 'LinkList', 'sectionId': 'header-main', 'id': 'LinkList10'}, {'title': 'Menu', 'type': 'LinkList', 'sectionId': 'header-main', 'id': 'LinkList11'}, {'title': '', 'type': 'HTML', 'sectionId': 'alrt', 'id': 'HTML50'}, {'title': '#search', 'type': 'HTML', 'sectionId': 'before-blog', 'id': 'HTML11'}, {'title': 'services', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image1'}, {'title': 'paid themes', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image2'}, {'title': 'all tools', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image4'}, {'title': 'live tv', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image3'}, {'title': 'codes op', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image5'}, {'title': 'portfolio', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image7'}, {'title': 'join channel', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image8'}, {'title': 'plp', 'type': 'Image', 'sectionId': 'mygrid', 'id': 'Image6'}, {'title': 'Blog Posts', 'type': 'Blog', 'sectionId': 'blog-post', 'id': 'Blog1', 'posts': [{'id': '6008434208933421506', 'title': 'YouTube downloader 2026', 'featuredImage': 'https://lh3.googleusercontent.com/blogger_img_proxy/AEn0k_uKxOqyqMOIO8jbX_IzQdRd3bXAQilnRkGqqxjwbdTYpgUI_urv2aKC4JQ3q6HsI4krrPV_WQ', 'showInlineAds': false}], 'headerByline': {'regionName': 'header1', 'items': [{'name': 'author', 'label': 'Written by \ud83d\udc49'}, {'name': 'timestamp', 'label': 'd MMM'}]}, 'footerBylines': [{'regionName': 'footer1', 'items': [{'name': 'comments', 'label': 'Comment'}]}, {'regionName': 'footer2', 'items': [{'name': 'labels', 'label': 'in'}]}], 'allBylineItems': [{'name': 'author', 'label': 'Written by \ud83d\udc49'}, {'name': 'timestamp', 'label': 'd MMM'}, {'name': 'comments', 'label': 'Comment'}, {'name': 'labels', 'label': 'in'}]}, {'title': '#You may also like', 'type': 'HTML', 'sectionId': 'ads-post', 'id': 'HTML15'}, {'title': 'wordpress theme', 'type': 'HTML', 'sectionId': 'custompst', 'id': 'HTML9'}, {'title': 'Movie theme', 'type': 'HTML', 'sectionId': 'custompst', 'id': 'HTML8'}, {'title': 'codes for blogger', 'type': 'HTML', 'sectionId': 'custompst', 'id': 'HTML6'}, {'title': 'Grafix Material', 'type': 'HTML', 'sectionId': 'custompst', 'id': 'HTML7'}, {'title': 'Popular Posts', 'type': 'PopularPosts', 'sectionId': 'sidebar-static', 'id': 'PopularPosts10', 'posts': [{'title': 'FilmyFly Clone WP Theme ', 'id': 7304032228813691610}, {'title': 'pubg mobile lite 360\u2070 aim bot Config File, High Damage 2024', 'id': 874764117286532909}, {'title': 'Rich Mag Blogger Theme \u2013 The best News Portal Template', 'id': 8899681697508873050}, {'title': '6 Colourfull css animation button ', 'id': 3557851609341329446}, {'title': 'Tmdb Movie Streaming Blogger Template \u2013 Create a Movie Site Without Posting Manually', 'id': 6769889121108119137}, {'title': 'Vegamovies Original V3 Latest wordpress theme', 'id': 5603832609335526904}, {'title': 'Custom contact form for blogger ', 'id': 5062518391588456820}, {'title': 'LuxMovies WordPress Theme', 'id': 8061286436209899258}, {'title': 'Canva pro lifetime free invite link and cookies daly update ', 'id': 3576416813993682169}, {'title': 'Vega Movies Blogger Template', 'id': 2027936681716204341}]}, {'title': '#Recent Post', 'type': 'HTML', 'sectionId': 'sidebar-static', 'id': 'HTML19'}, {'title': '#mendetor', 'type': 'HTML', 'sectionId': 'sidebar-sticky', 'id': 'HTML20'}, {'title': '#mendetory', 'type': 'HTML', 'sectionId': 'sidebar-sticky', 'id': 'HTML4'}, {'title': '#excss', 'type': 'HTML', 'sectionId': 'sidebar-sticky', 'id': 'HTML3'}, {'title': 'Categories', 'type': 'Label', 'sectionId': 'sidebar-sticky', 'id': 'Label1'}, {'title': 'About Us', 'type': 'HTML', 'sectionId': 'footer-widget', 'id': 'HTML21'}, {'title': 'Learn More', 'type': 'LinkList', 'sectionId': 'footer-widget', 'id': 'LinkList13'}, {'title': 'Tools \ud83d\udd2d and games \ud83c\udfae', 'type': 'LinkList', 'sectionId': 'footer-widget', 'id': 'LinkList15'}, {'title': 'Follow Us', 'type': 'LinkList', 'sectionId': 'footer-widget', 'id': 'LinkList14'}, {'title': 'Copyright', 'type': 'HTML', 'sectionId': 'copyright', 'id': 'HTML23'}, {'title': 'SVG Icons', 'type': 'HTML', 'sectionId': 'jet-options', 'id': 'HTML24'}, {'title': 'SVG Icons', 'type': 'HTML', 'sectionId': 'jet-last', 'id': 'HTML25'}]}]);
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML10', 'header-main', document.getElementById('HTML10'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList10', 'header-main', document.getElementById('LinkList10'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList11', 'header-main', document.getElementById('LinkList11'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML50', 'alrt', document.getElementById('HTML50'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML11', 'before-blog', document.getElementById('HTML11'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image1', 'mygrid', document.getElementById('Image1'), {'resize': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image2', 'mygrid', document.getElementById('Image2'), {'resize': true}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image4', 'mygrid', document.getElementById('Image4'), {'resize': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image3', 'mygrid', document.getElementById('Image3'), {'resize': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image5', 'mygrid', document.getElementById('Image5'), {'resize': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image7', 'mygrid', document.getElementById('Image7'), {'resize': true}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image8', 'mygrid', document.getElementById('Image8'), {'resize': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ImageView', new _WidgetInfo('Image6', 'mygrid', document.getElementById('Image6'), {'resize': true}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'blog-post', document.getElementById('Blog1'), {'cmtInteractionsEnabled': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML15', 'ads-post', document.getElementById('HTML15'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML9', 'custompst', document.getElementById('HTML9'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML8', 'custompst', document.getElementById('HTML8'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML6', 'custompst', document.getElementById('HTML6'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML7', 'custompst', document.getElementById('HTML7'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts10', 'sidebar-static', document.getElementById('PopularPosts10'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML19', 'sidebar-static', document.getElementById('HTML19'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML20', 'sidebar-sticky', document.getElementById('HTML20'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'sidebar-sticky', document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'sidebar-sticky', document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebar-sticky', document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML21', 'footer-widget', document.getElementById('HTML21'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList13', 'footer-widget', document.getElementById('LinkList13'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList15', 'footer-widget', document.getElementById('LinkList15'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList14', 'footer-widget', document.getElementById('LinkList14'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML23', 'copyright', document.getElementById('HTML23'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML24', 'jet-options', document.getElementById('HTML24'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML25', 'jet-last', document.getElementById('HTML25'), {}, 'displayModeFull'));
+</script>
+</body>
+*/</style></textarea><script>/*<![CDATA[*/const _eh=document.getElementById("element-h"),_eb=document.getElementById("element-b"),_WidgetManager={_PopupConfig:function(){}};null!==_eh&&
+
+(_eh.outerHTML=""),null!==_eb&&(_eb.outerHTML="");/*]]>*/</script>
+</body>
+</html>
