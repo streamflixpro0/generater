@@ -1,0 +1,132 @@
+<script>
+  const input = document.getElementById('ytInput');
+  const fetchBtn = document.getElementById('fetchBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const messageEl = document.getElementById('message');
+  const resultEl = document.getElementById('result');
+  const videoPlayer = document.getElementById('videoPlayer'); // Will add this below
+
+  function showMessage(text, type = 'info') {
+    messageEl.className = `alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} d-block`;
+    messageEl.textContent = text;
+    messageEl.classList.remove('d-none');
+  }
+
+  function hideMessage() {
+    messageEl.classList.add('d-none');
+  }
+
+  function formatDuration(sec) {
+    const hrs = Math.floor(sec / 3600);
+    const mins = Math.floor((sec % 3600) / 60);
+    const secs = Math.floor(sec % 60);
+    return `${hrs ? hrs + ':' : ''}${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+
+  // Function to trigger download
+  function downloadFile(url, filename) {
+    // Create a temporary link and click it
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'video.mp4';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  fetchBtn.addEventListener('click', async () => {
+    const url = input.value.trim();
+    if (!url) return showMessage('Please enter a valid YouTube URL.', 'error');
+
+    hideMessage();
+    resultEl.innerHTML = '';
+    showMessage('Fetching video info...', 'info');
+    fetchBtn.disabled = true;
+
+    try {
+      const api = `https://api.vidfly.ai/api/media/youtube/download?url=${encodeURIComponent(url)}`;
+      const res = await fetch(api);
+      const data = await res.json();
+
+      if (data.code !== 0) throw new Error(data.message || 'Failed to fetch video.');
+
+      const meta = data.data;
+
+      // Build result HTML
+      let formatsHtml = meta.items.map(it => `
+        <div class="col-md-6">
+          <div class="card format-card p-3 h-100">
+            <div>
+              <div class="fw-semibold">${it.label || it.ext}</div>
+              <small class="text-muted">${it.type || ''} • ${it.fps ? it.fps + ' fps' : ''}</small>
+            </div>
+            <button class="btn btn-sm btn-outline-primary mt-2 w-100 play-btn" data-url="${it.url}" data-label="${it.label || 'Video'}">
+              Play Preview
+            </button>
+            <button class="btn btn-sm btn-gradient mt-2 w-100 download-btn" data-url="${it.url}" data-label="${it.label || 'video'}">
+              Download
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      resultEl.innerHTML = `
+        <div class="card p-3 mb-4">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <img src="${meta.cover}" alt="Video thumbnail" class="img-fluid rounded" />
+            </div>
+            <div class="col-md-8">
+              <h4>${meta.title || 'Untitled video'}</h4>
+              <p class="text-muted mb-1">Duration: ${formatDuration(meta.duration)}</p>
+            </div>
+          </div>
+        </div>
+        <h5 class="fw-bold mb-3">Available Formats</h5>
+        <div class="row g-3">${formatsHtml}</div>
+
+        <!-- Video Player Container -->
+        <div id="videoPlayerContainer" class="mt-4 d-none">
+          <h5>Preview: <span id="videoLabel"></span></h5>
+          <video id="videoPlayer" controls width="100%" class="rounded"></video>
+        </div>
+      `;
+
+      // Add event listeners to new buttons
+      document.querySelectorAll('.play-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const url = e.target.dataset.url;
+          const label = e.target.dataset.label;
+          document.getElementById('videoLabel').textContent = label;
+          const player = document.getElementById('videoPlayer');
+          player.src = url;
+          player.load();
+          document.getElementById('videoPlayerContainer').classList.remove('d-none');
+        });
+      });
+
+      document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const url = e.target.dataset.url;
+          const label = e.target.dataset.label;
+          const filename = `${label.replace(/\s+/g, '_')}.mp4`;
+          downloadFile(url, filename);
+        });
+      });
+
+      hideMessage();
+    } catch (e) {
+      showMessage('Error: ' + e.message, 'error');
+    } finally {
+      fetchBtn.disabled = false;
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    resultEl.innerHTML = '';
+    hideMessage();
+    const container = document.getElementById('videoPlayerContainer');
+    if (container) container.classList.add('d-none');
+  });
+</script>
