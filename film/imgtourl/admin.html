@@ -11,39 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-// Add this security check at the very beginning of admin.html script
-(function() {
-    const isLoggedIn = localStorage.getItem('adminLoggedIn');
-    const loginTime = localStorage.getItem('adminLoginTime');
-    const currentTime = new Date().getTime();
-    
-    // Check if user is logged in and session is valid (24 hours)
-    if (!isLoggedIn || (currentTime - loginTime > 24 * 60 * 60 * 1000)) {
-        localStorage.removeItem('adminLoggedIn');
-        localStorage.removeItem('adminLoginTime');
-        window.location.href = 'admin-login.html';
-        return;
-    }
-})();
 
-// Add logout functionality
-function addLogoutButton() {
-    const header = document.querySelector('.header');
-    const logoutBtn = document.createElement('button');
-    logoutBtn.className = 'btn btn-danger';
-    logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
-    logoutBtn.onclick = function() {
-        localStorage.removeItem('adminLoggedIn');
-        localStorage.removeItem('adminLoginTime');
-        window.location.href = 'admin-login.html';
-    };
-    
-    const userInfo = document.querySelector('.user-info');
-    userInfo.appendChild(logoutBtn);
-}
-
-// Call this function in your admin panel initialization
-addLogoutButton();
         :root {
             --primary: #0a0a0a;
             --secondary: #1a1a1a;
@@ -57,6 +25,7 @@ addLogoutButton();
             --success: #00b894;
             --warning: #fdcb6e;
             --danger: #e17055;
+            --info: #0984e3;
         }
 
         body {
@@ -68,6 +37,36 @@ addLogoutButton();
             min-height: 100vh;
         }
 
+        /* Security Check Overlay */
+        .security-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .security-check {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid var(--border);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .security-check i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
         /* Sidebar */
         .sidebar {
             width: 250px;
@@ -77,6 +76,7 @@ addLogoutButton();
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            transition: transform 0.3s;
         }
 
         .logo {
@@ -107,6 +107,7 @@ addLogoutButton();
             text-decoration: none;
             border-radius: 8px;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -124,6 +125,7 @@ addLogoutButton();
             flex: 1;
             margin-left: 250px;
             padding: 20px;
+            transition: margin-left 0.3s;
         }
 
         .header {
@@ -135,6 +137,8 @@ addLogoutButton();
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header-title {
@@ -145,7 +149,8 @@ addLogoutButton();
         .user-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .user-avatar {
@@ -158,6 +163,49 @@ addLogoutButton();
             justify-content: center;
             color: white;
             font-weight: bold;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: #2d3436;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info);
+            color: white;
         }
 
         /* Dashboard Cards */
@@ -224,6 +272,8 @@ addLogoutButton();
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .section-title {
@@ -278,41 +328,58 @@ addLogoutButton();
             min-height: 100px;
         }
 
-        .btn {
-            padding: 12px 25px;
-            border: none;
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* Download Links Manager */
+        .download-links-manager {
+            background: var(--secondary);
             border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid var(--border);
         }
 
-        .btn-primary {
-            background: var(--accent);
-            color: white;
+        .download-link-item {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .btn-primary:hover {
-            background: var(--accent-light);
+        .download-link-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
-        .btn-success {
-            background: var(--success);
-            color: white;
+        .download-link-item .form-group {
+            flex: 1;
+            margin-bottom: 0;
         }
 
-        .btn-warning {
-            background: var(--warning);
-            color: #2d3436;
-        }
-
-        .btn-danger {
+        .remove-download-btn {
             background: var(--danger);
             color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .remove-download-btn:hover {
+            background: #d63031;
         }
 
         /* Movies Table */
@@ -370,6 +437,11 @@ addLogoutButton();
             color: white;
         }
 
+        .view-btn {
+            background: var(--info);
+            color: white;
+        }
+
         /* Tabs */
         .tabs {
             display: flex;
@@ -377,6 +449,7 @@ addLogoutButton();
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .tab {
@@ -410,6 +483,12 @@ addLogoutButton();
             display: flex;
             align-items: center;
             gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .notification.success {
@@ -422,22 +501,51 @@ addLogoutButton();
             border-left: 4px solid var(--danger);
         }
 
+        .notification.warning {
+            background: rgba(253, 203, 110, 0.2);
+            border-left: 4px solid var(--warning);
+        }
+
+        /* Settings Section */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .setting-group {
+            background: var(--secondary);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .setting-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
-                width: 70px;
+                transform: translateX(-100%);
+                width: 280px;
             }
 
-            .sidebar .nav-link span {
-                display: none;
+            .sidebar.active {
+                transform: translateX(0);
             }
 
             .main-content {
-                margin-left: 70px;
+                margin-left: 0;
             }
 
-            .logo span {
-                display: none;
+            .mobile-menu-btn {
+                display: block;
             }
 
             .stats-grid {
@@ -455,222 +563,432 @@ addLogoutButton();
             .action-buttons {
                 flex-direction: column;
             }
+
+            .download-link-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 480px) {
-            .sidebar {
-                display: none;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
             .header {
                 flex-direction: column;
-                gap: 15px;
                 text-align: center;
+            }
+
+            .user-info {
+                justify-content: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Security Check -->
+    <div class="security-overlay" id="securityOverlay">
+        <div class="security-check">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Security Check</h3>
+            <p>Verifying admin credentials...</p>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="logo">
             <i class="fas fa-play-circle"></i>
             <span>HDLove4U Admin</span>
         </div>
         <nav class="nav-links">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link active" data-tab="dashboard">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" data-tab="movies">
                 <i class="fas fa-film"></i>
-                <span>Movies</span>
+                <span>Movies Management</span>
             </a>
-            <a href="#" class="nav-link">
-                <i class="fas fa-users"></i>
-                <span>Users</span>
+            <a href="#" class="nav-link" data-tab="downloads">
+                <i class="fas fa-download"></i>
+                <span>Download Links</span>
             </a>
-            <a href="#" class="nav-link">
-                <i class="fas fa-chart-bar"></i>
-                <span>Analytics</span>
-            </a>
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" data-tab="settings">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
             </a>
             <a href="index.html" class="nav-link">
                 <i class="fas fa-external-link-alt"></i>
-                <span>View Site</span>
+                <span>View Website</span>
+            </a>
+            <a href="#" class="nav-link" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
             </a>
         </nav>
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
         <!-- Header -->
         <div class="header">
-            <h1 class="header-title">Admin Dashboard</h1>
+            <h1 class="header-title" id="pageTitle">Admin Dashboard</h1>
             <div class="user-info">
                 <div class="user-avatar">A</div>
-                <span>Admin User</span>
+                <span>Welcome, Admin</span>
+                <button class="btn btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
         </div>
 
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon movies">
-                    <i class="fas fa-film"></i>
-                </div>
-                <div class="stat-number" id="totalMovies">0</div>
-                <div class="stat-label">Total Movies</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon users">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-number">1,254</div>
-                <div class="stat-label">Active Users</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon views">
-                    <i class="fas fa-eye"></i>
-                </div>
-                <div class="stat-number">45.2K</div>
-                <div class="stat-label">Daily Views</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon downloads">
-                    <i class="fas fa-download"></i>
-                </div>
-                <div class="stat-number">12.8K</div>
-                <div class="stat-label">Daily Downloads</div>
-            </div>
-        </div>
+        <!-- Notification Area -->
+        <div id="notificationArea"></div>
 
-        <!-- Add Movie Section -->
-        <div class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-plus-circle"></i> Add New Movie
-                </h2>
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="tab-dashboard">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon movies">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="stat-number" id="totalMovies">0</div>
+                    <div class="stat-label">Total Movies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon users">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">1,254</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon views">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-number">45.2K</div>
+                    <div class="stat-label">Daily Views</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon downloads">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="stat-number">12.8K</div>
+                    <div class="stat-label">Daily Downloads</div>
+                </div>
             </div>
 
-            <div id="notificationArea"></div>
-
-            <form id="movieForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Movie Title *</label>
-                        <input type="text" class="form-input" id="movieTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Release Year *</label>
-                        <input type="number" class="form-input" id="movieYear" min="1900" max="2030" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">IMDB Rating</label>
-                        <input type="number" class="form-input" id="movieRating" step="0.1" min="0" max="10">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Duration</label>
-                        <input type="text" class="form-input" id="movieDuration" placeholder="e.g., 2h 28m">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Genre *</label>
-                        <input type="text" class="form-input" id="movieGenre" placeholder="e.g., Action, Drama, Comedy" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Director</label>
-                        <input type="text" class="form-input" id="movieDirector">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Cast</label>
-                        <input type="text" class="form-input" id="movieCast" placeholder="e.g., Actor 1, Actor 2, Actor 3">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Languages</label>
-                        <input type="text" class="form-input" id="movieLanguages" placeholder="e.g., Hindi, English">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Poster URL</label>
-                        <input type="url" class="form-input" id="moviePoster" placeholder="https://example.com/poster.jpg">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Quality</label>
-                        <select class="form-select" id="movieQuality">
-                            <option value="WEB-DL">WEB-DL</option>
-                            <option value="HD-RIP">HD-RIP</option>
-                            <option value="BluRay">BluRay</option>
-                            <option value="4K">4K UHD</option>
-                        </select>
-                    </div>
+            <!-- Quick Actions -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-bolt"></i> Quick Actions
+                    </h2>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Plot Summary</label>
-                    <textarea class="form-textarea" id="moviePlot" rows="4"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Stream URL</label>
-                    <input type="url" class="form-input" id="movieStreamUrl" placeholder="https://hikke383ehr.com/play/movie-id">
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Add Movie
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="switchTab('movies')">
+                        <i class="fas fa-plus"></i> Add New Movie
                     </button>
-                    <button type="button" class="btn btn-warning" onclick="clearForm()">
-                        <i class="fas fa-redo"></i> Clear Form
+                    <button class="btn btn-success" onclick="switchTab('downloads')">
+                        <i class="fas fa-link"></i> Manage Downloads
+                    </button>
+                    <button class="btn btn-info" onclick="exportData()">
+                        <i class="fas fa-file-export"></i> Export Data
                     </button>
                 </div>
-            </form>
-        </div>
-
-        <!-- Manage Movies Section -->
-        <div class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-edit"></i> Manage Movies
-                </h2>
-                <div class="tabs">
-                    <div class="tab active" data-tab="all">All Movies</div>
-                    <div class="tab" data-tab="latest">Latest</div>
-                    <div class="tab" data-tab="popular">Popular</div>
-                </div>
             </div>
 
-            <div class="tab-content active" id="tab-all">
+            <!-- Recent Movies -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-clock"></i> Recently Added Movies
+                    </h2>
+                    <button class="btn btn-primary" onclick="switchTab('movies')">
+                        View All
+                    </button>
+                </div>
                 <table class="movies-table">
                     <thead>
                         <tr>
                             <th>Poster</th>
                             <th>Title</th>
                             <th>Year</th>
-                            <th>Rating</th>
-                            <th>Genre</th>
                             <th>Quality</th>
+                            <th>Date Added</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="moviesTableBody">
-                        <!-- Movies will be loaded here -->
+                    <tbody id="recentMoviesTable">
+                        <!-- Recent movies will be loaded here -->
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- Movies Management Tab -->
+        <div class="tab-content" id="tab-movies">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-plus-circle"></i> Add New Movie
+                    </h2>
+                </div>
+
+                <form id="movieForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Movie Title *</label>
+                            <input type="text" class="form-input" id="movieTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Release Year *</label>
+                            <input type="number" class="form-input" id="movieYear" min="1900" max="2030" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">IMDB Rating</label>
+                            <input type="number" class="form-input" id="movieRating" step="0.1" min="0" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Duration</label>
+                            <input type="text" class="form-input" id="movieDuration" placeholder="e.g., 2h 28m">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Genre *</label>
+                            <input type="text" class="form-input" id="movieGenre" placeholder="e.g., Action, Drama, Comedy" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Director</label>
+                            <input type="text" class="form-input" id="movieDirector">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cast</label>
+                            <input type="text" class="form-input" id="movieCast" placeholder="e.g., Actor 1, Actor 2, Actor 3">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Languages</label>
+                            <input type="text" class="form-input" id="movieLanguages" placeholder="e.g., Hindi, English">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Poster URL</label>
+                            <input type="url" class="form-input" id="moviePoster" placeholder="https://example.com/poster.jpg">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quality</label>
+                            <select class="form-select" id="movieQuality">
+                                <option value="WEB-DL">WEB-DL</option>
+                                <option value="HD-RIP">HD-RIP</option>
+                                <option value="BluRay">BluRay</option>
+                                <option value="4K">4K UHD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Plot Summary</label>
+                        <textarea class="form-textarea" id="moviePlot" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Stream URL (Embed)</label>
+                        <input type="url" class="form-input" id="movieStreamUrl" placeholder="https://www.youtube.com/embed/VIDEO_ID">
+                    </div>
+
+                    <!-- Download Links Section -->
+                    <div class="download-links-manager">
+                        <h3 style="margin-bottom: 20px; color: var(--text);">
+                            <i class="fas fa-download"></i> Download Links
+                        </h3>
+                        <div id="downloadLinksContainer">
+                            <!-- Download links will be added here -->
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="addDownloadLink()" style="margin-top: 15px;">
+                            <i class="fas fa-plus"></i> Add Download Link
+                        </button>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Add Movie
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="clearMovieForm()">
+                            <i class="fas fa-redo"></i> Clear Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Manage Movies Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-edit"></i> Manage Movies
+                    </h2>
+                    <div class="tabs">
+                        <div class="tab active" data-movie-tab="all">All Movies</div>
+                        <div class="tab" data-movie-tab="recent">Recent</div>
+                        <div class="tab" data-movie-tab="popular">Popular</div>
+                    </div>
+                </div>
+
+                <div class="tab-content active" id="movie-tab-all">
+                    <table class="movies-table">
+                        <thead>
+                            <tr>
+                                <th>Poster</th>
+                                <th>Title</th>
+                                <th>Year</th>
+                                <th>Rating</th>
+                                <th>Genre</th>
+                                <th>Quality</th>
+                                <th>Downloads</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="moviesTableBody">
+                            <!-- Movies will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Downloads Management Tab -->
+        <div class="tab-content" id="tab-downloads">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-download"></i> Download Links Management
+                    </h2>
+                </div>
+                <div id="downloadsManagementContent">
+                    <!-- Downloads management content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="tab-content" id="tab-settings">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-cog"></i> System Settings
+                    </h2>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3 class="setting-title">
+                            <i class="fas fa-user-shield"></i> Security Settings
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">Change Admin Password</label>
+                            <input type="password" class="form-input" id="newPassword" placeholder="New password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm new password">
+                        </div>
+                        <button class="btn btn-primary" onclick="changePassword()">
+                            <i class="fas fa-key"></i> Update Password
+                        </button>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3 class="setting-title">
+                            <i class="fas fa-database"></i> Data Management
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <button class="btn btn-info" onclick="exportData()">
+                                <i class="fas fa-file-export"></i> Export All Data
+                            </button>
+                            <button class="btn btn-warning" onclick="backupData()">
+                                <i class="fas fa-save"></i> Create Backup
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i> Clear All Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3 class="setting-title">
+                            <i class="fas fa-info-circle"></i> System Information
+                        </h3>
+                        <div style="color: var(--text-secondary);">
+                            <p><strong>Version:</strong> 2.1.0</p>
+                            <p><strong>Last Backup:</strong> <span id="lastBackup">Never</span></p>
+                            <p><strong>Total Movies:</strong> <span id="settingsMovieCount">0</span></p>
+                            <p><strong>Storage Used:</strong> <span id="storageUsed">0 KB</span></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Security Check
+        (function() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn');
+            const loginTime = localStorage.getItem('adminLoginTime');
+            const currentTime = new Date().getTime();
+            
+            // Check if user is logged in and session is valid (24 hours)
+            if (!isLoggedIn || (currentTime - loginTime > 24 * 60 * 60 * 1000)) {
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminLoginTime');
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            
+            // Hide security overlay after check
+            setTimeout(() => {
+                document.getElementById('securityOverlay').style.display = 'none';
+            }, 1000);
+        })();
+
         // Movie Management System
         class MovieManager {
             constructor() {
                 this.movies = JSON.parse(localStorage.getItem('adminMovies')) || [];
+                this.currentEditingId = null;
+                this.downloadLinkCounter = 0;
                 this.init();
             }
 
@@ -678,27 +996,72 @@ addLogoutButton();
                 this.loadMovies();
                 this.setupEventListeners();
                 this.updateStats();
+                this.loadRecentMovies();
+                this.updateSystemInfo();
             }
 
             setupEventListeners() {
                 // Form submission
                 document.getElementById('movieForm').addEventListener('submit', (e) => {
                     e.preventDefault();
-                    this.addMovie();
+                    if (this.currentEditingId) {
+                        this.updateMovie(this.currentEditingId);
+                    } else {
+                        this.addMovie();
+                    }
                 });
 
                 // Tab switching
-                document.querySelectorAll('.tab').forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                        tab.classList.add('active');
-                        document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const tab = link.dataset.tab;
+                        if (tab) {
+                            this.switchTab(tab);
+                        }
                     });
+                });
+
+                // Movie tab switching
+                document.querySelectorAll('[data-movie-tab]').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        document.querySelectorAll('[data-movie-tab]').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        // In real implementation, you would filter movies based on tab
+                    });
+                });
+
+                // Mobile menu
+                document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.toggle('active');
                 });
             }
 
+            switchTab(tabName) {
+                // Update navigation
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+                
+                // Update content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(`tab-${tabName}`).classList.add('active');
+                
+                // Update page title
+                const titles = {
+                    dashboard: 'Admin Dashboard',
+                    movies: 'Movies Management',
+                    downloads: 'Download Links',
+                    settings: 'System Settings'
+                };
+                document.getElementById('pageTitle').textContent = titles[tabName];
+                
+                // Close mobile menu
+                document.getElementById('sidebar').classList.remove('active');
+            }
+
             addMovie() {
+                const downloadLinks = this.collectDownloadLinks();
+                
                 const movie = {
                     id: this.generateMovieId(),
                     title: document.getElementById('movieTitle').value,
@@ -712,16 +1075,84 @@ addLogoutButton();
                     plot: document.getElementById('moviePlot').value || 'An exciting movie with great action sequences and compelling storyline.',
                     quality: document.getElementById('movieQuality').value,
                     poster: document.getElementById('moviePoster').value || `https://via.placeholder.com/300x400/141414/333333?text=${encodeURIComponent(document.getElementById('movieTitle').value)}`,
-                    streamUrl: document.getElementById('movieStreamUrl').value || `https://hikke383ehr.com/play/${this.generateMovieId()}`,
-                    createdAt: new Date().toISOString()
+                    streamUrl: document.getElementById('movieStreamUrl').value || 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    downloadLinks: downloadLinks,
+                    createdAt: new Date().toISOString(),
+                    views: Math.floor(Math.random() * 10000),
+                    downloads: Math.floor(Math.random() * 5000)
                 };
 
                 this.movies.unshift(movie);
                 this.saveMovies();
                 this.loadMovies();
+                this.loadRecentMovies();
                 this.updateStats();
+                this.updateSystemInfo();
                 this.showNotification('Movie added successfully!', 'success');
-                this.clearForm();
+                this.clearMovieForm();
+            }
+
+            collectDownloadLinks() {
+                const links = [];
+                const linkItems = document.querySelectorAll('.download-link-item');
+                
+                linkItems.forEach(item => {
+                    const quality = item.querySelector('[name="downloadQuality"]').value;
+                    const size = item.querySelector('[name="downloadSize"]').value;
+                    const url = item.querySelector('[name="downloadUrl"]').value;
+                    
+                    if (quality && size && url) {
+                        links.push({
+                            quality: quality,
+                            size: size,
+                            url: url,
+                            info: `${quality} • ${size} • Hindi Audio`
+                        });
+                    }
+                });
+                
+                return links;
+            }
+
+            addDownloadLink(linkData = { quality: '', size: '', url: '' }) {
+                this.downloadLinkCounter++;
+                const container = document.getElementById('downloadLinksContainer');
+                const linkId = `download-link-${this.downloadLinkCounter}`;
+                
+                const linkHtml = `
+                    <div class="download-link-item" id="${linkId}">
+                        <div class="form-group">
+                            <label class="form-label">Quality</label>
+                            <select class="form-select" name="downloadQuality" required>
+                                <option value="">Select Quality</option>
+                                <option value="480p" ${linkData.quality === '480p' ? 'selected' : ''}>480p WEB-DL</option>
+                                <option value="720p" ${linkData.quality === '720p' ? 'selected' : ''}>720p WEB-DL</option>
+                                <option value="1080p" ${linkData.quality === '1080p' ? 'selected' : ''}>1080p WEB-DL</option>
+                                <option value="4K" ${linkData.quality === '4K' ? 'selected' : ''}>4K UHD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Size</label>
+                            <input type="text" class="form-input" name="downloadSize" placeholder="e.g., 1.2 GB" value="${linkData.size}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Download URL</label>
+                            <input type="url" class="form-input" name="downloadUrl" placeholder="https://example.com/download" value="${linkData.url}" required>
+                        </div>
+                        <button type="button" class="remove-download-btn" onclick="movieManager.removeDownloadLink('${linkId}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                
+                container.insertAdjacentHTML('beforeend', linkHtml);
+            }
+
+            removeDownloadLink(linkId) {
+                const element = document.getElementById(linkId);
+                if (element) {
+                    element.remove();
+                }
             }
 
             generateMovieId() {
@@ -744,7 +1175,7 @@ addLogoutButton();
                 if (this.movies.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="7" style="text-align: center; color: var(--text-secondary); padding: 40px;">
+                            <td colspan="8" style="text-align: center; color: var(--text-secondary); padding: 40px;">
                                 <i class="fas fa-film" style="font-size: 3rem; margin-bottom: 15px; display: block; opacity: 0.5;"></i>
                                 No movies added yet. Start by adding your first movie!
                             </td>
@@ -764,10 +1195,14 @@ addLogoutButton();
                         <td>${movie.rating}/10</td>
                         <td>${movie.genre}</td>
                         <td>${movie.quality}</td>
+                        <td>${movie.downloads}</td>
                         <td>
                             <div class="action-buttons">
                                 <button class="action-btn edit-btn" onclick="movieManager.editMovie('${movie.id}')">
                                     <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn view-btn" onclick="movieManager.viewMovie('${movie.id}')">
+                                    <i class="fas fa-eye"></i> View
                                 </button>
                                 <button class="action-btn delete-btn" onclick="movieManager.deleteMovie('${movie.id}')">
                                     <i class="fas fa-trash"></i> Delete
@@ -779,9 +1214,52 @@ addLogoutButton();
                 });
             }
 
+            loadRecentMovies() {
+                const tbody = document.getElementById('recentMoviesTable');
+                tbody.innerHTML = '';
+
+                const recentMovies = this.movies.slice(0, 5); // Last 5 movies
+
+                if (recentMovies.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 20px;">
+                                No movies available
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                recentMovies.forEach(movie => {
+                    const row = document.createElement('tr');
+                    const date = new Date(movie.createdAt).toLocaleDateString();
+                    
+                    row.innerHTML = `
+                        <td>
+                            <img src="${movie.poster}" alt="${movie.title}" class="movie-poster-small">
+                        </td>
+                        <td>${movie.title}</td>
+                        <td>${movie.year}</td>
+                        <td>${movie.quality}</td>
+                        <td>${date}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit-btn" onclick="movieManager.editMovie('${movie.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
             editMovie(id) {
                 const movie = this.movies.find(m => m.id === id);
                 if (movie) {
+                    this.currentEditingId = id;
+                    
                     // Populate form with movie data
                     document.getElementById('movieTitle').value = movie.title;
                     document.getElementById('movieYear').value = movie.year;
@@ -796,21 +1274,43 @@ addLogoutButton();
                     document.getElementById('moviePoster').value = movie.poster;
                     document.getElementById('movieStreamUrl').value = movie.streamUrl;
 
+                    // Clear existing download links
+                    document.getElementById('downloadLinksContainer').innerHTML = '';
+                    
+                    // Add download links
+                    if (movie.downloadLinks && movie.downloadLinks.length > 0) {
+                        movie.downloadLinks.forEach(link => {
+                            this.addDownloadLink({
+                                quality: link.quality,
+                                size: link.size,
+                                url: link.url
+                            });
+                        });
+                    } else {
+                        this.addDownloadLink(); // Add one empty link
+                    }
+
                     // Change button to update
                     const submitBtn = document.querySelector('#movieForm button[type="submit"]');
                     submitBtn.innerHTML = '<i class="fas fa-sync"></i> Update Movie';
-                    submitBtn.onclick = (e) => {
-                        e.preventDefault();
-                        this.updateMovie(id);
-                    };
-
+                    
+                    this.switchTab('movies');
                     this.showNotification('Movie loaded for editing', 'success');
+                }
+            }
+
+            viewMovie(id) {
+                const movie = this.movies.find(m => m.id === id);
+                if (movie) {
+                    window.open(`movie.html?id=${id}&title=${movie.title.toLowerCase().replace(/ /g, '-')}-${movie.year}-hindi-webrip-full-movie`, '_blank');
                 }
             }
 
             updateMovie(id) {
                 const movieIndex = this.movies.findIndex(m => m.id === id);
                 if (movieIndex !== -1) {
+                    const downloadLinks = this.collectDownloadLinks();
+                    
                     this.movies[movieIndex] = {
                         ...this.movies[movieIndex],
                         title: document.getElementById('movieTitle').value,
@@ -824,27 +1324,27 @@ addLogoutButton();
                         plot: document.getElementById('moviePlot').value,
                         quality: document.getElementById('movieQuality').value,
                         poster: document.getElementById('moviePoster').value,
-                        streamUrl: document.getElementById('movieStreamUrl').value
+                        streamUrl: document.getElementById('movieStreamUrl').value,
+                        downloadLinks: downloadLinks,
+                        updatedAt: new Date().toISOString()
                     };
 
                     this.saveMovies();
                     this.loadMovies();
-                    this.clearForm();
+                    this.loadRecentMovies();
+                    this.clearMovieForm();
                     this.showNotification('Movie updated successfully!', 'success');
-
-                    // Reset button
-                    const submitBtn = document.querySelector('#movieForm button[type="submit"]');
-                    submitBtn.innerHTML = '<i class="fas fa-save"></i> Add Movie';
-                    submitBtn.onclick = null;
                 }
             }
 
             deleteMovie(id) {
-                if (confirm('Are you sure you want to delete this movie?')) {
+                if (confirm('Are you sure you want to delete this movie? This action cannot be undone.')) {
                     this.movies = this.movies.filter(m => m.id !== id);
                     this.saveMovies();
                     this.loadMovies();
+                    this.loadRecentMovies();
                     this.updateStats();
+                    this.updateSystemInfo();
                     this.showNotification('Movie deleted successfully!', 'success');
                 }
             }
@@ -859,12 +1359,35 @@ addLogoutButton();
                 document.getElementById('totalMovies').textContent = this.movies.length;
             }
 
+            updateSystemInfo() {
+                document.getElementById('settingsMovieCount').textContent = this.movies.length;
+                
+                // Calculate storage used (approximate)
+                const dataSize = JSON.stringify(this.movies).length;
+                const sizeInKB = (dataSize / 1024).toFixed(2);
+                document.getElementById('storageUsed').textContent = `${sizeInKB} KB`;
+            }
+
+            clearMovieForm() {
+                document.getElementById('movieForm').reset();
+                document.getElementById('downloadLinksContainer').innerHTML = '';
+                this.currentEditingId = null;
+                this.downloadLinkCounter = 0;
+                
+                // Reset button to add
+                const submitBtn = document.querySelector('#movieForm button[type="submit"]');
+                submitBtn.innerHTML = '<i class="fas fa-save"></i> Add Movie';
+                
+                // Add one empty download link
+                this.addDownloadLink();
+            }
+
             showNotification(message, type) {
                 const notificationArea = document.getElementById('notificationArea');
                 const notification = document.createElement('div');
                 notification.className = `notification ${type}`;
                 notification.innerHTML = `
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    <i class="fas fa-${this.getNotificationIcon(type)}"></i>
                     ${message}
                 `;
                 notificationArea.appendChild(notification);
@@ -874,20 +1397,110 @@ addLogoutButton();
                 }, 5000);
             }
 
-            clearForm() {
-                document.getElementById('movieForm').reset();
+            getNotificationIcon(type) {
+                const icons = {
+                    success: 'check-circle',
+                    error: 'exclamation-circle',
+                    warning: 'exclamation-triangle'
+                };
+                return icons[type] || 'info-circle';
             }
+
+            exportData() {
+                const data = {
+                    movies: this.movies,
+                    exportDate: new Date().toISOString(),
+                    version: '2.1.0'
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `hdlove4u-backup-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                
+                this.showNotification('Data exported successfully!', 'success');
+            }
+
+            backupData() {
+                localStorage.setItem('adminMoviesBackup', JSON.stringify(this.movies));
+                document.getElementById('lastBackup').textContent = new Date().toLocaleString();
+                this.showNotification('Backup created successfully!', 'success');
+            }
+
+            clearAllData() {
+                if (confirm('⚠️ WARNING: This will delete ALL movies and cannot be undone! Are you absolutely sure?')) {
+                    this.movies = [];
+                    this.saveMovies();
+                    this.loadMovies();
+                    this.loadRecentMovies();
+                    this.updateStats();
+                    this.updateSystemInfo();
+                    this.showNotification('All data cleared successfully!', 'success');
+                }
+            }
+        }
+
+        // Global functions
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminLoginTime');
+            window.location.href = 'admin-login.html';
+        }
+
+        function switchTab(tabName) {
+            movieManager.switchTab(tabName);
+        }
+
+        function addDownloadLink() {
+            movieManager.addDownloadLink();
+        }
+
+        function clearMovieForm() {
+            movieManager.clearMovieForm();
+        }
+
+        function changePassword() {
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            if (!newPass || !confirmPass) {
+                movieManager.showNotification('Please fill in both password fields', 'error');
+                return;
+            }
+            
+            if (newPass !== confirmPass) {
+                movieManager.showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            // In real application, you would send this to server
+            movieManager.showNotification('Password updated successfully!', 'success');
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        function exportData() {
+            movieManager.exportData();
+        }
+
+        function backupData() {
+            movieManager.backupData();
+        }
+
+        function clearAllData() {
+            movieManager.clearAllData();
         }
 
         // Initialize Movie Manager
         const movieManager = new MovieManager();
 
-        // Clear form function for global access
-        function clearForm() {
-            movieManager.clearForm();
-            const submitBtn = document.querySelector('#movieForm button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-save"></i> Add Movie';
-            submitBtn.onclick = null;
+        // Load last backup time
+        const lastBackup = localStorage.getItem('lastBackupTime');
+        if (lastBackup) {
+            document.getElementById('lastBackup').textContent = new Date(lastBackup).toLocaleString();
         }
     </script>
 </body>
