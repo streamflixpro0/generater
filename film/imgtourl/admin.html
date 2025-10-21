@@ -926,14 +926,14 @@
                     <div class="form-row">
                         <div class="form-group" style="flex: 1;">
                             <label class="form-label">IMDb API Key</label>
-                            <input type="text" class="form-input" id="imdbApiKey" placeholder="Enter your IMDb API key">
+                            <input type="text" class="form-input" id="imdbApiKey" placeholder="Enter your IMDb API key" value="684fefc5">
                         </div>
                         <button class="btn btn-success" onclick="saveApiKey()" style="margin-top: 25px;">
                             <i class="fas fa-save"></i> Save API Key
                         </button>
                     </div>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px;">
-                        Get your free API key from <a href="https://www.omdbapi.com/apikey.aspx" target="_blank" style="color: var(--accent);">OMDb API</a>
+                        API key pre-configured. Get your free API key from <a href="https://www.omdbapi.com/apikey.aspx" target="_blank" style="color: var(--accent);">OMDb API</a>
                     </p>
                 </div>
 
@@ -1286,12 +1286,14 @@
         // Enhanced Admin Panel with IMDb API Integration
         class AdminPanel {
             constructor() {
-                this.movies = JSON.parse(localStorage.getItem('adminMovies')) || [];
+                // Load movies from public storage that all users can see
+                this.movies = JSON.parse(localStorage.getItem('websiteMovies')) || [];
                 this.posts = JSON.parse(localStorage.getItem('adminPosts')) || [];
                 this.categories = JSON.parse(localStorage.getItem('adminCategories')) || [];
                 this.currentEditingId = null;
                 this.downloadLinkCounter = 0;
-                this.imdbApiKey = localStorage.getItem('imdbApiKey') || '';
+                // Pre-configured IMDb API key
+                this.imdbApiKey = '684fefc5';
                 this.init();
             }
 
@@ -1305,10 +1307,9 @@
                 this.updateSystemInfo();
                 this.addDownloadLink(); // Add one empty download link by default
                 
-                // Load saved API key
-                if (this.imdbApiKey) {
-                    document.getElementById('imdbApiKey').value = this.imdbApiKey;
-                }
+                // Set the pre-configured API key
+                document.getElementById('imdbApiKey').value = this.imdbApiKey;
+                localStorage.setItem('imdbApiKey', this.imdbApiKey);
             }
 
             setupEventListeners() {
@@ -1525,7 +1526,7 @@
                 this.loadRecentMovies();
                 this.updateStats();
                 this.updateSystemInfo();
-                this.showNotification('Movie added successfully!', 'success');
+                this.showNotification('Movie added successfully! All users can now see this movie.', 'success');
                 this.clearMovieForm();
             }
 
@@ -1772,19 +1773,19 @@
                     this.loadMovies();
                     this.loadRecentMovies();
                     this.clearMovieForm();
-                    this.showNotification('Movie updated successfully!', 'success');
+                    this.showNotification('Movie updated successfully! All users can see the updated movie.', 'success');
                 }
             }
 
             deleteMovie(id) {
-                if (confirm('Are you sure you want to delete this movie? This action cannot be undone.')) {
+                if (confirm('Are you sure you want to delete this movie? This action cannot be undone and the movie will be removed for all users.')) {
                     this.movies = this.movies.filter(m => m.id !== id);
                     this.saveMovies();
                     this.loadMovies();
                     this.loadRecentMovies();
                     this.updateStats();
                     this.updateSystemInfo();
-                    this.showNotification('Movie deleted successfully!', 'success');
+                    this.showNotification('Movie deleted successfully! The movie has been removed for all users.', 'success');
                 }
             }
 
@@ -2012,9 +2013,10 @@
             }
 
             saveMovies() {
-                localStorage.setItem('adminMovies', JSON.stringify(this.movies));
-                // Also update the main site's movies
+                // Save to public storage that all users can access
                 localStorage.setItem('websiteMovies', JSON.stringify(this.movies));
+                // Also save to admin storage for backup
+                localStorage.setItem('adminMovies', JSON.stringify(this.movies));
             }
 
             savePosts() {
