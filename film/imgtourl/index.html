@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BollyFlix - Indian Movies Hub</title>
+    <title>HDLove4U - HD Movies Download Free</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -13,22 +13,22 @@
         }
 
         :root {
-            --primary: #0f1419;
-            --secondary: #1a222d;
+            --primary: #0a0a0a;
+            --secondary: #1a1a1a;
             --accent: #e50914;
             --accent-light: #ff4757;
             --text: #ffffff;
-            --text-secondary: #8b98a5;
-            --card-bg: #15202b;
-            --card-hover: #1c2a37;
-            --border: #38444d;
+            --text-secondary: #a0a0a0;
+            --card-bg: #141414;
+            --card-hover: #2a2a2a;
+            --border: #333333;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--primary);
             color: var(--text);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .header {
@@ -36,14 +36,14 @@
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             backdrop-filter: blur(10px);
         }
 
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -57,17 +57,21 @@
             font-size: 1.8rem;
             font-weight: bold;
             color: var(--accent);
+            text-decoration: none;
         }
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 30px;
+            align-items: center;
         }
 
         .nav-link {
             color: var(--text);
             font-weight: 500;
             transition: color 0.3s;
+            text-decoration: none;
+            font-size: 1rem;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -79,14 +83,33 @@
             background: none;
             border: none;
             color: var(--text);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            border-top: 1px solid var(--border);
+            z-index: 999;
+            padding: 20px;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-nav.active {
+            display: flex;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px 15px;
+            padding: 20px;
         }
 
         .hero-section {
@@ -96,39 +119,103 @@
             border-radius: 10px;
             margin-bottom: 40px;
             border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(229,9,20,0.1), transparent);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero-title {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 15px;
             background: linear-gradient(45deg, var(--accent-light), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto 30px;
         }
 
-        .category-tabs {
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box {
             display: flex;
             gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            background: var(--secondary);
+            font-size: 16px;
+            color: var(--text);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+
+        .search-btn {
+            padding: 15px 25px;
+            background: var(--accent);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-btn:hover {
+            background: var(--accent-light);
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 15px;
             margin-bottom: 30px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .category-tab {
-            padding: 10px 20px;
+            padding: 12px 25px;
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 25px;
             color: var(--text);
             cursor: pointer;
             transition: all 0.3s;
+            font-weight: 500;
         }
 
         .category-tab.active {
@@ -136,11 +223,49 @@
             border-color: var(--accent);
         }
 
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        .view-all {
+            color: var(--accent);
+            font-weight: 500;
+            transition: color 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .view-all:hover {
+            color: var(--accent-light);
+        }
+
         .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 25px;
         }
 
         .movie-card {
@@ -150,11 +275,13 @@
             transition: all 0.3s;
             cursor: pointer;
             border: 1px solid var(--border);
+            position: relative;
         }
 
         .movie-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
 
         .movie-poster {
@@ -170,16 +297,21 @@
         .movie-title {
             font-size: 1rem;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
+        .movie-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .movie-year {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 8px;
         }
 
         .movie-rating {
@@ -190,6 +322,18 @@
             font-size: 0.9rem;
         }
 
+        .quality-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
         .loading {
             text-align: center;
             padding: 40px;
@@ -198,7 +342,7 @@
 
         .error {
             background: rgba(229, 9, 20, 0.1);
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
             display: none;
@@ -208,17 +352,35 @@
 
         .footer {
             background: var(--secondary);
-            padding: 30px 0;
+            padding: 40px 0;
             border-top: 1px solid var(--border);
-            margin-top: 40px;
+            margin-top: 60px;
         }
 
         .footer-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 20px;
             text-align: center;
             color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-light);
         }
 
         @media (max-width: 768px) {
@@ -231,25 +393,51 @@
             }
 
             .hero-title {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .search-box {
+                flex-direction: column;
             }
 
             .movies-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
             }
 
             .movie-poster {
                 height: 220px;
             }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
             .movies-grid {
                 grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             }
 
             .movie-poster {
                 height: 190px;
+            }
+
+            .category-tabs {
+                gap: 10px;
+            }
+
+            .category-tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -260,17 +448,26 @@
         <div class="header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-play-circle"></i>
-                BollyFlix
+                HDLove4U
             </a>
             <nav class="nav-links">
                 <a href="index.html" class="nav-link active">Home</a>
-                <a href="#" class="nav-link">Movies</a>
-                <a href="#" class="nav-link">TV Shows</a>
-                <a href="#" class="nav-link">Premium</a>
+                <a href="#" class="nav-link">Bollywood</a>
+                <a href="#" class="nav-link">Hollywood</a>
+                <a href="#" class="nav-link">South Indian</a>
+                <a href="#" class="nav-link">Web Series</a>
+                <a href="#" class="nav-link"><i class="fas fa-search"></i></a>
             </nav>
-            <button class="mobile-menu-btn">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="#" class="nav-link">Bollywood</a>
+            <a href="#" class="nav-link">Hollywood</a>
+            <a href="#" class="nav-link">South Indian</a>
+            <a href="#" class="nav-link">Web Series</a>
         </div>
     </header>
 
@@ -278,20 +475,41 @@
     <main class="container">
         <!-- Hero Section -->
         <section class="hero-section">
-            <h1 class="hero-title">Bollywood & Regional Cinema</h1>
-            <p class="hero-subtitle">Discover the best of Indian cinema across languages and genres</p>
-            
-            <div class="category-tabs">
-                <button class="category-tab active" data-category="bollywood">Bollywood</button>
-                <button class="category-tab" data-category="south">South Indian</button>
-                <button class="category-tab" data-category="bengali">Bengali</button>
-                <button class="category-tab" data-category="punjabi">Punjabi</button>
-                <button class="category-tab" data-category="marathi">Marathi</button>
+            <div class="hero-content">
+                <h1 class="hero-title">HD Movies Download Free</h1>
+                <p class="hero-subtitle">Download Latest Bollywood, Hollywood, South Indian HD Movies in 480p, 720p, 1080p Quality</p>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search movies...">
+                        <button class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Movies Section -->
-        <section>
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="category-tab active" data-category="latest">Latest Movies</button>
+            <button class="category-tab" data-category="bollywood">Bollywood</button>
+            <button class="category-tab" data-category="hollywood">Hollywood</button>
+            <button class="category-tab" data-category="south">South Indian</button>
+            <button class="category-tab" data-category="web">Web Series</button>
+        </div>
+
+        <!-- Latest Movies Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-fire"></i> Latest Movies
+                </h2>
+                <a href="#" class="view-all">
+                    View All <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
             <div class="loading" id="loading">
                 <p><i class="fas fa-spinner fa-spin"></i> Loading movies...</p>
             </div>
@@ -302,56 +520,104 @@
                 <!-- Movies will be loaded here -->
             </div>
         </section>
+
+        <!-- Popular Movies Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i> Popular Movies
+                </h2>
+                <a href="#" class="view-all">
+                    View All <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="movies-grid" id="popularGrid">
+                <!-- Popular movies will be loaded here -->
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <p>&copy; 2024 BollyFlix. All rights reserved.</p>
+            <div class="logo">
+                <i class="fas fa-play-circle"></i>
+                HDLove4U
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Home</a>
+                <a href="#" class="footer-link">DMCA</a>
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">About Us</a>
+            </div>
+            <p>&copy; 2024 HDLove4U. All Rights Reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                Disclaimer: This site does not store any files on its server. All contents are provided by non-affiliated third parties.
+            </p>
         </div>
     </footer>
 
     <script>
-        // Indian movies by category
-        const movieCategories = {
+        // Movies data
+        const moviesData = {
+            latest: [
+                {title: 'Kishkindhapuri', year: '2025', quality: 'WEB-DL', rating: '8.2'},
+                {title: 'Fighter', year: '2024', quality: 'WEB-DL', rating: '7.9'},
+                {title: 'Animal', year: '2023', quality: 'WEB-DL', rating: '7.8'},
+                {title: 'Salaar', year: '2023', quality: 'WEB-DL', rating: '8.1'},
+                {title: 'Dunki', year: '2023', quality: 'WEB-DL', rating: '7.5'},
+                {title: 'Sam Bahadur', year: '2023', quality: 'WEB-DL', rating: '7.6'}
+            ],
             bollywood: [
-                'Dangal', '3 Idiots', 'PK', 'Bajrangi Bhaijaan', 'Lagaan',
-                'Queen', 'Zindagi Na Milegi Dobara', 'Barfi', 'Gully Boy',
-                'Andhadhun', 'Badhaai Ho', 'Article 15', 'Thappad', 'Shershaah'
+                {title: 'Pathaan', year: '2023', quality: 'WEB-DL', rating: '8.0'},
+                {title: 'Jawan', year: '2023', quality: 'WEB-DL', rating: '8.2'},
+                {title: 'Brahmastra', year: '2022', quality: 'WEB-DL', rating: '7.1'},
+                {title: 'RRR', year: '2022', quality: 'WEB-DL', rating: '8.5'},
+                {title: 'KGF 2', year: '2022', quality: 'WEB-DL', rating: '8.3'},
+                {title: 'Vikram Vedha', year: '2022', quality: 'WEB-DL', rating: '7.8'}
+            ],
+            hollywood: [
+                {title: 'Avatar 2', year: '2022', quality: 'WEB-DL', rating: '7.8'},
+                {title: 'Spider-Man: No Way Home', year: '2021', quality: 'WEB-DL', rating: '8.2'},
+                {title: 'The Batman', year: '2022', quality: 'WEB-DL', rating: '7.8'},
+                {title: 'Top Gun: Maverick', year: '2022', quality: 'WEB-DL', rating: '8.3'},
+                {title: 'Black Panther', year: '2022', quality: 'WEB-DL', rating: '7.2'},
+                {title: 'Doctor Strange', year: '2022', quality: 'WEB-DL', rating: '7.5'}
             ],
             south: [
-                'Baahubali: The Beginning', 'Baahubali 2: The Conclusion', 'RRR',
-                'KGF: Chapter 1', 'KGF: Chapter 2', 'Vikram Vedha', 'Master',
-                'Pushpa: The Rise', 'Kantara', 'Vikram', 'Ponniyin Selvan: I',
-                'Ponniyin Selvan: II', 'Sita Ramam', 'Uppena'
+                {title: 'Pushpa 2', year: '2024', quality: 'WEB-DL', rating: '8.4'},
+                {title: 'Kantara', year: '2022', quality: 'WEB-DL', rating: '8.7'},
+                {title: 'Vikram', year: '2022', quality: 'WEB-DL', rating: '8.4'},
+                {title: '777 Charlie', year: '2022', quality: 'WEB-DL', rating: '8.1'},
+                {title: 'Sita Ramam', year: '2022', quality: 'WEB-DL', rating: '8.8'},
+                {title: 'Uppena', year: '2021', quality: 'WEB-DL', rating: '7.9'}
             ],
-            bengali: [
-                'Pather Panchali', 'Apur Sansar', 'Chokher Bali', 'Autograph',
-                'Baishe Srabon', 'Chotushkone', 'Praktan', 'Amazon Obhijaan',
-                'Durgeshgorer Guptodhon', 'Ballabhpurer Roopkatha', 'Haami 2',
-                'Konttho', 'Mukhomukhi', 'Love Aaj Kal Porshu'
-            ],
-            punjabi: [
-                'Carry On Jatta', 'Jatt & Juliet', 'Sardaar Ji', 'Angrej',
-                'Nikka Zaildar', 'Qismat', 'Shadaa', 'Muklawa', 'Jinde Meriye',
-                'Maa', 'Bambukat', 'Ardaas', 'Surkhi Bindi', 'Khaao Piyo Aish Karo'
-            ],
-            marathi: [
-                'Sairat', 'Natsamrat', 'Court', 'Fandry', 'Killa',
-                'Elizabeth Ekadashi', 'Ventilator', 'Muramba', 'Anandi Gopal',
-                'Dhurala', 'Mumbai Pune Mumbai', 'Timepass', 'Lai Bhaari', 'Deool'
+            web: [
+                {title: 'The Family Man S2', year: '2021', quality: 'WEB-DL', rating: '8.7'},
+                {title: 'Sacred Games S2', year: '2019', quality: 'WEB-DL', rating: '8.6'},
+                {title: 'Mirzapur S3', year: '2024', quality: 'WEB-DL', rating: '8.4'},
+                {title: 'Aspirants S2', year: '2023', quality: 'WEB-DL', rating: '9.0'},
+                {title: 'Kota Factory S3', year: '2023', quality: 'WEB-DL', rating: '9.2'},
+                {title: 'Panchayat S3', year: '2024', quality: 'WEB-DL', rating: '9.1'}
             ]
         };
 
-        let currentCategory = 'bollywood';
+        let currentCategory = 'latest';
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             loadMovies(currentCategory);
+            loadPopularMovies();
             setupEventListeners();
         });
 
         function setupEventListeners() {
+            // Mobile menu
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                document.getElementById('mobileNav').classList.toggle('active');
+            });
+
             // Category tabs
             document.querySelectorAll('.category-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -362,71 +628,105 @@
                 });
             });
 
-            // Mobile menu
-            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-                const navLinks = document.querySelector('.nav-links');
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            // Search functionality
+            document.getElementById('searchBtn').addEventListener('click', searchMovies);
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchMovies();
+                }
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const mobileNav = document.getElementById('mobileNav');
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                if (!mobileNav.contains(event.target) && !menuBtn.contains(event.target)) {
+                    mobileNav.classList.remove('active');
+                }
             });
         }
 
-        async function loadMovies(category) {
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
+        function loadMovies(category) {
             const moviesGrid = document.getElementById('moviesGrid');
-
-            loading.style.display = 'block';
-            error.style.display = 'none';
             moviesGrid.innerHTML = '';
 
-            try {
-                const movies = movieCategories[category];
-                for (const title of movies) {
-                    await fetchMovieData(title, moviesGrid);
-                }
-            } catch (err) {
-                showError('Error loading movies. Please try again.');
-                console.error('Error:', err);
-            } finally {
-                loading.style.display = 'none';
-            }
+            const movies = moviesData[category];
+            movies.forEach(movie => {
+                createMovieCard(movie, moviesGrid);
+            });
         }
 
-        async function fetchMovieData(title, container) {
-            try {
-                const response = await fetch(`https://www.omdbapi.com/?apikey=684fefc5&t=${encodeURIComponent(title)}`);
-                const data = await response.json();
-
-                if (data.Response === 'True') {
-                    createMovieCard(data, container);
-                }
-            } catch (error) {
-                console.error('Error fetching movie:', error);
-            }
+        function loadPopularMovies() {
+            const popularGrid = document.getElementById('popularGrid');
+            const popularMovies = [...moviesData.latest, ...moviesData.bollywood].slice(0, 6);
+            
+            popularMovies.forEach(movie => {
+                createMovieCard(movie, popularGrid);
+            });
         }
 
         function createMovieCard(movie, container) {
             const movieCard = document.createElement('div');
             movieCard.className = 'movie-card';
+            
+            // Generate movie ID for sharing
+            const movieId = generateMovieId(movie.title, movie.year);
+            
             movieCard.innerHTML = `
-                <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/200x280/15202b/8b98a5?text=No+Poster'}" 
-                     alt="${movie.Title}" class="movie-poster">
+                <div class="quality-badge">${movie.quality}</div>
+                <img src="https://via.placeholder.com/300x400/141414/333333?text=${encodeURIComponent(movie.title)}" 
+                     alt="${movie.title}" class="movie-poster">
                 <div class="movie-info">
-                    <h3 class="movie-title">${movie.Title}</h3>
-                    <p class="movie-year">${movie.Year}</p>
-                    <div class="movie-rating">
-                        <i class="fas fa-star"></i>
-                        <span>${movie.imdbRating !== 'N/A' ? movie.imdbRating : 'N/A'}</span>
+                    <h3 class="movie-title">${movie.title}</h3>
+                    <div class="movie-meta">
+                        <span class="movie-year">${movie.year}</span>
+                        <div class="movie-rating">
+                            <i class="fas fa-star"></i>
+                            <span>${movie.rating}</span>
+                        </div>
                     </div>
                 </div>
             `;
             
             movieCard.addEventListener('click', () => {
-                // Store movie data and redirect to blog page
-                localStorage.setItem('selectedMovie', JSON.stringify(movie));
-                window.location.href = 'blog.html';
+                // Redirect to movie page with ID
+                window.location.href = `movie.html?id=${movieId}&title=${encodeURIComponent(movie.title.toLowerCase().replace(/ /g, '-'))}-${movie.year}-hindi-webrip-full-movie`;
             });
             
             container.appendChild(movieCard);
+        }
+
+        function searchMovies() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (searchTerm) {
+                // Simple search implementation
+                const allMovies = Object.values(moviesData).flat();
+                const filteredMovies = allMovies.filter(movie => 
+                    movie.title.toLowerCase().includes(searchTerm)
+                );
+                
+                const moviesGrid = document.getElementById('moviesGrid');
+                moviesGrid.innerHTML = '';
+                
+                if (filteredMovies.length > 0) {
+                    filteredMovies.forEach(movie => {
+                        createMovieCard(movie, moviesGrid);
+                    });
+                } else {
+                    moviesGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1;">No movies found</p>';
+                }
+            }
+        }
+
+        function generateMovieId(title, year) {
+            let baseString = title.toLowerCase().replace(/[^a-z0-9]/g, '') + year;
+            let hash = 0;
+            for (let i = 0; i < baseString.length; i++) {
+                let char = baseString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return 'tt' + Math.abs(hash).toString().substring(0, 8).padStart(7, '0');
         }
 
         function showError(message) {
@@ -434,19 +734,6 @@
             error.textContent = message;
             error.style.display = 'block';
         }
-
-        // Close mobile menu when clicking outside
-        window.addEventListener('click', function(event) {
-            const navLinks = document.querySelector('.nav-links');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            
-            if (window.innerWidth <= 768 && 
-                !navLinks.contains(event.target) && 
-                !menuBtn.contains(event.target) &&
-                navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
