@@ -11,7 +11,39 @@
             padding: 0;
             box-sizing: border-box;
         }
+// Add this security check at the very beginning of admin.html script
+(function() {
+    const isLoggedIn = localStorage.getItem('adminLoggedIn');
+    const loginTime = localStorage.getItem('adminLoginTime');
+    const currentTime = new Date().getTime();
+    
+    // Check if user is logged in and session is valid (24 hours)
+    if (!isLoggedIn || (currentTime - loginTime > 24 * 60 * 60 * 1000)) {
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('adminLoginTime');
+        window.location.href = 'admin-login.html';
+        return;
+    }
+})();
 
+// Add logout functionality
+function addLogoutButton() {
+    const header = document.querySelector('.header');
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'btn btn-danger';
+    logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+    logoutBtn.onclick = function() {
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('adminLoginTime');
+        window.location.href = 'admin-login.html';
+    };
+    
+    const userInfo = document.querySelector('.user-info');
+    userInfo.appendChild(logoutBtn);
+}
+
+// Call this function in your admin panel initialization
+addLogoutButton();
         :root {
             --primary: #0a0a0a;
             --secondary: #1a1a1a;
