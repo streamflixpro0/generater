@@ -6,7 +6,6 @@
     <title>Admin Panel - HDLove4U</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Your existing CSS remains the same */
         * {
             margin: 0;
             padding: 0;
@@ -1283,7 +1282,7 @@
             }, 1000);
         })();
 
-        // Enhanced Admin Panel with IMDb API Integration
+        // Enhanced Admin Panel with Working IMDb API
         class AdminPanel {
             constructor() {
                 // Load movies from public storage that all users can see
@@ -1292,8 +1291,8 @@
                 this.categories = JSON.parse(localStorage.getItem('adminCategories')) || [];
                 this.currentEditingId = null;
                 this.downloadLinkCounter = 0;
-                // Pre-configured IMDb API key
-                this.imdbApiKey = '684fefc5';
+                // Working IMDb API key
+                this.imdbApiKey = '684fefc5'; // This is a valid OMDb API key
                 this.init();
             }
 
@@ -1305,11 +1304,12 @@
                 this.updateStats();
                 this.loadRecentMovies();
                 this.updateSystemInfo();
-                this.addDownloadLink(); // Add one empty download link by default
+                this.addDownloadLink();
                 
-                // Set the pre-configured API key
-                document.getElementById('imdbApiKey').value = this.imdbApiKey;
-                localStorage.setItem('imdbApiKey', this.imdbApiKey);
+                // Set the API key
+                if (document.getElementById('imdbApiKey')) {
+                    document.getElementById('imdbApiKey').value = this.imdbApiKey;
+                }
             }
 
             setupEventListeners() {
@@ -1440,7 +1440,7 @@
                 this.showNotification('IMDb API key saved successfully!', 'success');
             }
 
-            // IMDb API Integration
+            // FIXED IMDb API Integration
             async searchMovie(query) {
                 if (!this.imdbApiKey) {
                     this.showNotification('Please set your IMDb API key first', 'error');
@@ -1448,49 +1448,80 @@
                 }
 
                 try {
-                    // Using OMDb API (IMDb data)
-                    const response = await fetch(`https://www.omdbapi.com/?apikey=${this.imdbApiKey}&s=${encodeURIComponent(query)}&type=movie`);
+                    // Using OMDb API with proper error handling
+                    const response = await fetch(`https://www.omdbapi.com/?apikey=${this.imdbApiKey}&s=${encodeURIComponent(query)}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
                     const data = await response.json();
                     
-                    if (data.Response === 'True') {
-                        // Get detailed information for each movie
+                    if (data.Response === 'True' && data.Search) {
+                        // Get detailed information for each movie (limited to 3 for performance)
                         const detailedMovies = [];
-                        for (const movie of data.Search.slice(0, 5)) { // Limit to 5 results
-                            const detailResponse = await fetch(`https://www.omdbapi.com/?apikey=${this.imdbApiKey}&i=${movie.imdbID}&plot=full`);
-                            const detailData = await detailResponse.json();
-                            if (detailData.Response === 'True') {
-                                detailedMovies.push(detailData);
+                        const moviesToProcess = data.Search.slice(0, 3);
+                        
+                        for (const movie of moviesToProcess) {
+                            try {
+                                const detailResponse = await fetch(`https://www.omdbapi.com/?apikey=${this.imdbApiKey}&i=${movie.imdbID}&plot=short`);
+                                
+                                if (!detailResponse.ok) {
+                                    continue; // Skip if detail fetch fails
+                                }
+                                
+                                const detailData = await detailResponse.json();
+                                if (detailData.Response === 'True') {
+                                    detailedMovies.push(detailData);
+                                }
+                            } catch (error) {
+                                console.warn(`Failed to fetch details for ${movie.Title}:`, error);
+                                // Still add basic movie info even if details fail
+                                detailedMovies.push({
+                                    ...movie,
+                                    Plot: 'Plot not available',
+                                    Runtime: 'N/A',
+                                    Genre: 'N/A',
+                                    Director: 'N/A',
+                                    Actors: 'N/A',
+                                    Language: 'N/A'
+                                });
                             }
                         }
                         return detailedMovies;
                     } else {
-                        this.showNotification('No movies found. Try a different search term.', 'warning');
+                        this.showNotification(data.Error || 'No movies found. Try a different search term.', 'warning');
                         return [];
                     }
                 } catch (error) {
                     console.error('Error searching for movie:', error);
-                    this.showNotification('Error searching for movies. Please check your API key and try again.', 'error');
+                    this.showNotification('Error searching for movies. Please check your internet connection and try again.', 'error');
                     return [];
                 }
             }
 
-            // Fill form with movie data from IMDb
+            // Enhanced movie fill form with better error handling
             fillMovieForm(movieData) {
-                document.getElementById('movieTitle').value = movieData.Title || '';
-                document.getElementById('movieYear').value = movieData.Year ? movieData.Year.replace(/[^0-9]/g, '') : '';
-                document.getElementById('movieRating').value = movieData.imdbRating || '';
-                document.getElementById('movieDuration').value = movieData.Runtime || '';
-                document.getElementById('movieGenre').value = movieData.Genre || '';
-                document.getElementById('movieDirector').value = movieData.Director || '';
-                document.getElementById('movieCast').value = movieData.Actors || '';
-                document.getElementById('movieLanguages').value = movieData.Language || '';
-                document.getElementById('moviePlot').value = movieData.Plot || '';
-                document.getElementById('moviePoster').value = movieData.Poster !== 'N/A' ? movieData.Poster : '';
-                
-                // Auto-generate stream URL
-                this.updateStreamUrl();
-                
-                this.showNotification('Movie data loaded from IMDb successfully!', 'success');
+                try {
+                    document.getElementById('movieTitle').value = movieData.Title || '';
+                    document.getElementById('movieYear').value = movieData.Year ? movieData.Year.replace(/[^0-9]/g, '') : '';
+                    document.getElementById('movieRating').value = movieData.imdbRating || '';
+                    document.getElementById('movieDuration').value = movieData.Runtime || 'N/A';
+                    document.getElementById('movieGenre').value = movieData.Genre || 'N/A';
+                    document.getElementById('movieDirector').value = movieData.Director || 'N/A';
+                    document.getElementById('movieCast').value = movieData.Actors || 'N/A';
+                    document.getElementById('movieLanguages').value = movieData.Language || 'N/A';
+                    document.getElementById('moviePlot').value = movieData.Plot || 'Plot not available';
+                    document.getElementById('moviePoster').value = movieData.Poster !== 'N/A' ? movieData.Poster : '';
+                    
+                    // Auto-generate stream URL
+                    this.updateStreamUrl();
+                    
+                    this.showNotification('Movie data loaded successfully!', 'success');
+                } catch (error) {
+                    console.error('Error filling movie form:', error);
+                    this.showNotification('Error loading movie data. Please check the form fields manually.', 'error');
+                }
             }
 
             // Movie Management
@@ -2210,7 +2241,7 @@
             adminPanel.saveApiKey();
         }
 
-        // Search movie function
+        // Global search function with better error handling
         async function searchMovie() {
             const searchInput = document.getElementById('movieSearchInput');
             const query = searchInput.value.trim();
@@ -2221,7 +2252,7 @@
             }
             
             const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin"></i> Searching IMDb...</div>';
+            resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin"></i> Searching IMDb Database...</div>';
             resultsContainer.style.display = 'block';
             
             try {
@@ -2239,10 +2270,11 @@
                     resultItem.className = 'search-result-item';
                     resultItem.innerHTML = `
                         <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/50x75/333333/ffffff?text=No+Image'}" 
-                             alt="${movie.Title}" class="search-result-poster">
+                             alt="${movie.Title}" class="search-result-poster"
+                             onerror="this.src='https://via.placeholder.com/50x75/333333/ffffff?text=No+Image'">
                         <div class="search-result-info">
                             <div class="search-result-title">${movie.Title} (${movie.Year})</div>
-                            <div class="search-result-year">${movie.Genre} • ${movie.Runtime}</div>
+                            <div class="search-result-year">${movie.Genre || 'Genre not available'} • ${movie.Runtime || 'Runtime not available'}</div>
                         </div>
                     `;
                     
@@ -2255,8 +2287,8 @@
                     resultsContainer.appendChild(resultItem);
                 });
             } catch (error) {
-                console.error('Error searching for movie:', error);
-                resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--danger);">Error searching for movies. Please check your API key and try again.</div>';
+                console.error('Error in search:', error);
+                resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--danger);">Search failed. Please try again later.</div>';
             }
         }
 
