@@ -79,16 +79,6 @@
             border-color: var(--accent);
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -185,10 +175,23 @@
             transition: background 0.3s;
             margin-right: 15px;
             margin-bottom: 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
         .download-btn:hover {
             background: var(--accent-light);
+        }
+
+        .download-btn.secondary {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .download-btn.secondary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
         }
 
         .movie-content {
@@ -274,6 +277,28 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .player-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .player-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
         }
 
         .quality-options {
@@ -440,6 +465,27 @@
             font-size: 0.9rem;
         }
 
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .error {
+            background: rgba(229, 9, 20, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent);
+            text-align: center;
+        }
+
         .footer {
             background: var(--secondary);
             padding: 40px 0;
@@ -475,16 +521,18 @@
                 font-size: 2rem;
             }
 
-            .mobile-menu-btn {
-                display: block;
-            }
-
             .details-grid {
                 grid-template-columns: 1fr;
             }
 
             .quality-options {
                 grid-template-columns: 1fr;
+            }
+
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+                margin-right: 0;
             }
         }
 
@@ -498,18 +546,17 @@
                 height: 280px;
             }
 
-            .download-btn {
-                width: 100%;
-                justify-content: center;
-                margin-right: 0;
-            }
-
             .share-buttons {
                 flex-direction: column;
             }
 
             .share-btn {
                 justify-content: center;
+            }
+
+            .movie-meta {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
@@ -531,8 +578,15 @@
 
     <!-- Main Content -->
     <main class="container">
-        <div id="movieContent">
-            <!-- Movie content will be loaded here -->
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading movie details...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="blog-content" id="blogContent" style="display: none;">
+            <!-- Blog content will be loaded here -->
         </div>
     </main>
 
@@ -551,8 +605,8 @@
     </footer>
 
     <script>
-        // Movie data
-        const moviesDatabase = {
+        // Default movie database
+        const defaultMoviesDatabase = {
             'ttkishkind2025': {
                 title: 'Kishkindhapuri',
                 year: '2025',
@@ -563,7 +617,8 @@
                 cast: 'Prabhas, Deepika Padukone, Amitabh Bachchan',
                 plot: 'An epic adventure set in the mythical kingdom of Kishkindha, following the journey of a warrior prince who must save his kingdom from dark forces threatening to destroy the balance between humans and mythical creatures.',
                 quality: 'WEB-DL',
-                languages: 'Hindi, Telugu, Tamil'
+                languages: 'Hindi, Telugu, Tamil',
+                poster: 'https://via.placeholder.com/300x450/141414/333333?text=Kishkindhapuri'
             },
             'ttfighter2024': {
                 title: 'Fighter',
@@ -575,7 +630,8 @@
                 cast: 'Hrithik Roshan, Deepika Padukone, Anil Kapoor',
                 plot: 'A high-octane action thriller about Indian Air Force pilots and their missions to protect the nation from aerial threats.',
                 quality: 'WEB-DL',
-                languages: 'Hindi, English'
+                languages: 'Hindi, English',
+                poster: 'https://via.placeholder.com/300x450/141414/333333?text=Fighter'
             }
         };
 
@@ -594,8 +650,27 @@
                 return;
             }
 
-            const movie = moviesDatabase[movieId] || getDefaultMovieData(movieSlug);
-            generateMovieContent(movie, movieId);
+            // First try to load from admin data
+            let movie = loadMovieFromAdmin(movieId);
+            
+            // If not found in admin data, use default
+            if (!movie) {
+                movie = defaultMoviesDatabase[movieId] || getDefaultMovieData(movieSlug);
+            }
+
+            if (movie) {
+                generateMovieContent(movie, movieId);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('blogContent').style.display = 'block';
+            } else {
+                showError('Movie not found. Please check the URL or go back to home page.');
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function loadMovieFromAdmin(movieId) {
+            const adminMovies = JSON.parse(localStorage.getItem('websiteMovies')) || [];
+            return adminMovies.find(movie => movie.id === movieId);
         }
 
         function getDefaultMovieData(movieSlug) {
@@ -616,19 +691,19 @@
                 cast: 'Actor 1, Actor 2, Actor 3',
                 plot: 'An exciting movie with great action sequences and compelling storyline that will keep you engaged throughout.',
                 quality: 'WEB-DL',
-                languages: 'Hindi, English'
+                languages: 'Hindi, English',
+                poster: `https://via.placeholder.com/300x450/141414/333333?text=${encodeURIComponent(title)}`
             };
         }
 
         function generateMovieContent(movie, movieId) {
-            const movieContent = document.getElementById('movieContent');
+            const blogContent = document.getElementById('blogContent');
             const currentUrl = window.location.href;
-            const streamUrl = `https://hikke383ehr.com/play/${movieId}`;
+            const streamUrl = movie.streamUrl || `https://hikke383ehr.com/play/${movieId}`;
 
-            movieContent.innerHTML = `
+            blogContent.innerHTML = `
                 <div class="movie-header">
-                    <img src="https://via.placeholder.com/300x450/141414/333333?text=${encodeURIComponent(movie.title)}" 
-                         alt="${movie.title}" class="movie-poster">
+                    <img src="${movie.poster}" alt="${movie.title}" class="movie-poster">
                     <div class="movie-info">
                         <h1 class="movie-title">${movie.title} (${movie.year})</h1>
                         <div class="movie-meta">
@@ -657,12 +732,12 @@
                             <span class="quality-tag">4K</span>
                         </div>
                         <div>
-                            <a href="${streamUrl}" class="download-btn" target="_blank">
+                            <button class="download-btn" onclick="window.open('${streamUrl}', '_blank')">
                                 <i class="fas fa-play"></i> Watch Now
-                            </a>
-                            <a href="#downloads" class="download-btn">
+                            </button>
+                            <button class="download-btn secondary" onclick="scrollToDownloads()">
                                 <i class="fas fa-download"></i> Download
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -706,11 +781,14 @@
                                 <i class="fas fa-play-circle"></i> Watch Online
                             </h2>
                             <div class="player-container">
-                                <iframe src="${streamUrl}" 
-                                        title="${movie.title} Player"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
-                                </iframe>
+                                <div class="player-placeholder">
+                                    <i class="fas fa-play-circle"></i>
+                                    <h3>Movie Player</h3>
+                                    <p>Click "Watch Now" to start streaming</p>
+                                    <button class="download-btn" onclick="window.open('${streamUrl}', '_blank')" style="margin-top: 15px;">
+                                        <i class="fas fa-external-link-alt"></i> Open Player
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -719,22 +797,22 @@
                                 <i class="fas fa-download"></i> Download Links
                             </h2>
                             <div class="quality-options">
-                                <div class="quality-option">
+                                <div class="quality-option" onclick="downloadMovie('480p')">
                                     <div class="quality-size">1.2 GB</div>
                                     <div class="quality-resolution">480p WEB-DL</div>
                                     <div class="quality-info">Hindi • x264</div>
                                 </div>
-                                <div class="quality-option">
+                                <div class="quality-option" onclick="downloadMovie('720p')">
                                     <div class="quality-size">2.5 GB</div>
                                     <div class="quality-resolution">720p WEB-DL</div>
                                     <div class="quality-info">Hindi • HEVC</div>
                                 </div>
-                                <div class="quality-option">
+                                <div class="quality-option" onclick="downloadMovie('1080p')">
                                     <div class="quality-size">4.8 GB</div>
                                     <div class="quality-resolution">1080p WEB-DL</div>
                                     <div class="quality-info">Hindi • x265</div>
                                 </div>
-                                <div class="quality-option">
+                                <div class="quality-option" onclick="downloadMovie('4K')">
                                     <div class="quality-size">8.2 GB</div>
                                     <div class="quality-resolution">2160p WEB-DL</div>
                                     <div class="quality-info">Hindi • HDR</div>
@@ -748,7 +826,7 @@
                             <i class="fas fa-film"></i> Related Movies
                         </h2>
                         <div class="related-movies">
-                            ${generateRelatedMovies()}
+                            ${generateRelatedMovies(movieId)}
                         </div>
                     </div>
                 </div>
@@ -782,24 +860,40 @@
             document.title = `${movie.title} (${movie.year}) Hindi WEBRip Full Movie Download - HDLove4U`;
         }
 
-        function generateRelatedMovies() {
-            const relatedMovies = [
-                {title: 'Salaar', year: '2023', id: 'ttsalaar2023'},
-                {title: 'Animal', year: '2023', id: 'ttanimal2023'},
-                {title: 'Jawan', year: '2023', id: 'ttjawan2023'},
-                {title: 'Pathaan', year: '2023', id: 'ttpathaan2023'}
-            ];
+        function generateRelatedMovies(currentMovieId) {
+            const adminMovies = JSON.parse(localStorage.getItem('websiteMovies')) || [];
+            const defaultMovies = Object.values(defaultMoviesDatabase);
+            const allMovies = [...adminMovies, ...defaultMovies];
+            
+            // Filter out current movie and get 4 random movies
+            const relatedMovies = allMovies
+                .filter(movie => movie.id !== currentMovieId)
+                .slice(0, 4);
+
+            if (relatedMovies.length === 0) {
+                return '<p style="color: var(--text-secondary); text-align: center;">No related movies found</p>';
+            }
 
             return relatedMovies.map(movie => `
                 <a href="movie.html?id=${movie.id}&title=${movie.title.toLowerCase().replace(/ /g, '-')}-${movie.year}-hindi-webrip-full-movie" class="related-movie">
-                    <img src="https://via.placeholder.com/80x100/141414/333333?text=${encodeURIComponent(movie.title)}" 
+                    <img src="${movie.poster}" 
                          alt="${movie.title}" class="related-poster">
                     <div class="related-info">
                         <div class="related-title">${movie.title}</div>
-                        <div class="related-year">${movie.year}</div>
+                        <div class="related-year">${movie.year} • ${movie.rating}/10</div>
                     </div>
                 </a>
             `).join('');
+        }
+
+        function scrollToDownloads() {
+            document.getElementById('downloads').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function downloadMovie(quality) {
+            alert(`Downloading movie in ${quality} quality...\nNote: This is a demo. In a real application, this would start the download.`);
         }
 
         function copyShareUrl() {
@@ -812,12 +906,14 @@
 
         function shareOnWhatsApp() {
             const url = encodeURIComponent(window.location.href);
-            window.open(`https://wa.me/?text=Check out this movie: ${url}`, '_blank');
+            const text = encodeURIComponent(`Check out this movie: ${document.title}`);
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
         }
 
         function shareOnTelegram() {
             const url = encodeURIComponent(window.location.href);
-            window.open(`https://t.me/share/url?url=${url}`, '_blank');
+            const text = encodeURIComponent(`Check out this movie: ${document.title}`);
+            window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
         }
 
         function shareOnFacebook() {
@@ -829,6 +925,19 @@
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent('Check out this amazing movie!');
             window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function showError(message) {
+            const error = document.getElementById('error');
+            error.innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Error Loading Movie</h3>
+                <p>${message}</p>
+                <a href="index.html" class="download-btn" style="margin-top: 15px;">
+                    <i class="fas fa-home"></i> Go Back Home
+                </a>
+            `;
+            error.style.display = 'block';
         }
     </script>
 </body>
