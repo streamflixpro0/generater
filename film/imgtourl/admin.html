@@ -656,6 +656,15 @@
             gap: 8px;
         }
 
+        /* API Key Input */
+        .api-key-section {
+            background: var(--secondary);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
@@ -909,10 +918,29 @@
                     </h2>
                 </div>
 
+                <!-- IMDb API Key Section -->
+                <div class="api-key-section">
+                    <h3 style="margin-bottom: 15px; color: var(--text);">
+                        <i class="fas fa-key"></i> IMDb API Configuration
+                    </h3>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label">IMDb API Key</label>
+                            <input type="text" class="form-input" id="imdbApiKey" placeholder="Enter your IMDb API key">
+                        </div>
+                        <button class="btn btn-success" onclick="saveApiKey()" style="margin-top: 25px;">
+                            <i class="fas fa-save"></i> Save API Key
+                        </button>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px;">
+                        Get your free API key from <a href="https://www.omdbapi.com/apikey.aspx" target="_blank" style="color: var(--accent);">OMDb API</a>
+                    </p>
+                </div>
+
                 <!-- Movie Search Section -->
                 <div class="movie-search">
                     <h3 style="margin-bottom: 15px; color: var(--text);">
-                        <i class="fas fa-search"></i> Search TMDB Database
+                        <i class="fas fa-search"></i> Search IMDb Database
                     </h3>
                     <div class="form-row">
                         <div class="form-group" style="flex: 1;">
@@ -938,7 +966,7 @@
                             <input type="number" class="form-input" id="movieYear" min="1900" max="2030" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">IMDB Rating</label>
+                            <label class="form-label">IMDb Rating</label>
                             <input type="number" class="form-input" id="movieRating" step="0.1" min="0" max="10">
                         </div>
                         <div class="form-group">
@@ -1255,7 +1283,7 @@
             }, 1000);
         })();
 
-        // Enhanced Admin Panel with TMDB API, Posts, and Categories
+        // Enhanced Admin Panel with IMDb API Integration
         class AdminPanel {
             constructor() {
                 this.movies = JSON.parse(localStorage.getItem('adminMovies')) || [];
@@ -1263,6 +1291,7 @@
                 this.categories = JSON.parse(localStorage.getItem('adminCategories')) || [];
                 this.currentEditingId = null;
                 this.downloadLinkCounter = 0;
+                this.imdbApiKey = localStorage.getItem('imdbApiKey') || '';
                 this.init();
             }
 
@@ -1275,6 +1304,11 @@
                 this.loadRecentMovies();
                 this.updateSystemInfo();
                 this.addDownloadLink(); // Add one empty download link by default
+                
+                // Load saved API key
+                if (this.imdbApiKey) {
+                    document.getElementById('imdbApiKey').value = this.imdbApiKey;
+                }
             }
 
             setupEventListeners() {
@@ -1392,82 +1426,70 @@
                 }
             }
 
-            // TMDB API Integration
+            // Save IMDb API Key
+            saveApiKey() {
+                const apiKey = document.getElementById('imdbApiKey').value.trim();
+                if (!apiKey) {
+                    this.showNotification('Please enter a valid IMDb API key', 'error');
+                    return;
+                }
+                
+                this.imdbApiKey = apiKey;
+                localStorage.setItem('imdbApiKey', apiKey);
+                this.showNotification('IMDb API key saved successfully!', 'success');
+            }
+
+            // IMDb API Integration
             async searchMovie(query) {
+                if (!this.imdbApiKey) {
+                    this.showNotification('Please set your IMDb API key first', 'error');
+                    return [];
+                }
+
                 try {
-                    // In a real application, you would use your TMDB API key
-                    // For demonstration, we'll use a mock response
-                    const mockMovies = [
-                        {
-                            title: "The Shawshank Redemption",
-                            release_date: "1994-09-23",
-                            id: 278,
-                            vote_average: 9.3,
-                            runtime: 142,
-                            genres: [{name: "Drama"}],
-                            director: "Frank Darabont",
-                            cast: "Tim Robbins, Morgan Freeman, Bob Gunton",
-                            overview: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-                            poster_path: "/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
-                            spoken_languages: [{english_name: "English"}]
-                        },
-                        {
-                            title: "The Godfather",
-                            release_date: "1972-03-14",
-                            id: 238,
-                            vote_average: 9.2,
-                            runtime: 175,
-                            genres: [{name: "Crime"}, {name: "Drama"}],
-                            director: "Francis Ford Coppola",
-                            cast: "Marlon Brando, Al Pacino, James Caan",
-                            overview: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
-                            poster_path: "/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
-                            spoken_languages: [{english_name: "English"}, {english_name: "Italian"}]
-                        },
-                        {
-                            title: "The Dark Knight",
-                            release_date: "2008-07-18",
-                            id: 155,
-                            vote_average: 9.0,
-                            runtime: 152,
-                            genres: [{name: "Action"}, {name: "Crime"}, {name: "Drama"}],
-                            director: "Christopher Nolan",
-                            cast: "Christian Bale, Heath Ledger, Aaron Eckhart",
-                            overview: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
-                            poster_path: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-                            spoken_languages: [{english_name: "English"}, {english_name: "Mandarin"}]
+                    // Using OMDb API (IMDb data)
+                    const response = await fetch(`https://www.omdbapi.com/?apikey=${this.imdbApiKey}&s=${encodeURIComponent(query)}&type=movie`);
+                    const data = await response.json();
+                    
+                    if (data.Response === 'True') {
+                        // Get detailed information for each movie
+                        const detailedMovies = [];
+                        for (const movie of data.Search.slice(0, 5)) { // Limit to 5 results
+                            const detailResponse = await fetch(`https://www.omdbapi.com/?apikey=${this.imdbApiKey}&i=${movie.imdbID}&plot=full`);
+                            const detailData = await detailResponse.json();
+                            if (detailData.Response === 'True') {
+                                detailedMovies.push(detailData);
+                            }
                         }
-                    ];
-
-                    // Filter mock data based on query
-                    const filteredMovies = mockMovies.filter(movie => 
-                        movie.title.toLowerCase().includes(query.toLowerCase())
-                    );
-
-                    return filteredMovies;
+                        return detailedMovies;
+                    } else {
+                        this.showNotification('No movies found. Try a different search term.', 'warning');
+                        return [];
+                    }
                 } catch (error) {
                     console.error('Error searching for movie:', error);
+                    this.showNotification('Error searching for movies. Please check your API key and try again.', 'error');
                     return [];
                 }
             }
 
-            // Fill form with movie data from TMDB
+            // Fill form with movie data from IMDb
             fillMovieForm(movieData) {
-                document.getElementById('movieTitle').value = movieData.title;
-                document.getElementById('movieYear').value = new Date(movieData.release_date).getFullYear();
-                document.getElementById('movieRating').value = movieData.vote_average || '';
-                document.getElementById('movieDuration').value = `${Math.floor(movieData.runtime / 60)}h ${movieData.runtime % 60}m` || '';
-                document.getElementById('movieGenre').value = movieData.genres.map(g => g.name).join(', ') || '';
-                document.getElementById('movieDirector').value = movieData.director || '';
-                document.getElementById('movieCast').value = movieData.cast || '';
-                document.getElementById('movieLanguages').value = movieData.spoken_languages.map(l => l.english_name).join(', ') || '';
-                document.getElementById('moviePlot').value = movieData.overview || '';
-                document.getElementById('moviePoster').value = `https://image.tmdb.org/t/p/w500${movieData.poster_path}` || '';
+                document.getElementById('movieTitle').value = movieData.Title || '';
+                document.getElementById('movieYear').value = movieData.Year ? movieData.Year.replace(/[^0-9]/g, '') : '';
+                document.getElementById('movieRating').value = movieData.imdbRating || '';
+                document.getElementById('movieDuration').value = movieData.Runtime || '';
+                document.getElementById('movieGenre').value = movieData.Genre || '';
+                document.getElementById('movieDirector').value = movieData.Director || '';
+                document.getElementById('movieCast').value = movieData.Actors || '';
+                document.getElementById('movieLanguages').value = movieData.Language || '';
+                document.getElementById('moviePlot').value = movieData.Plot || '';
+                document.getElementById('moviePoster').value = movieData.Poster !== 'N/A' ? movieData.Poster : '';
                 
                 // Auto-generate stream URL
                 this.updateStreamUrl();
                 
-                this.showNotification('Movie data loaded from TMDB successfully!', 'success');
+                this.showNotification('Movie data loaded from IMDb successfully!', 'success');
             }
 
             // Movie Management
@@ -1661,6 +1683,9 @@
                             <div class="action-buttons">
                                 <button class="action-btn edit-btn" onclick="adminPanel.editMovie('${movie.id}')">
                                     <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" onclick="adminPanel.deleteMovie('${movie.id}')">
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </div>
                         </td>
@@ -2179,6 +2204,10 @@
             adminPanel.clearAllData();
         }
 
+        function saveApiKey() {
+            adminPanel.saveApiKey();
+        }
+
         // Search movie function
         async function searchMovie() {
             const searchInput = document.getElementById('movieSearchInput');
@@ -2190,7 +2219,7 @@
             }
             
             const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin"></i> Searching TMDB...</div>';
+            resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin"></i> Searching IMDb...</div>';
             resultsContainer.style.display = 'block';
             
             try {
@@ -2207,11 +2236,11 @@
                     const resultItem = document.createElement('div');
                     resultItem.className = 'search-result-item';
                     resultItem.innerHTML = `
-                        <img src="${movie.poster_path ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : 'https://via.placeholder.com/50x75/333333/ffffff?text=No+Image'}" 
-                             alt="${movie.title}" class="search-result-poster">
+                        <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/50x75/333333/ffffff?text=No+Image'}" 
+                             alt="${movie.Title}" class="search-result-poster">
                         <div class="search-result-info">
-                            <div class="search-result-title">${movie.title} (${new Date(movie.release_date).getFullYear()})</div>
-                            <div class="search-result-year">${movie.genres.map(g => g.name).join(', ')} • ${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m</div>
+                            <div class="search-result-title">${movie.Title} (${movie.Year})</div>
+                            <div class="search-result-year">${movie.Genre} • ${movie.Runtime}</div>
                         </div>
                     `;
                     
@@ -2225,7 +2254,7 @@
                 });
             } catch (error) {
                 console.error('Error searching for movie:', error);
-                resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--danger);">Error searching for movies. Please try again.</div>';
+                resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--danger);">Error searching for movies. Please check your API key and try again.</div>';
             }
         }
 
