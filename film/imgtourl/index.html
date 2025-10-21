@@ -737,3 +737,62 @@
     </script>
 </body>
 </html>
+
+// Add this to the existing script in index.html
+function loadMoviesFromAdmin() {
+    const adminMovies = JSON.parse(localStorage.getItem('websiteMovies')) || [];
+    const moviesGrid = document.getElementById('moviesGrid');
+    
+    if (adminMovies.length > 0) {
+        moviesGrid.innerHTML = '';
+        adminMovies.forEach(movie => {
+            createMovieCardFromAdmin(movie, moviesGrid);
+        });
+    }
+}
+
+function createMovieCardFromAdmin(movie, container) {
+    const movieCard = document.createElement('div');
+    movieCard.className = 'movie-card';
+    
+    movieCard.innerHTML = `
+        <div class="quality-badge">${movie.quality}</div>
+        <img src="${movie.poster}" 
+             alt="${movie.title}" class="movie-poster">
+        <div class="movie-info">
+            <h3 class="movie-title">${movie.title}</h3>
+            <div class="movie-meta">
+                <span class="movie-year">${movie.year}</span>
+                <div class="movie-rating">
+                    <i class="fas fa-star"></i>
+                    <span>${movie.rating}</span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    movieCard.addEventListener('click', () => {
+        // Redirect to movie page with ID
+        window.location.href = `movie.html?id=${movie.id}&title=${movie.title.toLowerCase().replace(/ /g, '-')}-${movie.year}-hindi-webrip-full-movie`;
+    });
+    
+    container.appendChild(movieCard);
+}
+
+// Update the existing loadMovies function in index.html to check for admin movies first
+function loadMovies(category) {
+    const adminMovies = JSON.parse(localStorage.getItem('websiteMovies'));
+    
+    if (adminMovies && adminMovies.length > 0) {
+        loadMoviesFromAdmin();
+    } else {
+        // Load default movies if no admin movies
+        const moviesGrid = document.getElementById('moviesGrid');
+        moviesGrid.innerHTML = '';
+
+        const movies = moviesData[category];
+        movies.forEach(movie => {
+            createMovieCard(movie, moviesGrid);
+        });
+    }
+}
