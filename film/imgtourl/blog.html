@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - BollyFlix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f1419;
+            --secondary: #1a222d;
+            --accent: #e50914;
+            --accent-light: #ff4757;
+            --text: #ffffff;
+            --text-secondary: #8b98a5;
+            --card-bg: #15202b;
+            --card-hover: #1c2a37;
+            --border: #38444d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .header {
+            background: var(--primary);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
+
+        .blog-content {
+            background: var(--primary);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .blog-hero {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .blog-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to top, var(--primary) 10%, transparent 90%);
+        }
+
+        .blog-hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            z-index: 2;
+        }
+
+        .blog-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .blog-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .blog-meta-item i {
+            color: var(--accent);
+        }
+
+        .blog-body {
+            padding: 40px;
+        }
+
+        .blog-poster {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            float: left;
+            margin: 0 25px 25px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-plot {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: var(--text);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            clear: both;
+        }
+
+        .detail-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .detail-card:hover {
+            background: var(--card-hover);
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            font-weight: 500;
+            color: var(--text);
+            font-size: 1.05rem;
+        }
+
+        .player-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 1px solid var(--border);
+        }
+
+        .player-title {
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            margin: 25px 0;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .quality-badges {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .quality-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+
+        .conclusion {
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border-left: 4px solid var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        .conclusion p {
+            font-style: italic;
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .error {
+            background: rgba(229, 9, 20, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent);
+            text-align: center;
+        }
+
+        .footer {
+            background: var(--secondary);
+            padding: 30px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .blog-title {
+                font-size: 2rem;
+            }
+
+            .blog-hero {
+                height: 300px;
+            }
+
+            .blog-hero-content {
+                padding: 20px;
+            }
+
+            .blog-body {
+                padding: 20px;
+            }
+
+            .blog-poster {
+                float: none;
+                max-width: 100%;
+                margin: 0 0 20px 0;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-title {
+                font-size: 1.7rem;
+            }
+
+            .blog-hero {
+                height: 250px;
+            }
+
+            .player-section {
+                padding: 20px;
+            }
+
+            .quality-badges {
+                gap: 8px;
+            }
+
+            .quality-badge {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-play-circle"></i>
+                BollyFlix
+            </a>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Movies
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading movie details...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="blog-content" id="blogContent" style="display: none;">
+            <!-- Blog content will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2024 BollyFlix. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMovieDetails();
+        });
+
+        function loadMovieDetails() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const blogContent = document.getElementById('blogContent');
+
+            try {
+                const movieData = localStorage.getItem('selectedMovie');
+                
+                if (!movieData) {
+                    showError('No movie selected. Please go back and select a movie.');
+                    loading.style.display = 'none';
+                    return;
+                }
+
+                const movie = JSON.parse(movieData);
+                generateBlogContent(movie);
+                
+                loading.style.display = 'none';
+                blogContent.style.display = 'block';
+                
+            } catch (err) {
+                showError('Error loading movie details. Please try again.');
+                loading.style.display = 'none';
+                console.error('Error:', err);
+            }
+        }
+
+        function generateBlogContent(movie) {
+            const blogContent = document.getElementById('blogContent');
+            const movieId = generateMovieId(movie.Title, movie.Year, movie.imdbID);
+            const streamUrl = `https://hikke383ehr.com/play/${movieId}`;
+            
+            // Use the movie poster as hero image or a placeholder
+            const heroImage = movie.Poster && movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/1200x400/15202b/8b98a5?text=No+Image+Available';
+
+            blogContent.innerHTML = `
+                <div class="blog-hero">
+                    <img src="${heroImage}" alt="${movie.Title}" class="blog-hero-img">
+                    <div class="blog-hero-content">
+                        <h1 class="blog-title">${movie.Title} (${movie.Year})</h1>
+                        <div class="blog-meta">
+                            <div class="blog-meta-item"><i class="fas fa-star"></i> ${movie.imdbRating !== 'N/A' ? movie.imdbRating + '/10 IMDb' : 'Rating not available'}</div>
+                            <div class="blog-meta-item"><i class="fas fa-clock"></i> ${movie.Runtime}</div>
+                            <div class="blog-meta-item"><i class="fas fa-film"></i> ${movie.Genre}</div>
+                            <div class="blog-meta-item"><i class="fas fa-calendar-alt"></i> ${movie.Released}</div>
+                        </div>
+                        <div class="quality-badges">
+                            <span class="quality-badge">4K UHD</span>
+                            <span class="quality-badge">1080p FHD</span>
+                            <span class="quality-badge">720p HD</span>
+                            <span class="quality-badge">Dual Audio</span>
+                            <span class="quality-badge">x264/HEVC</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="blog-body">
+                    ${movie.Poster && movie.Poster !== 'N/A' && movie.Poster !== heroImage ? 
+                        `<img src="${movie.Poster}" alt="${movie.Title}" class="blog-poster">` : ''
+                    }
+                    
+                    <p class="blog-plot">${movie.Plot}</p>
+                    
+                    <div class="details-grid">
+                        <div class="detail-card">
+                            <div class="detail-label">Director</div>
+                            <div class="detail-value">${movie.Director}</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Cast</div>
+                            <div class="detail-value">${movie.Actors}</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Genre</div>
+                            <div class="detail-value">${movie.Genre}</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Release Date</div>
+                            <div class="detail-value">${movie.Released}</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Runtime</div>
+                            <div class="detail-value">${movie.Runtime}</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Language</div>
+                            <div class="detail-value">${movie.Language}</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Country</div>
+                            <div class="detail-value">${movie.Country}</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Box Office</div>
+                            <div class="detail-value">${movie.BoxOffice !== 'N/A' ? movie.BoxOffice : 'Not available'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="player-section">
+                        <h2 class="player-title"><i class="fas fa-play-circle"></i> Watch ${movie.Title}</h2>
+                        <p>Stream "${movie.Title}" directly in multiple qualities with dual audio support. Available in 4K, 1080p, 720p, and 480p resolutions.</p>
+                        
+                        <div class="video-container">
+                            <iframe src="${streamUrl}" title="${movie.Title} (${movie.Year}) - Full Movie Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="quality-badges">
+                            <span class="quality-badge">4K Ultra HD</span>
+                            <span class="quality-badge">1080p Full HD</span>
+                            <span class="quality-badge">720p HD</span>
+                            <span class="quality-badge">480p SD</span>
+                            <span class="quality-badge">Hindi Audio</span>
+                            <span class="quality-badge">Telugu Audio</span>
+                            <span class="quality-badge">Tamil Audio</span>
+                            <span class="quality-badge">Bengali Audio</span>
+                        </div>
+                    </div>
+                    
+                    <div class="conclusion">
+                        <p><strong>Final Verdict:</strong> ${movie.Title} is a ${movie.Genre.toLowerCase()} film that ${movie.imdbRating !== 'N/A' && parseFloat(movie.imdbRating) > 7 ? 'has received critical acclaim' : 'offers an entertaining experience'} for viewers. With a runtime of ${movie.Runtime}, it provides ${movie.Actors.split(',')[0]} and the cast an opportunity to deliver memorable performances. ${movie.imdbRating !== 'N/A' && parseFloat(movie.imdbRating) > 8 ? 'This is a must-watch for fans of the genre.' : 'Worth watching for its engaging storyline and performances.'}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate TT-style movie ID
+        function generateMovieId(movieTitle, year, imdbId = '') {
+            if (imdbId && imdbId.startsWith('tt')) {
+                return imdbId;
+            }
+            
+            let baseString = movieTitle.toLowerCase().replace(/[^a-z0-9]/g, '') + year;
+            let hash = 0;
+            for (let i = 0; i < baseString.length; i++) {
+                let char = baseString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            const ttNumber = Math.abs(hash).toString().substring(0, 8).padStart(7, '0');
+            return 'tt' + ttNumber;
+        }
+
+        function showError(message) {
+            const error = document.getElementById('error');
+            error.textContent = message;
+            error.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
