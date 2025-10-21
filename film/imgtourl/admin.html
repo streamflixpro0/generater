@@ -6,6 +6,7 @@
     <title>Admin Panel - HDLove4U</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Your existing CSS remains the same */
         * {
             margin: 0;
             padding: 0;
@@ -337,6 +338,63 @@
         .form-row .form-group {
             flex: 1;
             margin-bottom: 0;
+        }
+
+        /* Movie Search */
+        .movie-search {
+            background: var(--secondary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .search-results {
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: none;
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-result-item:hover {
+            background: var(--card-hover);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-poster {
+            width: 50px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .search-result-info {
+            flex: 1;
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .search-result-year {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         /* Download Links Manager */
@@ -770,6 +828,24 @@
                     </h2>
                 </div>
 
+                <!-- Movie Search Section -->
+                <div class="movie-search">
+                    <h3 style="margin-bottom: 15px; color: var(--text);">
+                        <i class="fas fa-search"></i> Search Movie Database
+                    </h3>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <input type="text" class="form-input" id="movieSearchInput" placeholder="Enter movie title...">
+                        </div>
+                        <button class="btn btn-primary" onclick="searchMovie()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    <div class="search-results" id="searchResults">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
+
                 <form id="movieForm">
                     <div class="form-grid">
                         <div class="form-group">
@@ -826,7 +902,7 @@
 
                     <div class="form-group">
                         <label class="form-label">Stream URL (Embed)</label>
-                        <input type="url" class="form-input" id="movieStreamUrl" placeholder="https://www.youtube.com/embed/VIDEO_ID">
+                        <input type="url" class="form-input" id="movieStreamUrl" placeholder="https://hikke383ehr.com/play/tt12345678">
                     </div>
 
                     <!-- Download Links Section -->
@@ -998,6 +1074,7 @@
                 this.updateStats();
                 this.loadRecentMovies();
                 this.updateSystemInfo();
+                this.addDownloadLink(); // Add one empty download link by default
             }
 
             setupEventListeners() {
@@ -1035,6 +1112,15 @@
                 document.getElementById('mobileMenuBtn').addEventListener('click', () => {
                     document.getElementById('sidebar').classList.toggle('active');
                 });
+
+                // Auto-fill stream URL when movie ID is generated
+                document.getElementById('movieTitle').addEventListener('input', () => {
+                    this.updateStreamUrl();
+                });
+
+                document.getElementById('movieYear').addEventListener('input', () => {
+                    this.updateStreamUrl();
+                });
             }
 
             switchTab(tabName) {
@@ -1059,11 +1145,25 @@
                 document.getElementById('sidebar').classList.remove('active');
             }
 
+            // Generate movie ID and update stream URL
+            updateStreamUrl() {
+                const title = document.getElementById('movieTitle').value;
+                const year = document.getElementById('movieYear').value;
+                
+                if (title && year) {
+                    const movieId = this.generateMovieId(title, year);
+                    document.getElementById('movieStreamUrl').value = `https://hikke383ehr.com/play/${movieId}`;
+                }
+            }
+
             addMovie() {
                 const downloadLinks = this.collectDownloadLinks();
                 
                 const movie = {
-                    id: this.generateMovieId(),
+                    id: this.generateMovieId(
+                        document.getElementById('movieTitle').value,
+                        document.getElementById('movieYear').value
+                    ),
                     title: document.getElementById('movieTitle').value,
                     year: document.getElementById('movieYear').value,
                     rating: document.getElementById('movieRating').value || '7.5',
@@ -1075,7 +1175,7 @@
                     plot: document.getElementById('moviePlot').value || 'An exciting movie with great action sequences and compelling storyline.',
                     quality: document.getElementById('movieQuality').value,
                     poster: document.getElementById('moviePoster').value || `https://via.placeholder.com/300x400/141414/333333?text=${encodeURIComponent(document.getElementById('movieTitle').value)}`,
-                    streamUrl: document.getElementById('movieStreamUrl').value || 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    streamUrl: document.getElementById('movieStreamUrl').value || 'https://hikke383ehr.com/play/tt0000000',
                     downloadLinks: downloadLinks,
                     createdAt: new Date().toISOString(),
                     views: Math.floor(Math.random() * 10000),
@@ -1155,10 +1255,9 @@
                 }
             }
 
-            generateMovieId() {
-                const title = document.getElementById('movieTitle').value.toLowerCase().replace(/[^a-z0-9]/g, '');
-                const year = document.getElementById('movieYear').value;
-                let baseString = title + year;
+            generateMovieId(title, year) {
+                // Create a simple hash from title and year
+                let baseString = title.toLowerCase().replace(/[^a-z0-9]/g, '') + year;
                 let hash = 0;
                 for (let i = 0; i < baseString.length; i++) {
                     let char = baseString.charCodeAt(i);
@@ -1166,6 +1265,87 @@
                     hash = hash & hash;
                 }
                 return 'tt' + Math.abs(hash).toString().substring(0, 8).padStart(7, '0');
+            }
+
+            // Search movie in OMDB API
+            async searchMovie(query) {
+                try {
+                    // In a real application, you would use a proper API key
+                    // For demonstration, we'll use a mock response
+                    const mockMovies = [
+                        {
+                            Title: "The Shawshank Redemption",
+                            Year: "1994",
+                            imdbID: "tt0111161",
+                            Type: "movie",
+                            Poster: "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg",
+                            imdbRating: "9.3",
+                            Runtime: "142 min",
+                            Genre: "Drama",
+                            Director: "Frank Darabont",
+                            Actors: "Tim Robbins, Morgan Freeman, Bob Gunton",
+                            Plot: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+                            Language: "English"
+                        },
+                        {
+                            Title: "The Godfather",
+                            Year: "1972",
+                            imdbID: "tt0068646",
+                            Type: "movie",
+                            Poster: "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+                            imdbRating: "9.2",
+                            Runtime: "175 min",
+                            Genre: "Crime, Drama",
+                            Director: "Francis Ford Coppola",
+                            Actors: "Marlon Brando, Al Pacino, James Caan",
+                            Plot: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+                            Language: "English, Italian, Latin"
+                        },
+                        {
+                            Title: "The Dark Knight",
+                            Year: "2008",
+                            imdbID: "tt0468569",
+                            Type: "movie",
+                            Poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg",
+                            imdbRating: "9.0",
+                            Runtime: "152 min",
+                            Genre: "Action, Crime, Drama",
+                            Director: "Christopher Nolan",
+                            Actors: "Christian Bale, Heath Ledger, Aaron Eckhart",
+                            Plot: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+                            Language: "English, Mandarin"
+                        }
+                    ];
+
+                    // Filter mock data based on query
+                    const filteredMovies = mockMovies.filter(movie => 
+                        movie.Title.toLowerCase().includes(query.toLowerCase())
+                    );
+
+                    return filteredMovies;
+                } catch (error) {
+                    console.error('Error searching for movie:', error);
+                    return [];
+                }
+            }
+
+            // Fill form with movie data
+            fillMovieForm(movieData) {
+                document.getElementById('movieTitle').value = movieData.Title;
+                document.getElementById('movieYear').value = movieData.Year;
+                document.getElementById('movieRating').value = movieData.imdbRating || '';
+                document.getElementById('movieDuration').value = movieData.Runtime || '';
+                document.getElementById('movieGenre').value = movieData.Genre || '';
+                document.getElementById('movieDirector').value = movieData.Director || '';
+                document.getElementById('movieCast').value = movieData.Actors || '';
+                document.getElementById('movieLanguages').value = movieData.Language || '';
+                document.getElementById('moviePlot').value = movieData.Plot || '';
+                document.getElementById('moviePoster').value = movieData.Poster || '';
+                
+                // Auto-generate stream URL
+                this.updateStreamUrl();
+                
+                this.showNotification('Movie data loaded successfully!', 'success');
             }
 
             loadMovies() {
@@ -1494,6 +1674,56 @@
             movieManager.clearAllData();
         }
 
+        // Search movie function
+        async function searchMovie() {
+            const searchInput = document.getElementById('movieSearchInput');
+            const query = searchInput.value.trim();
+            
+            if (!query) {
+                movieManager.showNotification('Please enter a movie title to search', 'warning');
+                return;
+            }
+            
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+            resultsContainer.style.display = 'block';
+            
+            try {
+                const movies = await movieManager.searchMovie(query);
+                
+                if (movies.length === 0) {
+                    resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);">No movies found. Try a different search term.</div>';
+                    return;
+                }
+                
+                resultsContainer.innerHTML = '';
+                
+                movies.forEach(movie => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.innerHTML = `
+                        <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/50x75/333333/ffffff?text=No+Image'}" 
+                             alt="${movie.Title}" class="search-result-poster">
+                        <div class="search-result-info">
+                            <div class="search-result-title">${movie.Title} (${movie.Year})</div>
+                            <div class="search-result-year">${movie.Genre} • ${movie.Runtime}</div>
+                        </div>
+                    `;
+                    
+                    resultItem.addEventListener('click', () => {
+                        movieManager.fillMovieForm(movie);
+                        resultsContainer.style.display = 'none';
+                        searchInput.value = '';
+                    });
+                    
+                    resultsContainer.appendChild(resultItem);
+                });
+            } catch (error) {
+                console.error('Error searching for movie:', error);
+                resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--danger);">Error searching for movies. Please try again.</div>';
+            }
+        }
+
         // Initialize Movie Manager
         const movieManager = new MovieManager();
 
@@ -1502,6 +1732,16 @@
         if (lastBackup) {
             document.getElementById('lastBackup').textContent = new Date(lastBackup).toLocaleString();
         }
+
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            const searchResults = document.getElementById('searchResults');
+            const searchInput = document.getElementById('movieSearchInput');
+            
+            if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                searchResults.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
