@@ -106,6 +106,14 @@
             display: flex;
         }
 
+        .admin-link {
+            background: var(--accent);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white !important;
+            font-weight: bold;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -350,6 +358,19 @@
             text-align: center;
         }
 
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
         .footer {
             background: var(--secondary);
             padding: 40px 0;
@@ -456,7 +477,7 @@
                 <a href="#" class="nav-link">Hollywood</a>
                 <a href="#" class="nav-link">South Indian</a>
                 <a href="#" class="nav-link">Web Series</a>
-                <a href="#" class="nav-link"><i class="fas fa-search"></i></a>
+                <a href="admin.html" class="nav-link admin-link">Admin</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
@@ -468,6 +489,7 @@
             <a href="#" class="nav-link">Hollywood</a>
             <a href="#" class="nav-link">South Indian</a>
             <a href="#" class="nav-link">Web Series</a>
+            <a href="admin.html" class="nav-link admin-link">Admin Panel</a>
         </div>
     </header>
 
@@ -492,7 +514,7 @@
 
         <!-- Category Tabs -->
         <div class="category-tabs">
-            <button class="category-tab active" data-category="latest">Latest Movies</button>
+            <button class="category-tab active" data-category="all">All Movies</button>
             <button class="category-tab" data-category="bollywood">Bollywood</button>
             <button class="category-tab" data-category="hollywood">Hollywood</button>
             <button class="category-tab" data-category="south">South Indian</button>
@@ -559,56 +581,69 @@
     </footer>
 
     <script>
-        // Movies data
-        const moviesData = {
-            latest: [
-                {title: 'Kishkindhapuri', year: '2025', quality: 'WEB-DL', rating: '8.2'},
-                {title: 'Fighter', year: '2024', quality: 'WEB-DL', rating: '7.9'},
-                {title: 'Animal', year: '2023', quality: 'WEB-DL', rating: '7.8'},
-                {title: 'Salaar', year: '2023', quality: 'WEB-DL', rating: '8.1'},
-                {title: 'Dunki', year: '2023', quality: 'WEB-DL', rating: '7.5'},
-                {title: 'Sam Bahadur', year: '2023', quality: 'WEB-DL', rating: '7.6'}
-            ],
-            bollywood: [
-                {title: 'Pathaan', year: '2023', quality: 'WEB-DL', rating: '8.0'},
-                {title: 'Jawan', year: '2023', quality: 'WEB-DL', rating: '8.2'},
-                {title: 'Brahmastra', year: '2022', quality: 'WEB-DL', rating: '7.1'},
-                {title: 'RRR', year: '2022', quality: 'WEB-DL', rating: '8.5'},
-                {title: 'KGF 2', year: '2022', quality: 'WEB-DL', rating: '8.3'},
-                {title: 'Vikram Vedha', year: '2022', quality: 'WEB-DL', rating: '7.8'}
-            ],
-            hollywood: [
-                {title: 'Avatar 2', year: '2022', quality: 'WEB-DL', rating: '7.8'},
-                {title: 'Spider-Man: No Way Home', year: '2021', quality: 'WEB-DL', rating: '8.2'},
-                {title: 'The Batman', year: '2022', quality: 'WEB-DL', rating: '7.8'},
-                {title: 'Top Gun: Maverick', year: '2022', quality: 'WEB-DL', rating: '8.3'},
-                {title: 'Black Panther', year: '2022', quality: 'WEB-DL', rating: '7.2'},
-                {title: 'Doctor Strange', year: '2022', quality: 'WEB-DL', rating: '7.5'}
-            ],
-            south: [
-                {title: 'Pushpa 2', year: '2024', quality: 'WEB-DL', rating: '8.4'},
-                {title: 'Kantara', year: '2022', quality: 'WEB-DL', rating: '8.7'},
-                {title: 'Vikram', year: '2022', quality: 'WEB-DL', rating: '8.4'},
-                {title: '777 Charlie', year: '2022', quality: 'WEB-DL', rating: '8.1'},
-                {title: 'Sita Ramam', year: '2022', quality: 'WEB-DL', rating: '8.8'},
-                {title: 'Uppena', year: '2021', quality: 'WEB-DL', rating: '7.9'}
-            ],
-            web: [
-                {title: 'The Family Man S2', year: '2021', quality: 'WEB-DL', rating: '8.7'},
-                {title: 'Sacred Games S2', year: '2019', quality: 'WEB-DL', rating: '8.6'},
-                {title: 'Mirzapur S3', year: '2024', quality: 'WEB-DL', rating: '8.4'},
-                {title: 'Aspirants S2', year: '2023', quality: 'WEB-DL', rating: '9.0'},
-                {title: 'Kota Factory S3', year: '2023', quality: 'WEB-DL', rating: '9.2'},
-                {title: 'Panchayat S3', year: '2024', quality: 'WEB-DL', rating: '9.1'}
-            ]
-        };
+        // Default movies data
+        const defaultMovies = [
+            {
+                id: 'ttkishkind2025',
+                title: 'Kishkindhapuri',
+                year: '2025',
+                rating: '8.2',
+                quality: 'WEB-DL',
+                genre: 'Action, Adventure',
+                poster: 'https://via.placeholder.com/300x400/141414/333333?text=Kishkindhapuri'
+            },
+            {
+                id: 'ttfighter2024',
+                title: 'Fighter',
+                year: '2024',
+                rating: '7.9',
+                quality: 'WEB-DL',
+                genre: 'Action, Thriller',
+                poster: 'https://via.placeholder.com/300x400/141414/333333?text=Fighter'
+            },
+            {
+                id: 'ttanimal2023',
+                title: 'Animal',
+                year: '2023',
+                rating: '7.8',
+                quality: 'WEB-DL',
+                genre: 'Action, Drama',
+                poster: 'https://via.placeholder.com/300x400/141414/333333?text=Animal'
+            },
+            {
+                id: 'ttsalaar2023',
+                title: 'Salaar',
+                year: '2023',
+                rating: '8.1',
+                quality: 'WEB-DL',
+                genre: 'Action, Thriller',
+                poster: 'https://via.placeholder.com/300x400/141414/333333?text=Salaar'
+            },
+            {
+                id: 'ttdunki2023',
+                title: 'Dunki',
+                year: '2023',
+                rating: '7.5',
+                quality: 'WEB-DL',
+                genre: 'Comedy, Drama',
+                poster: 'https://via.placeholder.com/300x400/141414/333333?text=Dunki'
+            },
+            {
+                id: 'ttsambahadur2023',
+                title: 'Sam Bahadur',
+                year: '2023',
+                rating: '7.6',
+                quality: 'WEB-DL',
+                genre: 'Biography, Drama',
+                poster: 'https://via.placeholder.com/300x400/141414/333333?text=Sam+Bahadur'
+            }
+        ];
 
-        let currentCategory = 'latest';
+        let currentCategory = 'all';
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            loadMovies(currentCategory);
-            loadPopularMovies();
+            loadMovies();
             setupEventListeners();
         });
 
@@ -624,7 +659,7 @@
                     document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     currentCategory = this.dataset.category;
-                    loadMovies(currentCategory);
+                    loadMovies();
                 });
             });
 
@@ -646,22 +681,64 @@
             });
         }
 
-        function loadMovies(category) {
-            const moviesGrid = document.getElementById('moviesGrid');
-            moviesGrid.innerHTML = '';
-
-            const movies = moviesData[category];
-            movies.forEach(movie => {
-                createMovieCard(movie, moviesGrid);
-            });
+        function loadMovies() {
+            const adminMovies = JSON.parse(localStorage.getItem('websiteMovies'));
+            
+            if (adminMovies && adminMovies.length > 0) {
+                loadMoviesFromAdmin();
+            } else {
+                loadDefaultMovies();
+            }
         }
 
-        function loadPopularMovies() {
+        function loadMoviesFromAdmin() {
+            const adminMovies = JSON.parse(localStorage.getItem('websiteMovies')) || [];
+            const moviesGrid = document.getElementById('moviesGrid');
             const popularGrid = document.getElementById('popularGrid');
-            const popularMovies = [...moviesData.latest, ...moviesData.bollywood].slice(0, 6);
             
-            popularMovies.forEach(movie => {
-                createMovieCard(movie, popularGrid);
+            if (adminMovies.length === 0) {
+                showEmptyState();
+                return;
+            }
+
+            // Filter movies based on category
+            let filteredMovies = adminMovies;
+            if (currentCategory !== 'all') {
+                filteredMovies = adminMovies.filter(movie => 
+                    movie.genre.toLowerCase().includes(currentCategory)
+                );
+            }
+
+            displayMovies(filteredMovies, moviesGrid);
+            
+            // For popular movies, show first 6 movies
+            displayMovies(adminMovies.slice(0, 6), popularGrid);
+        }
+
+        function loadDefaultMovies() {
+            const moviesGrid = document.getElementById('moviesGrid');
+            const popularGrid = document.getElementById('popularGrid');
+            
+            displayMovies(defaultMovies, moviesGrid);
+            displayMovies(defaultMovies.slice(0, 6), popularGrid);
+        }
+
+        function displayMovies(movies, container) {
+            container.innerHTML = '';
+
+            if (movies.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-film"></i>
+                        <h3>No movies found</h3>
+                        <p>Try selecting a different category or add movies from the admin panel.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            movies.forEach(movie => {
+                createMovieCard(movie, container);
             });
         }
 
@@ -669,12 +746,9 @@
             const movieCard = document.createElement('div');
             movieCard.className = 'movie-card';
             
-            // Generate movie ID for sharing
-            const movieId = generateMovieId(movie.title, movie.year);
-            
             movieCard.innerHTML = `
                 <div class="quality-badge">${movie.quality}</div>
-                <img src="https://via.placeholder.com/300x400/141414/333333?text=${encodeURIComponent(movie.title)}" 
+                <img src="${movie.poster}" 
                      alt="${movie.title}" class="movie-poster">
                 <div class="movie-info">
                     <h3 class="movie-title">${movie.title}</h3>
@@ -690,7 +764,7 @@
             
             movieCard.addEventListener('click', () => {
                 // Redirect to movie page with ID
-                window.location.href = `movie.html?id=${movieId}&title=${encodeURIComponent(movie.title.toLowerCase().replace(/ /g, '-'))}-${movie.year}-hindi-webrip-full-movie`;
+                window.location.href = `movie.html?id=${movie.id}&title=${movie.title.toLowerCase().replace(/ /g, '-')}-${movie.year}-hindi-webrip-full-movie`;
             });
             
             container.appendChild(movieCard);
@@ -699,34 +773,27 @@
         function searchMovies() {
             const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
             if (searchTerm) {
-                // Simple search implementation
-                const allMovies = Object.values(moviesData).flat();
-                const filteredMovies = allMovies.filter(movie => 
-                    movie.title.toLowerCase().includes(searchTerm)
+                const adminMovies = JSON.parse(localStorage.getItem('websiteMovies')) || defaultMovies;
+                const filteredMovies = adminMovies.filter(movie => 
+                    movie.title.toLowerCase().includes(searchTerm) ||
+                    movie.genre.toLowerCase().includes(searchTerm) ||
+                    movie.year.includes(searchTerm)
                 );
                 
                 const moviesGrid = document.getElementById('moviesGrid');
-                moviesGrid.innerHTML = '';
-                
-                if (filteredMovies.length > 0) {
-                    filteredMovies.forEach(movie => {
-                        createMovieCard(movie, moviesGrid);
-                    });
-                } else {
-                    moviesGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1;">No movies found</p>';
-                }
+                displayMovies(filteredMovies, moviesGrid);
             }
         }
 
-        function generateMovieId(title, year) {
-            let baseString = title.toLowerCase().replace(/[^a-z0-9]/g, '') + year;
-            let hash = 0;
-            for (let i = 0; i < baseString.length; i++) {
-                let char = baseString.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return 'tt' + Math.abs(hash).toString().substring(0, 8).padStart(7, '0');
+        function showEmptyState() {
+            const moviesGrid = document.getElementById('moviesGrid');
+            moviesGrid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-film"></i>
+                    <h3>No Movies Available</h3>
+                    <p>Start by adding movies from the <a href="admin.html" style="color: var(--accent);">Admin Panel</a></p>
+                </div>
+            `;
         }
 
         function showError(message) {
@@ -737,62 +804,3 @@
     </script>
 </body>
 </html>
-
-// Add this to the existing script in index.html
-function loadMoviesFromAdmin() {
-    const adminMovies = JSON.parse(localStorage.getItem('websiteMovies')) || [];
-    const moviesGrid = document.getElementById('moviesGrid');
-    
-    if (adminMovies.length > 0) {
-        moviesGrid.innerHTML = '';
-        adminMovies.forEach(movie => {
-            createMovieCardFromAdmin(movie, moviesGrid);
-        });
-    }
-}
-
-function createMovieCardFromAdmin(movie, container) {
-    const movieCard = document.createElement('div');
-    movieCard.className = 'movie-card';
-    
-    movieCard.innerHTML = `
-        <div class="quality-badge">${movie.quality}</div>
-        <img src="${movie.poster}" 
-             alt="${movie.title}" class="movie-poster">
-        <div class="movie-info">
-            <h3 class="movie-title">${movie.title}</h3>
-            <div class="movie-meta">
-                <span class="movie-year">${movie.year}</span>
-                <div class="movie-rating">
-                    <i class="fas fa-star"></i>
-                    <span>${movie.rating}</span>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    movieCard.addEventListener('click', () => {
-        // Redirect to movie page with ID
-        window.location.href = `movie.html?id=${movie.id}&title=${movie.title.toLowerCase().replace(/ /g, '-')}-${movie.year}-hindi-webrip-full-movie`;
-    });
-    
-    container.appendChild(movieCard);
-}
-
-// Update the existing loadMovies function in index.html to check for admin movies first
-function loadMovies(category) {
-    const adminMovies = JSON.parse(localStorage.getItem('websiteMovies'));
-    
-    if (adminMovies && adminMovies.length > 0) {
-        loadMoviesFromAdmin();
-    } else {
-        // Load default movies if no admin movies
-        const moviesGrid = document.getElementById('moviesGrid');
-        moviesGrid.innerHTML = '';
-
-        const movies = moviesData[category];
-        movies.forEach(movie => {
-            createMovieCard(movie, moviesGrid);
-        });
-    }
-}
