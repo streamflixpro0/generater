@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML Runner | Live Code Editor</title>
+    
+    <!-- Custom Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%234a6ee0'/><text x='50%' y='45%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='12' fill='white'>BM</text><text x='50%' y='65%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='8' fill='white'>MACAO</text></svg>">
+    
+    <!-- Robots.txt -->
+    <meta name="robots" content="index, follow">
+    
     <style>
         :root {
             --primary-color: #4a6ee0;
@@ -141,6 +148,7 @@
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+            flex-wrap: wrap;
         }
         
         .fullscreen-overlay {
@@ -169,9 +177,16 @@
             width: 100%;
             border: none;
         }
-        
-        .hidden {
-            display: none;
+
+        .brand-footer {
+            text-align: center;
+            padding: 10px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 10px;
         }
     </style>
 </head>
@@ -253,7 +268,6 @@
             alert('Hello! This is a JavaScript function triggered by the button click.');
         }
         
-        // Additional JavaScript can be added here
         console.log('HTML Runner is working!');
     </script>
 </body>
@@ -267,6 +281,10 @@
             </div>
             <iframe id="preview" class="preview"></iframe>
         </div>
+    </div>
+    
+    <div class="brand-footer">
+        Powered by Bian Macao
     </div>
     
     <div id="fullscreenOverlay" class="fullscreen-overlay">
