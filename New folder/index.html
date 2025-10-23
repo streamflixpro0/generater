@@ -728,177 +728,165 @@
         <p class="footer-text">DEVELOPED BY <span>KULDEEP RAI SANATANI</span></p>
     </div>
 
-    <script>
-        const OMDB_KEY = 'af683232';
-        const YT_KEY = 'AIzaSyDMJDSiqd78g52t6W0F0BAMUij5xSynDe0';
-        let movieData = {};
-        let customBtns = [];
-        let extraListItems = [];
-        let currentImdbId = '';
-        let searchResults = [];
+  <script>
+const OMDB_KEY = 'af683232';
+const YT_KEY = 'AIzaSyDMJDSiqd78g52t6W0F0BAMUij5xSynDe0';
+let movieData = {};
+let customBtns = [];
+let extraListItems = [];
+let currentImdbId = '';
+let searchResults = [];
 
-        async function fetchMovieData() {
-            const movieName = document.getElementById('movieName').value.trim();
-            if(!movieName) return alert('Please enter movie name');
-            
-            try {
-                // Show loading state
-                document.getElementById('movieName').disabled = true;
-                const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
-                fetchBtn.disabled = true;
-                fetchBtn.textContent = 'Loading...';
-                
-                // First search by title to get the IMDb ID
-                const searchRes = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_KEY}`);
-                const searchData = await searchRes.json();
-                
-                if(searchData.Response === 'False' || !searchData.Search || searchData.Search.length === 0) {
-                    throw new Error('Movie not found');
-                }
-                
-                // Store all search results
-                searchResults = searchData.Search;
-                
-                // If only one result found, proceed directly
-                if(searchResults.length === 1) {
-                    currentImdbId = searchResults[0].imdbID;
-                    showMovieDetails(currentImdbId);
-                    return;
-                }
-                
-                // Show search results to user
-                showSearchResults(searchResults);
-                
-                document.getElementById('moviePreview').classList.remove('hidden');
-                
-            } catch(err) {
-                alert('Error fetching data: ' + err.message);
-                resetLoadingState();
-            }
+// Main fetch function (can handle both Name & IMDb ID)
+async function fetchMovieData() {
+    const movieInput = document.getElementById('movieName').value.trim();
+    if (!movieInput) return alert('Please enter movie name or IMDb ID');
+
+    document.getElementById('moviePreview').classList.add('hidden');
+    document.getElementById('manualFields').classList.add('hidden');
+
+    try {
+        // Disable button temporarily
+        const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
+        fetchBtn.disabled = true;
+        fetchBtn.textContent = 'Loading...';
+        document.getElementById('movieName').disabled = true;
+
+        // Check if IMDb ID (starts with "tt")
+        if (movieInput.toLowerCase().startsWith("tt")) {
+            // Direct fetch by IMDb ID
+            currentImdbId = movieInput;
+            await showMovieDetails(currentImdbId);
+            resetLoadingState();
+            return;
         }
 
-        function showSearchResults(results) {
-            const container = document.getElementById('searchResults');
-            container.innerHTML = '';
-            
-            if(results.length === 0) {
-                container.innerHTML = '<p style="padding: 10px; text-align: center;">No movies found. Please try a different search.</p>';
-                return;
-            }
-            
-            results.forEach(movie => {
-                const option = document.createElement('div');
-                option.className = 'movie-option';
-                option.onclick = () => selectMovie(movie.imdbID);
-                
-                option.innerHTML = `
-                    <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/50x75?text=No+Poster'}" 
-                         class="movie-option-poster" alt="${movie.Title}" loading="lazy">
-                    <div class="movie-option-details">
-                        <div class="movie-option-title">${movie.Title}</div>
-                        <div class="movie-option-year">${movie.Year}</div>
-                        <div class="movie-option-type">${movie.Type === 'movie' ? '🎬 MOVIE' : '📺 TV SERIES'}</div>
-                    </div>
-                `;
-                
-                container.appendChild(option);
-            });
+        // Search by movie title
+        const searchUrl = `https://www.omdbapi.com/?s=${encodeURIComponent(movieInput)}&type=movie&apikey=${OMDB_KEY}`;
+        const searchRes = await fetch(searchUrl);
+        const searchData = await searchRes.json();
+
+        if (searchData.Response === 'False' || !searchData.Search) {
+            throw new Error('Movie not found. Try different name or IMDb ID.');
         }
 
-        function selectMovie(imdbID) {
-            currentImdbId = imdbID;
-            document.getElementById('searchResults').classList.add('hidden');
-            showMovieDetails(imdbID);
-        }
+        searchResults = searchData.Search;
 
-        async function showMovieDetails(imdbID) {
-            try {
-                // Show loading state
-                const singlePreview = document.getElementById('singleMoviePreview');
-                singlePreview.classList.remove('hidden');
-                singlePreview.innerHTML = '<div style="padding: 20px; text-align: center;">Loading movie details...</div>';
-                
-                // Fetch full details using the IMDb ID
-                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_KEY}`);
-                const omdb = await omdbRes.json();
-                
-                if(omdb.Response === 'False') {
-                    throw new Error(omdb.Error || 'Failed to fetch movie data');
-                }
-                
-                // Update the preview with actual content
-                singlePreview.innerHTML = `
-                    <img id="previewPoster" class="preview-poster" src="${omdb.Poster}" alt="Movie Poster" loading="lazy">
-                    <div class="preview-details">
-                        <div class="preview-title">${omdb.Title}</div>
-                        <div class="preview-year">${omdb.Year}</div>
-                        <div style="font-weight: 600; color: var(--secondary);">${omdb.Type === 'movie' ? '🎬 MOVIE' : '📺 TV SERIES'}</div>
-                        <div class="preview-plot">${omdb.Plot}</div>
-                        <div class="preview-confirm">
-                            <button class="confirm-btn" onclick="confirmMovieSelection()">Yes, Correct</button>
-                            <button class="reject-btn" onclick="rejectMovieSelection()">No, Try Again</button>
-                        </div>
-                    </div>
-                `;
-                
-            } catch(err) {
-                alert('Error fetching movie details: ' + err.message);
-                resetLoadingState();
-                document.getElementById('searchResults').classList.remove('hidden');
-                document.getElementById('singleMoviePreview').classList.add('hidden');
-            }
-        }
+        // Multiple results → show all options
+        showSearchResults(searchResults);
+        document.getElementById('moviePreview').classList.remove('hidden');
+    } catch (err) {
+        alert('Error fetching data: ' + err.message);
+    } finally {
+        resetLoadingState();
+    }
+}
 
-        async function confirmMovieSelection() {
-            try {
-                document.getElementById('moviePreview').classList.add('hidden');
-                document.querySelector('button[onclick="fetchMovieData()"]').textContent = 'Loading...';
-                
-                // Fetch full details again (in case we need fresh data)
-                const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&apikey=${OMDB_KEY}`);
-                const omdb = await omdbRes.json();
-                
-                const ytRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(omdb.Title + " trailer")}&key=${YT_KEY}&maxResults=1`);
-                const ytData = await ytRes.json();
-                
-                movieData = {
-                    ...omdb,
-                    trailerId: ytData.items?.[0]?.id?.videoId || '',
-                    imdbUrl: `https://www.imdb.com/title/${currentImdbId}/`
-                };
-                
-                document.getElementById('manualFields').classList.remove('hidden');
-                
-                // Pre-fill some fields
-                document.getElementById('tags').value = omdb.Genre.split(', ').join(', ');
-                
-                // Reset loading state
-                document.getElementById('movieName').disabled = false;
-                const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
-                fetchBtn.disabled = false;
-                fetchBtn.textContent = 'Fetch Movie Data';
-                
-            } catch(err) {
-                alert('Error confirming selection: ' + err.message);
-            }
-        }
+function showSearchResults(results) {
+    const container = document.getElementById('searchResults');
+    container.innerHTML = '';
 
-        function rejectMovieSelection() {
-            document.getElementById('singleMoviePreview').classList.add('hidden');
-            document.getElementById('searchResults').classList.remove('hidden');
-            document.getElementById('movieName').disabled = false;
-            const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
-            fetchBtn.disabled = false;
-            fetchBtn.textContent = 'Fetch Movie Data';
-            document.getElementById('movieName').focus();
-        }
+    results.forEach(movie => {
+        const option = document.createElement('div');
+        option.className = 'movie-option';
+        option.onclick = () => selectMovie(movie.imdbID);
 
-        function resetLoadingState() {
-            document.getElementById('movieName').disabled = false;
-            const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
-            fetchBtn.disabled = false;
-            fetchBtn.textContent = 'Fetch Movie Data';
-        }
+        option.innerHTML = `
+            <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/50x75?text=No+Poster'}" 
+                 class="movie-option-poster" alt="${movie.Title}" loading="lazy">
+            <div class="movie-option-details">
+                <div class="movie-option-title">${movie.Title}</div>
+                <div class="movie-option-year">${movie.Year}</div>
+                <div class="movie-option-type">${movie.Type === 'movie' ? '🎬 MOVIE' : '📺 TV SERIES'}</div>
+                <div style="font-size:12px;color:#888;">${movie.imdbID}</div>
+            </div>
+        `;
+        container.appendChild(option);
+    });
+}
+
+function selectMovie(imdbID) {
+    currentImdbId = imdbID;
+    document.getElementById('searchResults').classList.add('hidden');
+    showMovieDetails(imdbID);
+}
+
+async function showMovieDetails(imdbID) {
+    try {
+        const singlePreview = document.getElementById('singleMoviePreview');
+        singlePreview.classList.remove('hidden');
+        singlePreview.innerHTML = '<div style="padding: 20px; text-align: center;">Loading movie details...</div>';
+
+        const omdbRes = await fetch(`https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=${OMDB_KEY}`);
+        const omdb = await omdbRes.json();
+
+        if (omdb.Response === 'False') throw new Error(omdb.Error || 'Failed to fetch movie data');
+
+        singlePreview.innerHTML = `
+            <img id="previewPoster" class="preview-poster" src="${omdb.Poster}" alt="Movie Poster" loading="lazy">
+            <div class="preview-details">
+                <div class="preview-title">${omdb.Title}</div>
+                <div class="preview-year">${omdb.Year}</div>
+                <div style="font-weight: 600; color: var(--secondary);">${omdb.Type === 'movie' ? '🎬 MOVIE' : '📺 TV SERIES'}</div>
+                <div class="preview-plot">${omdb.Plot}</div>
+                <div class="preview-confirm">
+                    <button class="confirm-btn" onclick="confirmMovieSelection()">Yes, Correct</button>
+                    <button class="reject-btn" onclick="rejectMovieSelection()">No, Try Again</button>
+                </div>
+            </div>
+        `;
+    } catch (err) {
+        alert('Error fetching details: ' + err.message);
+        document.getElementById('singleMoviePreview').classList.add('hidden');
+        document.getElementById('searchResults').classList.remove('hidden');
+    } finally {
+        resetLoadingState();
+    }
+}
+
+async function confirmMovieSelection() {
+    try {
+        document.getElementById('moviePreview').classList.add('hidden');
+
+        const omdbRes = await fetch(`https://www.omdbapi.com/?i=${currentImdbId}&plot=full&apikey=${OMDB_KEY}`);
+        const omdb = await omdbRes.json();
+
+        const ytRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(omdb.Title + " trailer")}&key=${YT_KEY}&maxResults=1`);
+        const ytData = await ytRes.json();
+
+        movieData = {
+            ...omdb,
+            trailerId: ytData.items?.[0]?.id?.videoId || '',
+            imdbUrl: `https://www.imdb.com/title/${currentImdbId}/`
+        };
+
+        document.getElementById('manualFields').classList.remove('hidden');
+        document.getElementById('tags').value = omdb.Genre.split(', ').join(', ');
+    } catch (err) {
+        alert('Error confirming movie: ' + err.message);
+    }
+}
+
+function rejectMovieSelection() {
+    document.getElementById('singleMoviePreview').classList.add('hidden');
+    document.getElementById('searchResults').classList.remove('hidden');
+    document.getElementById('movieName').disabled = false;
+    const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
+    fetchBtn.disabled = false;
+    fetchBtn.textContent = 'Fetch Movie Data';
+    document.getElementById('movieName').focus();
+}
+
+function resetLoadingState() {
+    document.getElementById('movieName').disabled = false;
+    const fetchBtn = document.querySelector('button[onclick="fetchMovieData()"]');
+    fetchBtn.disabled = false;
+    fetchBtn.textContent = 'Fetch Movie Data';
+}
+
+/* Rest of your functions (addDefaultQualityButtons, addCustomButton, etc.) 
+   remain exactly same from your original code — no change needed below this. */
+
 
         function addDefaultQualityButtons() {
             // Clear existing buttons first
