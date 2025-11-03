@@ -3,508 +3,1091 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embed Player Generator</title>
+    <title>Movie Data Generator - OMDB & TMDB</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #e50914;
-            --dark: #141414;
-            --dark-gray: #222;
-            --medium-gray: #333;
-            --light-gray: #444;
-            --text: #f5f5f5;
-        }
-        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
         }
         
         body {
-            background-color: #0a0a0a;
-            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            margin: 0;
             padding: 20px;
-            line-height: 1.6;
+            min-height: 100vh;
         }
         
-        .generator-container {
-            max-width: 1000px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            background: var(--dark-gray);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
         
-        .header {
-            background: linear-gradient(135deg, var(--primary), #b00710);
-            padding: 20px;
+        header {
             text-align: center;
+            padding: 20px 0;
         }
         
-        .header h1 {
-            font-weight: 600;
-            font-size: 24px;
+        h1 {
+            color: #fdd835;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
         
-        .generator-body {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        
-        .config-section {
-            flex: 1;
-            min-width: 300px;
-            padding: 25px;
-            border-right: 1px solid var(--light-gray);
-        }
-        
-        .preview-section {
-            flex: 1;
-            min-width: 300px;
-            padding: 25px;
-            background: var(--dark);
-        }
-        
-        .section-title {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--primary);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .section-title i {
-            font-size: 20px;
-        }
-        
-        .form-group {
+        .subtitle {
+            color: #90caf9;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
             margin-bottom: 20px;
         }
         
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 400;
+        .search-section {
+            background: rgba(25,25,35,0.9);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
-        input, textarea, select {
-            width: 100%;
-            padding: 12px 15px;
-            background: var(--medium-gray);
-            border: 1px solid var(--light-gray);
-            border-radius: 5px;
-            color: var(--text);
-            font-size: 14px;
-            transition: all 0.3s ease;
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-direction: column;
         }
         
-        input:focus, textarea:focus, select:focus {
+        @media (min-width: 768px) {
+            .search-box {
+                flex-direction: row;
+            }
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(229,9,20,0.2);
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.3);
         }
         
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn:hover {
-            background: #f40612;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: var(--medium-gray);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--light-gray);
-        }
-        
-        .episode-list {
-            margin-top: 15px;
-            border: 1px dashed var(--light-gray);
-            border-radius: 5px;
-            padding: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        
-        .episode-item {
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 8px;
+        .api-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
+            flex-wrap: wrap;
+            flex-direction: column;
         }
         
-        .episode-item:last-child {
-            margin-bottom: 0;
+        @media (min-width: 768px) {
+            .api-buttons {
+                flex-direction: row;
+            }
         }
         
-        .episode-inputs {
+        .api-btn {
             flex: 1;
-        }
-        
-        .remove-episode {
-            background: #ff4757;
-            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
             border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 4px;
+            color: white;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
+            min-width: 200px;
         }
         
-        .preview-container {
-            background: #000;
-            border-radius: 8px;
+        .omdb-btn {
+            background: linear-gradient(135deg,#e74c3c,#c0392b);
+        }
+        
+        .tmdb-btn {
+            background: linear-gradient(135deg,#01b4e4,#90cea1);
+        }
+        
+        .api-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        
+        .omdb-btn:hover {
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .tmdb-btn:hover {
+            box-shadow: 0 5px 15px rgba(1, 180, 228, 0.4);
+        }
+        
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .preview-section, .code-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .section-title {
+            color: #fdd835;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .movie-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
-        .code-container {
-            background: #1e1e1e;
-            border-radius: 5px;
-            padding: 15px;
-            overflow-x: auto;
+        .movie-header {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
         }
         
-        pre {
+        @media (min-width: 768px) {
+            .movie-header {
+                height: 260px;
+            }
+        }
+        
+        .movie-backdrop {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(4px) brightness(0.6);
+        }
+        
+        .movie-poster {
+            position: absolute;
+            bottom: -40px;
+            left: 15px;
+            width: 90px;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        
+        @media (min-width: 768px) {
+            .movie-poster {
+                width: 120px;
+                bottom: -60px;
+                left: 20px;
+            }
+        }
+        
+        .movie-card {
+            background: rgba(25,25,35,0.9);
+            padding: 60px 15px 15px;
+            border-radius: 16px;
+            margin-top: -40px;
+        }
+        
+        @media (min-width: 768px) {
+            .movie-card {
+                padding: 80px 20px 20px;
+                margin-top: -60px;
+            }
+        }
+        
+        .movie-title {
+            font-size: 18px;
+            color: #fdd835;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        
+        @media (min-width: 768px) {
+            .movie-title {
+                font-size: 20px;
+            }
+        }
+        
+        .movie-details {
+            list-style: none;
+            padding: 0;
             margin: 0;
-            white-space: pre-wrap;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.5;
+        }
+        
+        .movie-details li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+        
+        @media (min-width: 768px) {
+            .movie-details li {
+                font-size: 16px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .movie-details b {
+            color: #90caf9;
+        }
+        
+        .imdb-rating-link {
+            color: #ffb300;
+            text-decoration: none;
+        }
+        
+        .imdb-rating-link:hover {
+            text-decoration: underline;
+        }
+        
+        .credit-box {
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            background: linear-gradient(135deg,#6a11cb,#2575fc);
+            color: white;
+            border-radius: 6px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        
+        .credit-box span {
+            color: #f5c518;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+            color: #90caf9;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 20px;
+            color: #ff6b6b;
+            display: none;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        
+        .mt-box {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .code-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .action-card {
+            background: rgba(25,25,35,0.9);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (min-width: 768px) {
+            .action-card {
+                padding: 25px;
+            }
         }
         
         .copy-btn {
-            background: var(--medium-gray);
-            color: var(--text);
+            width: 100%;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
             border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
+            padding: 15px 25px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 12px;
-            margin-top: 10px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-size: 16px;
+            margin-top: 15px;
         }
         
-        .action-buttons {
-            display: flex;
-            gap: 10px;
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+        
+        .instructions {
+            background: rgba(25,25,35,0.9);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .instructions h3 {
+            color: #fdd835;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
         
-        @media (max-width: 768px) {
-            .generator-body {
-                flex-direction: column;
+        .feature {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature i {
+            font-size: 2rem;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+        
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 3s ease-in-out;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #90caf9;
+            font-size: 0.9rem;
+        }
+        
+        .player-container {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .player-container iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+        }
+        
+        @media (min-width: 768px) {
+            .player-container iframe {
+                height: 400px;
             }
-            
-            .config-section {
-                border-right: none;
-                border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .quality-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .quality-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quality-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .quality-btn.active {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border-color: #6a11cb;
+        }
+        
+        .note {
+            background: rgba(255,193,7,0.1);
+            border-left: 4px solid #ffc107;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.9rem;
+        }
+        
+        .api-info {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #90caf9;
+        }
+        
+        .api-tag {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .omdb-tag {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+        
+        .tmdb-tag {
+            background: rgba(1, 180, 228, 0.2);
+            color: #01b4e4;
+        }
+        
+        .code-preview {
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        @media (min-width: 768px) {
+            .code-preview {
+                padding: 20px;
+            }
+        }
+        
+        pre {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-size: 12px;
+        }
+        
+        .mobile-warning {
+            display: none;
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid #ff9800;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 767px) {
+            .mobile-warning {
+                display: block;
             }
         }
     </style>
 </head>
 <body>
-    <div class="generator-container">
-        <div class="header">
-            <h1>Embedded Video Player Generator</h1>
+    <div class="container">
+        <header>
+            <h1>Movie Data Generator</h1>
+            <p class="subtitle">Fetch movie details from OMDB & TMDB APIs</p>
+        </header>
+        
+        <div class="instructions">
+            <h3>How to Use This Generator</h3>
+            <ul>
+                <li>Enter a movie title in the search box below</li>
+                <li>Choose between OMDB or TMDB API using the buttons</li>
+                <li>OMDB provides detailed movie information</li>
+                <li>TMDB provides high-quality backdrop images</li>
+                <li>Copy the complete HTML code for your Blogger post</li>
+            </ul>
+            
+            <div class="mobile-warning">
+                <i class="fas fa-mobile-alt"></i> You're viewing on a mobile device. For the best experience, consider using a desktop for easier code copying.
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature">
+                    <i class="fas fa-database"></i>
+                    <h4>Dual API Support</h4>
+                    <p>Fetch data from both OMDB and TMDB APIs</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-image"></i>
+                    <h4>HD Backdrops</h4>
+                    <p>TMDB provides high-quality backdrop images</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-info-circle"></i>
+                    <h4>Detailed Info</h4>
+                    <p>OMDB provides comprehensive movie details</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-code"></i>
+                    <h4>Full Post Code</h4>
+                    <p>Get complete HTML code for Blogger</p>
+                </div>
+            </div>
         </div>
         
-        <div class="generator-body">
-            <div class="config-section">
-                <div class="form-group">
-                    <label for="defaultEpisode">Default Episode</label>
-                    <select id="defaultEpisode" class="form-control">
-                        <option value="0">Episode 1</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>Add New Episode</label>
-                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                        <input type="text" id="episodeName" placeholder="Episode name" style="flex: 2;">
-                        <input type="text" id="episodeUrl" placeholder="Embed URL" style="flex: 3;">
-                        <button id="addEpisode" class="btn">Add</button>
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="movieInput" placeholder="Enter movie title (e.g., The Dark Knight, Inception, Avatar)" value="The Dark Knight">
+            </div>
+            
+            <div class="api-buttons">
+                <button class="api-btn omdb-btn" id="omdbBtn">
+                    <i class="fas fa-film"></i> Fetch from OMDB API
+                </button>
+                <button class="api-btn tmdb-btn" id="tmdbBtn">
+                    <i class="fas fa-images"></i> Fetch from TMDB API
+                </button>
+            </div>
+            
+            <div class="loading" id="loadingIndicator">
+                <i class="fas fa-spinner fa-spin"></i> Loading movie data...
+            </div>
+            <div class="error" id="errorMessage">
+                <i class="fas fa-exclamation-triangle"></i> Movie not found. Please try another title.
+            </div>
+        </div>
+        
+        <div class="results-container">
+            <div class="preview-section">
+                <h2 class="section-title">Preview</h2>
+                <div class="movie-container" id="movieContainer">
+                    <div style="text-align: center; padding: 40px; color: #90caf9;">
+                        <i class="fas fa-film" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>Search for a movie to see the preview here</p>
                     </div>
-                    
-                    <div class="episode-list" id="episodeList">
-                        <!-- Episodes will be added here -->
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="playerWidth">Player Width</label>
-                    <select id="playerWidth" class="form-control">
-                        <option value="100%">Full Width (100%)</option>
-                        <option value="800px">800px</option>
-                        <option value="700px">700px</option>
-                        <option value="600px">600px</option>
-                    </select>
-                </div>
-                
-                <div class="action-buttons">
-                    <button id="generateBtn" class="btn">
-                        <i>🔄</i> Generate Code
-                    </button>
-                    <button id="resetBtn" class="btn btn-secondary">
-                        <i>🗑️</i> Reset
-                    </button>
                 </div>
             </div>
             
-            <div class="preview-section">
-                <div class="section-title">
-                    <i>👁️</i> Preview
+            <div class="code-section">
+                <div class="action-card">
+                    <h2 class="section-title">Generated HTML Code</h2>
+                    <p>Complete HTML code for your Blogger post:</p>
+                    <div class="code-preview">
+                        <pre id="htmlCode">// Search for a movie to generate HTML code...</pre>
+                    </div>
+                    <button class="copy-btn" id="copyBtn">
+                        <i class="fas fa-copy"></i> Copy HTML Code
+                    </button>
+                    <div class="note">
+                        <i class="fas fa-info-circle"></i> Paste this code in your Blogger post in HTML mode
+                    </div>
                 </div>
-                
-                <div class="preview-container" id="playerPreview">
-                    <!-- Player preview will appear here -->
-                </div>
-                
-                <div class="section-title">
-                    <i>📋</i> Generated Code
-                </div>
-                
-                <div class="code-container">
-                    <pre id="generatedCode">Configure your player and click "Generate Code"</pre>
-                </div>
-                
-                <button id="copyBtn" class="copy-btn">
-                    <i>📄</i> Copy to Clipboard
-                </button>
             </div>
         </div>
+        
+        <footer>
+            <p>Movie Data Generator &copy; 2023 | Using OMDB & TMDB APIs | Developed by Kuldeep Rai Sanatani</p>
+        </footer>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i> HTML code copied to clipboard!
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const episodes = [
-                { name: "Episode 1", url: "https://example.com/embed/1" }
-            ];
-            
-            // DOM elements
-            const defaultEpisodeSelect = document.getElementById('defaultEpisode');
-            const episodeNameInput = document.getElementById('episodeName');
-            const episodeUrlInput = document.getElementById('episodeUrl');
-            const addEpisodeBtn = document.getElementById('addEpisode');
-            const episodeList = document.getElementById('episodeList');
-            const generateBtn = document.getElementById('generateBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const playerPreview = document.getElementById('playerPreview');
-            const generatedCode = document.getElementById('generatedCode');
+            const omdbBtn = document.getElementById('omdbBtn');
+            const tmdbBtn = document.getElementById('tmdbBtn');
+            const movieInput = document.getElementById('movieInput');
+            const movieContainer = document.getElementById('movieContainer');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const errorMessage = document.getElementById('errorMessage');
             const copyBtn = document.getElementById('copyBtn');
-            const playerWidthSelect = document.getElementById('playerWidth');
+            const htmlCode = document.getElementById('htmlCode');
+            const successMessage = document.getElementById('successMessage');
             
-            // Render episodes list
-            function renderEpisodes() {
-                episodeList.innerHTML = '';
-                defaultEpisodeSelect.innerHTML = '';
-                
-                episodes.forEach((episode, index) => {
-                    // Add to episode list
-                    const episodeItem = document.createElement('div');
-                    episodeItem.className = 'episode-item';
-                    episodeItem.innerHTML = `
-                        <div class="episode-inputs">
-                            <div><strong>${episode.name}</strong></div>
-                            <div style="font-size: 12px; opacity: 0.8; overflow: hidden; text-overflow: ellipsis;">${episode.url}</div>
-                        </div>
-                        <button class="remove-episode" data-index="${index}">×</button>
-                    `;
-                    episodeList.appendChild(episodeItem);
-                    
-                    // Add to default episode select
-                    const option = document.createElement('option');
-                    option.value = index;
-                    option.textContent = episode.name;
-                    defaultEpisodeSelect.appendChild(option);
-                });
-            }
+            // API Keys
+            const OMDB_API_KEY = '8501ba9a';
+            const TMDB_API_KEY = 'fed86956458f19fb45cdd382b6e6de83';
             
-            // Add new episode
-            addEpisodeBtn.addEventListener('click', function() {
-                const name = episodeNameInput.value.trim();
-                const url = episodeUrlInput.value.trim();
-                
-                if (name && url) {
-                    episodes.push({ name, url });
-                    episodeNameInput.value = '';
-                    episodeUrlInput.value = '';
-                    renderEpisodes();
+            let currentMovieData = null;
+            let currentApiSource = '';
+            
+            // Search for a movie on page load
+            window.onload = function() {
+                fetchFromOMDB();
+            };
+            
+            omdbBtn.addEventListener('click', fetchFromOMDB);
+            tmdbBtn.addEventListener('click', fetchFromTMDB);
+            movieInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    fetchFromOMDB();
                 }
             });
             
-            // Remove episode
-            episodeList.addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-episode')) {
-                    const index = parseInt(e.target.getAttribute('data-index'));
-                    episodes.splice(index, 1);
-                    renderEpisodes();
-                }
-            });
+            copyBtn.addEventListener('click', copyHTMLCode);
             
-            // Generate code
-            generateBtn.addEventListener('click', function() {
-                if (episodes.length === 0) {
-                    alert('Please add at least one episode');
+            function fetchFromOMDB() {
+                const movieTitle = movieInput.value.trim();
+                
+                if (!movieTitle) {
+                    alert('Please enter a movie title');
                     return;
                 }
                 
-                const defaultEpisodeIndex = parseInt(defaultEpisodeSelect.value);
-                const width = playerWidthSelect.value;
-                
-                // Generate HTML code
-                const code = generatePlayerCode(episodes, defaultEpisodeIndex, width);
-                generatedCode.textContent = code;
-                
-                // Update preview
-                playerPreview.innerHTML = code;
-                
-                // Reattach event listeners for preview
-                const iframe = playerPreview.querySelector('#videoFrame');
-                const selector = playerPreview.querySelector('#episodeSelector');
-                if (iframe && selector) {
-                    selector.addEventListener('change', function() {
-                        iframe.style.opacity = '0.7';
-                        iframe.style.filter = 'blur(1px)';
-                        iframe.style.transition = 'all 0.3s ease';
-                        
-                        iframe.src = selector.value;
-                        
-                        setTimeout(() => {
-                            iframe.style.opacity = '1';
-                            iframe.style.filter = 'blur(0)';
-                        }, 300);
-                    });
-                }
-            });
-            
-            // Copy to clipboard
-            copyBtn.addEventListener('click', function() {
-                const code = generatedCode.textContent;
-                navigator.clipboard.writeText(code).then(() => {
-                    copyBtn.innerHTML = '<i>✓</i> Copied!';
-                    setTimeout(() => {
-                        copyBtn.innerHTML = '<i>📄</i> Copy to Clipboard';
-                    }, 2000);
-                });
-            });
-            
-            // Reset form
-            resetBtn.addEventListener('click', function() {
-                episodes.length = 0;
-                episodes.push({ name: "Episode 1", url: "https://example.com/embed/1" });
-                episodeNameInput.value = '';
-                episodeUrlInput.value = '';
-                defaultEpisodeSelect.value = '0';
-                playerWidthSelect.value = '100%';
-                renderEpisodes();
-                generatedCode.textContent = 'Configure your player and click "Generate Code"';
-                playerPreview.innerHTML = '';
-            });
-            
-            // Generate player HTML code
-            function generatePlayerCode(episodes, defaultEpisodeIndex, width) {
-                const defaultEpisode = episodes[defaultEpisodeIndex];
-                const options = episodes.map(ep => 
-                    `<option value="${ep.url}">${ep.name}</option>`
-                ).join('\n        ');
-                
-                return `<div style="width:${width};max-width:100%;margin:20px auto;">
-
-<!-- Main Player Container -->
-<div style="background: #000; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); overflow: hidden; position: relative;">
-  <!-- Video Frame -->
-  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-    <iframe 
-      id="videoFrame"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
-      src="${defaultEpisode.url}" 
-      allowfullscreen
-      allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
-      frameborder="0"
-    ></iframe>
-  </div>
-
-  <!-- Controls Bar -->
-  <div style="background: linear-gradient(to right, #141414, #222); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-    <!-- Episode Title -->
-    <div style="color: white; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 500;">
-      <span id="currentEpisode" style="color: #e50914; font-weight: 600;">${defaultEpisode.name}</span>
-    </div>
-    
-    <!-- Episode Selector -->
-    <div style="display: flex; gap: 10px; align-items: center;">
-      <select 
-        id="episodeSelector" 
-        onchange="changeEpisode()" 
-        style="padding: 8px 15px; border-radius: 4px; background: #333; color: white; border: 1px solid #444; font-family: 'Poppins', sans-serif; font-size: 14px; cursor: pointer; min-width: 150px; transition: all 0.2s ease;"
-      >
-        ${options}
-      </select>
-    </div>
-  </div>
-</div>
-
-<script>
-function changeEpisode() {
-  const selector = document.getElementById('episodeSelector');
-  const selectedUrl = selector.value;
-  const selectedText = selector.options[selector.selectedIndex].text;
-  const frame = document.getElementById('videoFrame');
-  
-  // Show loading state
-  frame.style.opacity = '0.7';
-  frame.style.filter = 'blur(1px)';
-  frame.style.transition = 'all 0.3s ease';
-  
-  // Update content
-  frame.src = selectedUrl;
-  document.getElementById('currentEpisode').textContent = selectedText;
-  
-  // Restore appearance
-  setTimeout(() => {
-    frame.style.opacity = '1';
-    frame.style.filter = 'blur(0)';
-  }, 300);
-}
-<\/script>`;
+                currentApiSource = 'OMDB';
+                searchMovie(`https://www.omdbapi.com/?t=${encodeURIComponent(movieTitle)}&apikey=${OMDB_API_KEY}`, 'OMDB');
             }
             
-            // Initial render
-            renderEpisodes();
+            function fetchFromTMDB() {
+                const movieTitle = movieInput.value.trim();
+                
+                if (!movieTitle) {
+                    alert('Please enter a movie title');
+                    return;
+                }
+                
+                currentApiSource = 'TMDB';
+                searchMovie(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(movieTitle)}`, 'TMDB');
+            }
+            
+            function searchMovie(apiUrl, apiType) {
+                // Show loading indicator
+                loadingIndicator.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Fetch movie data from API
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        loadingIndicator.style.display = 'none';
+                        
+                        if (apiType === 'OMDB') {
+                            if (data.Response === 'True') {
+                                currentMovieData = data;
+                                displayMovieData(data, 'OMDB');
+                                generateHTMLCode(data, 'OMDB');
+                            } else {
+                                showError();
+                            }
+                        } else if (apiType === 'TMDB') {
+                            if (data.results && data.results.length > 0) {
+                                const movie = data.results[0];
+                                // Fetch additional details for TMDB
+                                fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${TMDB_API_KEY}&append_to_response=credits`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('TMDB details not found');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(movieDetails => {
+                                        currentMovieData = formatTMDBData(movieDetails);
+                                        displayMovieData(currentMovieData, 'TMDB');
+                                        generateHTMLCode(currentMovieData, 'TMDB');
+                                    })
+                                    .catch(error => {
+                                        console.error('Error fetching TMDB details:', error);
+                                        showError();
+                                    });
+                            } else {
+                                showError();
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        loadingIndicator.style.display = 'none';
+                        showError();
+                        console.error('Error fetching movie data:', error);
+                    });
+            }
+            
+            function formatTMDBData(movie) {
+                // Get director from credits
+                let director = 'N/A';
+                if (movie.credits && movie.credits.crew) {
+                    const directors = movie.credits.crew.filter(person => person.job === 'Director');
+                    if (directors.length > 0) {
+                        director = directors.map(d => d.name).join(', ');
+                    }
+                }
+                
+                // Get actors from credits
+                let actors = 'N/A';
+                if (movie.credits && movie.credits.cast) {
+                    actors = movie.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+                }
+                
+                return {
+                    Title: movie.title,
+                    Year: movie.release_date ? movie.release_date.substring(0, 4) : 'N/A',
+                    Rated: movie.adult ? 'R' : 'PG',
+                    Released: movie.release_date || 'N/A',
+                    Runtime: movie.runtime ? `${movie.runtime} min` : 'N/A',
+                    Genre: movie.genres ? movie.genres.map(g => g.name).join(', ') : 'N/A',
+                    Director: director,
+                    Writer: 'N/A',
+                    Actors: actors,
+                    Plot: movie.overview || 'N/A',
+                    Language: movie.original_language || 'N/A',
+                    Country: movie.production_countries ? movie.production_countries[0]?.name : 'N/A',
+                    Awards: 'N/A',
+                    Poster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'N/A',
+                    Backdrop: movie.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}` : 'N/A',
+                    Ratings: [{ Source: 'TMDB', Value: `${movie.vote_average}/10` }],
+                    imdbRating: movie.vote_average ? movie.vote_average.toString() : 'N/A',
+                    imdbVotes: movie.vote_count ? movie.vote_count.toString() : 'N/A',
+                    imdbID: movie.imdb_id || 'N/A',
+                    Type: 'movie',
+                    DVD: 'N/A',
+                    BoxOffice: 'N/A',
+                    Production: 'N/A',
+                    Website: 'N/A',
+                    Response: 'True'
+                };
+            }
+            
+            function displayMovieData(movie, apiSource) {
+                // Generate HTML for movie data
+                const backdropImage = apiSource === 'TMDB' && movie.Backdrop !== 'N/A' 
+                    ? movie.Backdrop 
+                    : getBackdropImage(movie.Title);
+                    
+                const movieHTML = `
+                    <div class="movie-header">
+                        <img class="movie-backdrop" src="${backdropImage}" alt="Backdrop">
+                        <img class="movie-poster" src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+                        <div class="api-info">
+                            <span class="api-tag ${apiSource.toLowerCase()}-tag">${apiSource}</span>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-title">💳 Full Name: ${movie.Title} <span>[${movie.Year}]</span></div>
+                        <ul class="movie-details">
+                            <li><b>⭐ Rating:</b> <a href="${movie.imdbID !== 'N/A' ? `https://www.imdb.com/title/${movie.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${movie.imdbRating !== 'N/A' ? movie.imdbRating : 'N/A'}/10</a></li>
+                            <li><b>🎙️ Language:</b> ${movie.Language}</li>
+                            <li><b>🗓️ Released:</b> ${movie.Released}</li>
+                            <li><b>🎚️ Runtime:</b> ${movie.Runtime}</li>
+                            <li><b>📇 Starcast:</b> ${movie.Actors !== 'N/A' ? movie.Actors : 'N/A'}</li>
+                            <li><b>🎭 Genre:</b> ${movie.Genre}</li>
+                            <li><b>🎬 Director:</b> ${movie.Director !== 'N/A' ? movie.Director : 'N/A'}</li>
+                            <li><b>✍️ Writer:</b> ${movie.Writer !== 'N/A' ? movie.Writer : 'N/A'}</li>
+                            <li><b>📀 Available Qualities:</b> 480p / 720p / 1080p / 4K</li>
+                            <li><b>💾 File Sizes:</b> 500 MB / 1.5 GB / 2.7 GB / 5 GB</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-box">📺 MOVIE PLAYER</div>
+                    <div id="dkplyr"></div>
+                    <br>
+
+                    <script src="https://kuldeeptech-ai.github.io/generater/New%20folder/plyrimbd.js"><\/script>
+
+                    <p>✅ Download <strong style="color:Green;">${movie.Title} ${movie.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${movie.Genre}</strong>.</p>
+                    <p>🏷️ Tags: ${movie.Genre}</p>
+                `;
+                
+                // Insert HTML into container
+                movieContainer.innerHTML = movieHTML;
+            }
+            
+            function getBackdropImage(movieTitle) {
+                // For popular movies, use actual backdrop images
+                const backdropImages = {
+                    "The Dark Knight": "https://image.tmdb.org/t/p/w1280/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
+                    "Inception": "https://image.tmdb.org/t/p/w1280/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
+                    "Avatar": "https://image.tmdb.org/t/p/w1280/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
+                    "Avengers: Endgame": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+                    "The Shawshank Redemption": "https://image.tmdb.org/t/p/w1280/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+                    "Pulp Fiction": "https://image.tmdb.org/t/p/w1280/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
+                    "The Godfather": "https://image.tmdb.org/t/p/w1280/tmU7GeKVybMWFButWEGl2M4GeiP.jpg"
+                };
+                
+                return backdropImages[movieTitle] || 'https://via.placeholder.com/500x282/333/fff?text=No+Backdrop+Image';
+            }
+            
+            function showError() {
+                errorMessage.style.display = 'block';
+                movieContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #ff6b6b;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>Movie not found. Please try another title.</p>
+                    </div>
+                `;
+                htmlCode.textContent = '// Movie not found. Please search for a valid movie title.';
+            }
+            
+            function generateHTMLCode(movie, apiSource) {
+                const backdropImage = apiSource === 'TMDB' && movie.Backdrop !== 'N/A' 
+                    ? movie.Backdrop 
+                    : getBackdropImage(movie.Title);
+                
+                const completeHTML = `<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #111;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+.movie-container {
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+}
+.movie-header {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .movie-header {
+    height: 260px;
+  }
+}
+.movie-backdrop {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(4px) brightness(0.6);
+}
+.movie-poster {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  width: 90px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+@media (min-width: 768px) {
+  .movie-poster {
+    width: 120px;
+    bottom: 10px;
+    left: 20px;
+  }
+}
+.movie-card {
+  background: rgba(25,25,25,0.9);
+  padding: 60px 15px 15px;
+  border-radius: 16px;
+  margin-top: -40px;
+}
+@media (min-width: 768px) {
+  .movie-card {
+    padding: 80px 20px 20px;
+    margin-top: -60px;
+  }
+}
+.movie-title {
+  font-size: 18px;
+  color: #fdd835;
+  text-align: center;
+  margin-bottom: 12px;
+}
+@media (min-width: 768px) {
+  .movie-title {
+    font-size: 20px;
+  }
+}
+.movie-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.movie-details li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  .movie-details li {
+    font-size: 16px;
+  }
+}
+.movie-details b {
+  color: #90caf9;
+}
+.imdb-rating-link {
+  color: #ffb300;
+  text-decoration: none;
+}
+.imdb-rating-link:hover {
+  text-decoration: underline;
+}
+.credit-box {
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  background: linear-gradient(135deg,#6a11cb,#2575fc);
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+.credit-box span {
+  color: #f5c518;
+}
+.mt-box {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+.player-container {
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+.player-container iframe {
+  width: 100%;
+  height: 250px;
+  border: none;
+}
+@media (min-width: 768px) {
+  .player-container iframe {
+    height: 400px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="movie-container">
+  <div class="movie-header">
+    <img class="movie-backdrop" src="${backdropImage}" alt="Backdrop">
+    <img class="movie-poster" src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+  </div>
+
+  <div class="movie-card">
+    <div class="movie-title">💳 Full Name: ${movie.Title} <span>[${movie.Year}]</span></div>
+    <ul class="movie-details">
+      <li><b>⭐ Rating:</b> <a href="${movie.imdbID !== 'N/A' ? `https://www.imdb.com/title/${movie.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${movie.imdbRating !== 'N/A' ? movie.imdbRating : 'N/A'}/10</a></li>
+      <li><b>🎙️ Language:</b> ${movie.Language}</li>
+      <li><b>🗓️ Released:</b> ${movie.Released}</li>
+      <li><b>🎚️ Runtime:</b> ${movie.Runtime}</li>
+      <li><b>📇 Starcast:</b> ${movie.Actors !== 'N/A' ? movie.Actors : 'N/A'}</li>
+      <li><b>🎭 Genre:</b> ${movie.Genre}</li>
+      <li><b>🎬 Director:</b> ${movie.Director !== 'N/A' ? movie.Director : 'N/A'}</li>
+      <li><b>✍️ Writer:</b> ${movie.Writer !== 'N/A' ? movie.Writer : 'N/A'}</li>
+      <li><b>📀 Available Qualities:</b> 480p / 720p / 1080p / 4K</li>
+      <li><b>💾 File Sizes:</b> 500 MB / 1.5 GB / 2.7 GB / 5 GB</li>
+    </ul>
+  </div>
+
+  <div class="mt-box">📺 MOVIE PLAYER</div>
+  <div id="dkplyr"></div>
+  <br>
+
+  <script src="https://kuldeeptech-ai.github.io/generater/New%20folder/plyrimbd.js"><\/script>
+
+  <p>✅ Download <strong style="color:Green;">${movie.Title} ${movie.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${movie.Genre}</strong>.</p>
+  <p>🏷️ Tags: ${movie.Genre}</p>
+</div>
+</body>
+</html>`;
+                
+                htmlCode.textContent = completeHTML;
+            }
+            
+            function copyHTMLCode() {
+                if (!currentMovieData) {
+                    alert('Please search for a movie first');
+                    return;
+                }
+                
+                // Copy to clipboard
+                const textArea = document.createElement('textarea');
+                textArea.value = htmlCode.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                } catch (err) {
+                    alert('Failed to copy code. Please select and copy manually.');
+                }
+                
+                document.body.removeChild(textArea);
+            }
         });
     </script>
 </body>
