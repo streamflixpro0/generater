@@ -1006,7 +1006,7 @@ body {
   padding: 0;
 }
 .movie-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 20px auto;
   border-radius: 20px;
   overflow: hidden;
@@ -1155,6 +1155,7 @@ body {
 <body>
 <div class="movie-container">
   <div class="movie-header">
+      <img class="movie-poster" src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
     <img class="movie-backdrop" src="${backdropImage}" alt="Backdrop">
     <img class="movie-poster" src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
   </div>
