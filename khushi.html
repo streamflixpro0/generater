@@ -651,23 +651,172 @@
                 box-shadow: 0 0 20px rgba(106, 17, 203, 0.8), 0 0 30px rgba(37, 117, 252, 0.6);
             }
         }
+        
+        /* Toggle Switch Styles */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(36px);
+        }
+        
+        /* History Section Styles */
+        .history-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .history-btn {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .history-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+        }
+        
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 10px;
+            background: rgba(20, 20, 30, 0.8);
+            padding: 15px;
+        }
+        
+        .history-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .history-item-title {
+            font-weight: 600;
+        }
+        
+        .history-item-type {
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            background: rgba(106, 17, 203, 0.3);
+        }
+        
+        .clear-history {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .clear-history:hover {
+            background: rgba(255, 107, 107, 0.3);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎬 Movie Data Generator</h1>
-            <p class="subtitle">Fetch movie details from OMDB & TMDB APIs</p>
+            <h1>🎬 Movie & TV Show Data Generator</h1>
+            <p class="subtitle">Fetch details from OMDB & TMDB APIs</p>
         </header>
         
         <div class="instructions frame">
             <h3><i class="fas fa-info-circle"></i> How to Use This Generator</h3>
             <ul>
-                <li>Enter a movie title in the search box below</li>
+                <li>Select whether you want to search for a Movie or TV Show using the toggle</li>
+                <li>Enter a title in the search box below</li>
                 <li>Choose between OMDB or TMDB API using the colorful buttons</li>
-                <li>OMDB provides detailed movie information</li>
+                <li>OMDB provides detailed information</li>
                 <li>TMDB provides high-quality backdrop images</li>
                 <li>Copy the complete HTML code for your Blogger post</li>
+                <li>Your search history is saved for quick access</li>
             </ul>
             
             <div class="mobile-warning">
@@ -688,7 +837,7 @@
                 <div class="feature">
                     <i class="fas fa-info-circle"></i>
                     <h4>Detailed Info</h4>
-                    <p>OMDB provides comprehensive movie details</p>
+                    <p>OMDB provides comprehensive details</p>
                 </div>
                 <div class="feature">
                     <i class="fas fa-code"></i>
@@ -699,8 +848,17 @@
         </div>
         
         <div class="search-section frame glow">
+            <div class="toggle-container">
+                <span class="toggle-label">Movie</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="mediaToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">TV Show</span>
+            </div>
+            
             <div class="search-box">
-                <input type="text" id="movieInput" placeholder="Enter movie title (e.g., The Dark Knight, Inception, Avatar)" value="The Dark Knight">
+                <input type="text" id="movieInput" placeholder="Enter movie or TV show title">
             </div>
             
             <div class="api-buttons">
@@ -713,21 +871,33 @@
             </div>
             
             <div class="loading" id="loadingIndicator">
-                <i class="fas fa-spinner fa-spin"></i> Loading movie data...
+                <i class="fas fa-spinner fa-spin"></i> Loading data...
             </div>
             <div class="error" id="errorMessage">
-                <i class="fas fa-exclamation-triangle"></i> Movie not found. Please try another title.
+                <i class="fas fa-exclamation-triangle"></i> Title not found. Please try another.
+            </div>
+            
+            <div class="history-section" id="historySection">
+                <div class="history-header">
+                    <h3><i class="fas fa-history"></i> Search History</h3>
+                    <button class="history-btn" id="toggleHistoryBtn">
+                        <i class="fas fa-chevron-up"></i> Hide
+                    </button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <!-- History items will be added here -->
+                </div>
+                <button class="clear-history" id="clearHistoryBtn">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
             </div>
         </div>
         
-        <div class="results-container">
+        <div class="results-container" id="resultsContainer" style="display: none;">
             <div class="preview-section">
                 <h2 class="section-title"><i class="fas fa-eye"></i> Preview</h2>
                 <div class="movie-container frame" id="movieContainer">
-                    <div style="text-align: center; padding: 40px; color: #90caf9;">
-                        <i class="fas fa-film" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                        <p>Search for a movie to see the preview here</p>
-                    </div>
+                    <!-- Movie/TV show preview will be displayed here -->
                 </div>
             </div>
             
@@ -736,7 +906,7 @@
                     <h2 class="section-title"><i class="fas fa-code"></i> Generated HTML Code</h2>
                     <p>Complete HTML code for your Blogger post:</p>
                     <div class="code-preview">
-                        <pre id="htmlCode">// Search for a movie to generate HTML code...</pre>
+                        <pre id="htmlCode">// Search for a movie or TV show to generate HTML code...</pre>
                     </div>
                     <button class="copy-btn" id="copyBtn">
                         <i class="fas fa-copy"></i> Copy HTML Code
@@ -749,7 +919,7 @@
         </div>
         
         <footer class="frame">
-            <p>Movie Data Generator &copy; 2023 | Using OMDB & TMDB APIs | Developed by Kuldeep Rai Sanatani</p>
+            <p>Movie & TV Show Data Generator &copy; 2023 | Using OMDB & TMDB APIs | Developed by Kuldeep Rai Sanatani</p>
         </footer>
     </div>
     
@@ -768,19 +938,26 @@
             const copyBtn = document.getElementById('copyBtn');
             const htmlCode = document.getElementById('htmlCode');
             const successMessage = document.getElementById('successMessage');
+            const mediaToggle = document.getElementById('mediaToggle');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const historySection = document.getElementById('historySection');
+            const historyList = document.getElementById('historyList');
+            const toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
+            const clearHistoryBtn = document.getElementById('clearHistoryBtn');
             
             // API Keys
             const OMDB_API_KEY = '8501ba9a';
             const TMDB_API_KEY = 'fed86956458f19fb45cdd382b6e6de83';
             
-            let currentMovieData = null;
+            let currentMediaData = null;
             let currentApiSource = '';
+            let isMovie = true; // Default to movie search
+            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             
-            // Search for a movie on page load
-            window.onload = function() {
-                fetchFromOMDB();
-            };
+            // Initialize history display
+            updateHistoryDisplay();
             
+            // Event listeners
             omdbBtn.addEventListener('click', fetchFromOMDB);
             tmdbBtn.addEventListener('click', fetchFromTMDB);
             movieInput.addEventListener('keypress', function(e) {
@@ -790,37 +967,58 @@
             });
             
             copyBtn.addEventListener('click', copyHTMLCode);
+            mediaToggle.addEventListener('change', toggleMediaType);
+            toggleHistoryBtn.addEventListener('click', toggleHistory);
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            
+            function toggleMediaType() {
+                isMovie = !isMovie;
+                movieInput.placeholder = isMovie ? 
+                    "Enter movie title" : 
+                    "Enter TV show title";
+                
+                // Update toggle labels
+                document.querySelectorAll('.toggle-label').forEach((label, index) => {
+                    if (isMovie) {
+                        label.textContent = index === 0 ? 'Movie' : 'TV Show';
+                    } else {
+                        label.textContent = index === 0 ? 'TV Show' : 'Movie';
+                    }
+                });
+            }
             
             function fetchFromOMDB() {
-                const movieTitle = movieInput.value.trim();
+                const title = movieInput.value.trim();
                 
-                if (!movieTitle) {
-                    alert('Please enter a movie title');
+                if (!title) {
+                    alert('Please enter a title');
                     return;
                 }
                 
                 currentApiSource = 'OMDB';
-                searchMovie(`https://www.omdbapi.com/?t=${encodeURIComponent(movieTitle)}&apikey=${OMDB_API_KEY}`, 'OMDB');
+                const type = isMovie ? 'movie' : 'series';
+                searchMedia(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&type=${type}&apikey=${OMDB_API_KEY}`, 'OMDB', title);
             }
             
             function fetchFromTMDB() {
-                const movieTitle = movieInput.value.trim();
+                const title = movieInput.value.trim();
                 
-                if (!movieTitle) {
-                    alert('Please enter a movie title');
+                if (!title) {
+                    alert('Please enter a title');
                     return;
                 }
                 
                 currentApiSource = 'TMDB';
-                searchMovie(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(movieTitle)}`, 'TMDB');
+                const type = isMovie ? 'movie' : 'tv';
+                searchMedia(`https://api.themoviedb.org/3/search/${type}?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(title)}`, 'TMDB', title);
             }
             
-            function searchMovie(apiUrl, apiType) {
+            function searchMedia(apiUrl, apiType, searchTitle) {
                 // Show loading indicator
                 loadingIndicator.style.display = 'block';
                 errorMessage.style.display = 'none';
                 
-                // Fetch movie data from API
+                // Fetch media data from API
                 fetch(apiUrl)
                     .then(response => {
                         if (!response.ok) {
@@ -833,27 +1031,31 @@
                         
                         if (apiType === 'OMDB') {
                             if (data.Response === 'True') {
-                                currentMovieData = data;
-                                displayMovieData(data, 'OMDB');
+                                currentMediaData = data;
+                                displayMediaData(data, 'OMDB');
                                 generateHTMLCode(data, 'OMDB');
+                                addToHistory(searchTitle, isMovie ? 'movie' : 'tv');
+                                resultsContainer.style.display = 'flex';
                             } else {
                                 showError();
                             }
                         } else if (apiType === 'TMDB') {
                             if (data.results && data.results.length > 0) {
-                                const movie = data.results[0];
+                                const media = data.results[0];
                                 // Fetch additional details for TMDB
-                                fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${TMDB_API_KEY}&append_to_response=credits`)
+                                fetch(`https://api.themoviedb.org/3/${isMovie ? 'movie' : 'tv'}/${media.id}?api_key=${TMDB_API_KEY}&append_to_response=credits`)
                                     .then(response => {
                                         if (!response.ok) {
                                             throw new Error('TMDB details not found');
                                         }
                                         return response.json();
                                     })
-                                    .then(movieDetails => {
-                                        currentMovieData = formatTMDBData(movieDetails);
-                                        displayMovieData(currentMovieData, 'TMDB');
-                                        generateHTMLCode(currentMovieData, 'TMDB');
+                                    .then(mediaDetails => {
+                                        currentMediaData = formatTMDBData(mediaDetails);
+                                        displayMediaData(currentMediaData, 'TMDB');
+                                        generateHTMLCode(currentMediaData, 'TMDB');
+                                        addToHistory(searchTitle, isMovie ? 'movie' : 'tv');
+                                        resultsContainer.style.display = 'flex';
                                     })
                                     .catch(error => {
                                         console.error('Error fetching TMDB details:', error);
@@ -867,15 +1069,15 @@
                     .catch(error => {
                         loadingIndicator.style.display = 'none';
                         showError();
-                        console.error('Error fetching movie data:', error);
+                        console.error('Error fetching media data:', error);
                     });
             }
             
-            function formatTMDBData(movie) {
+            function formatTMDBData(media) {
                 // Get director from credits
                 let director = 'N/A';
-                if (movie.credits && movie.credits.crew) {
-                    const directors = movie.credits.crew.filter(person => person.job === 'Director');
+                if (media.credits && media.credits.crew) {
+                    const directors = media.credits.crew.filter(person => person.job === 'Director');
                     if (directors.length > 0) {
                         director = directors.map(d => d.name).join(', ');
                     }
@@ -883,86 +1085,99 @@
                 
                 // Get actors from credits
                 let actors = 'N/A';
-                if (movie.credits && movie.credits.cast) {
-                    actors = movie.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+                if (media.credits && media.credits.cast) {
+                    actors = media.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
                 }
                 
+                // For TV shows, handle different properties
+                const isTV = !media.release_date;
+                
                 return {
-                    Title: movie.title,
-                    Year: movie.release_date ? movie.release_date.substring(0, 4) : 'N/A',
-                    Rated: movie.adult ? 'R' : 'PG',
-                    Released: movie.release_date || 'N/A',
-                    Runtime: movie.runtime ? `${movie.runtime} min` : 'N/A',
-                    Genre: movie.genres ? movie.genres.map(g => g.name).join(', ') : 'N/A',
+                    Title: media.title || media.name,
+                    Year: isTV ? 
+                        (media.first_air_date ? media.first_air_date.substring(0, 4) : 'N/A') : 
+                        (media.release_date ? media.release_date.substring(0, 4) : 'N/A'),
+                    Rated: media.adult ? 'R' : 'PG',
+                    Released: isTV ? (media.first_air_date || 'N/A') : (media.release_date || 'N/A'),
+                    Runtime: isTV ? 
+                        (media.episode_run_time && media.episode_run_time.length > 0 ? `${media.episode_run_time[0]} min` : 'N/A') : 
+                        (media.runtime ? `${media.runtime} min` : 'N/A'),
+                    Genre: media.genres ? media.genres.map(g => g.name).join(', ') : 'N/A',
                     Director: director,
                     Writer: 'N/A',
                     Actors: actors,
-                    Plot: movie.overview || 'N/A',
-                    Language: movie.original_language || 'N/A',
-                    Country: movie.production_countries ? movie.production_countries[0]?.name : 'N/A',
+                    Plot: media.overview || 'N/A',
+                    Language: media.original_language || 'N/A',
+                    Country: media.production_countries ? media.production_countries[0]?.name : 'N/A',
                     Awards: 'N/A',
-                    Poster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'N/A',
-                    Backdrop: movie.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}` : 'N/A',
-                    Ratings: [{ Source: 'TMDB', Value: `${movie.vote_average}/10` }],
-                    imdbRating: movie.vote_average ? movie.vote_average.toString() : 'N/A',
-                    imdbVotes: movie.vote_count ? movie.vote_count.toString() : 'N/A',
-                    imdbID: movie.imdb_id || 'N/A',
-                    Type: 'movie',
+                    Poster: media.poster_path ? `https://image.tmdb.org/t/p/w500${media.poster_path}` : 'N/A',
+                    Backdrop: media.backdrop_path ? `https://image.tmdb.org/t/p/w1280${media.backdrop_path}` : 'N/A',
+                    Ratings: [{ Source: 'TMDB', Value: `${media.vote_average}/10` }],
+                    imdbRating: media.vote_average ? media.vote_average.toString() : 'N/A',
+                    imdbVotes: media.vote_count ? media.vote_count.toString() : 'N/A',
+                    imdbID: media.imdb_id || 'N/A',
+                    Type: isMovie ? 'movie' : 'series',
                     DVD: 'N/A',
                     BoxOffice: 'N/A',
                     Production: 'N/A',
                     Website: 'N/A',
-                    Response: 'True'
+                    Response: 'True',
+                    totalSeasons: isTV ? (media.number_of_seasons || 'N/A') : 'N/A'
                 };
             }
             
-            function displayMovieData(movie, apiSource) {
-                // Generate HTML for movie data
-                const backdropImage = apiSource === 'TMDB' && movie.Backdrop !== 'N/A' 
-                    ? movie.Backdrop 
-                    : getBackdropImage(movie.Title);
+            function displayMediaData(media, apiSource) {
+                // Generate HTML for media data
+                const backdropImage = apiSource === 'TMDB' && media.Backdrop !== 'N/A' 
+                    ? media.Backdrop 
+                    : getBackdropImage(media.Title);
                     
-                const movieHTML = `
+                const mediaType = isMovie ? 'Movie' : 'TV Show';
+                const seasonsInfo = !isMovie && media.totalSeasons !== 'N/A' ? 
+                    `<li><b>📺 Total Seasons:</b> ${media.totalSeasons}</li>` : '';
+                    
+                const mediaHTML = `
                     <div class="movie-header">
                         <img class="movie-backdrop" src="${backdropImage}" alt="Backdrop">
-                        <img class="movie-poster" src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+                        <img class="movie-poster" src="${media.Poster !== 'N/A' ? media.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
                         <div class="api-info">
                             <span class="api-tag ${apiSource.toLowerCase()}-tag">${apiSource}</span>
                         </div>
                     </div>
 
                     <div class="movie-card">
-                        <div class="movie-title">${movie.Title} <span>[${movie.Year}]</span></div>
+                        <div class="movie-title">${media.Title} <span>[${media.Year}]</span></div>
                         <ul class="movie-details">
-                            <li><b>⭐ Rating:</b> <a href="${movie.imdbID !== 'N/A' ? `https://www.imdb.com/title/${movie.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${movie.imdbRating !== 'N/A' ? movie.imdbRating : 'N/A'}/10</a></li>
-                            <li><b>🎙️ Language:</b> ${movie.Language}</li>
-                            <li><b>🗓️ Released:</b> ${movie.Released}</li>
-                            <li><b>🎚️ Runtime:</b> ${movie.Runtime}</li>
-                            <li><b>📇 Starcast:</b> ${movie.Actors !== 'N/A' ? movie.Actors : 'N/A'}</li>
-                            <li><b>🎭 Genre:</b> ${movie.Genre}</li>
-                            <li><b>🎬 Director:</b> ${movie.Director !== 'N/A' ? movie.Director : 'N/A'}</li>
-                            <li><b>✍️ Writer:</b> ${movie.Writer !== 'N/A' ? movie.Writer : 'N/A'}</li>
+                            <li><b>⭐ Rating:</b> <a href="${media.imdbID !== 'N/A' ? `https://www.imdb.com/title/${media.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${media.imdbRating !== 'N/A' ? media.imdbRating : 'N/A'}/10</a></li>
+                            <li><b>🎙️ Language:</b> ${media.Language}</li>
+                            <li><b>🗓️ Released:</b> ${media.Released}</li>
+                            <li><b>🎚️ Runtime:</b> ${media.Runtime}</li>
+                            <li><b>📇 Starcast:</b> ${media.Actors !== 'N/A' ? media.Actors : 'N/A'}</li>
+                            <li><b>🎭 Genre:</b> ${media.Genre}</li>
+                            <li><b>🎬 Director:</b> ${media.Director !== 'N/A' ? media.Director : 'N/A'}</li>
+                            ${seasonsInfo}
+                            <li><b>✍️ Writer:</b> ${media.Writer !== 'N/A' ? media.Writer : 'N/A'}</li>
                             <li><b>📀 Available Qualities:</b> 480p / 720p / 1080p / 4K</li>
                             <li><b>💾 File Sizes:</b> 500 MB / 1.5 GB / 2.7 GB / 5 GB</li>
                         </ul>
                     </div>
 
-                    <div class="mt-box">📺 MOVIE PLAYER</div>
+                    <div class="mt-box">📺 ${mediaType.toUpperCase()} PLAYER</div>
                     <div id="dkplyr"></div>
                     <br>
 
                     <script src="https://kuldeeptech-ai.github.io/generater/New%20folder/plyrimbd.js"><\/script>
 
-                    <p>✅ Download <strong style="color:Green;">${movie.Title} ${movie.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${movie.Genre}</strong>.</p>
-                    <p>🏷️ Tags: ${movie.Genre}</p>
+                    <p>✅ Download <strong style="color:Green;">${media.Title} ${media.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${media.Genre}</strong>.</p>
+                    <p>🏷️ Tags: ${media.Genre}</p>
                 `;
                 
                 // Insert HTML into container
-                movieContainer.innerHTML = movieHTML;
+                movieContainer.innerHTML = mediaHTML;
             }
             
-            function getBackdropImage(movieTitle) {
-                // For popular movies, use actual backdrop images
+            function getBackdropImage(title) {
+                // For popular media, use actual backdrop images
                 const backdropImages = {
                     "The Dark Knight": "https://image.tmdb.org/t/p/w1280/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
                     "Inception": "https://image.tmdb.org/t/p/w1280/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
@@ -970,10 +1185,13 @@
                     "Avengers: Endgame": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
                     "The Shawshank Redemption": "https://image.tmdb.org/t/p/w1280/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
                     "Pulp Fiction": "https://image.tmdb.org/t/p/w1280/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
-                    "The Godfather": "https://image.tmdb.org/t/p/w1280/tmU7GeKVybMWFButWEGl2M4GeiP.jpg"
+                    "The Godfather": "https://image.tmdb.org/t/p/w1280/tmU7GeKVybMWFButWEGl2M4GeiP.jpg",
+                    "Breaking Bad": "https://image.tmdb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
+                    "Game of Thrones": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+                    "Stranger Things": "https://image.tmdb.org/t/p/w1280/56v2KjBlU4XaOv9rVYEQypROD7P.jpg"
                 };
                 
-                return backdropImages[movieTitle] || 'https://via.placeholder.com/500x282/333/fff?text=No+Backdrop+Image';
+                return backdropImages[title] || 'https://via.placeholder.com/500x282/333/fff?text=No+Backdrop+Image';
             }
             
             function showError() {
@@ -981,16 +1199,20 @@
                 movieContainer.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #ff6b6b;">
                         <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                        <p>Movie not found. Please try another title.</p>
+                        <p>${isMovie ? 'Movie' : 'TV show'} not found. Please try another title.</p>
                     </div>
                 `;
-                htmlCode.textContent = '// Movie not found. Please search for a valid movie title.';
+                htmlCode.textContent = `// ${isMovie ? 'Movie' : 'TV show'} not found. Please search for a valid title.`;
             }
             
-            function generateHTMLCode(movie, apiSource) {
-                const backdropImage = apiSource === 'TMDB' && movie.Backdrop !== 'N/A' 
-                    ? movie.Backdrop 
-                    : getBackdropImage(movie.Title);
+            function generateHTMLCode(media, apiSource) {
+                const backdropImage = apiSource === 'TMDB' && media.Backdrop !== 'N/A' 
+                    ? media.Backdrop 
+                    : getBackdropImage(media.Title);
+                
+                const mediaType = isMovie ? 'Movie' : 'TV Show';
+                const seasonsInfo = !isMovie && media.totalSeasons !== 'N/A' ? 
+                    `<li><b>📺 Total Seasons:</b> ${media.totalSeasons}</li>` : '';
                 
                 const completeHTML = `<!DOCTYPE html>
 <html>
@@ -1008,10 +1230,10 @@ body {
 .movie-container {
   max-width: 1000px;
   margin: 20px auto;
-  border-radius: 20px;
+  border-radius: 0px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-  border: 2px solid rgba(255,255,255,0.1);
+  border: 0px solid rgba(255,255,255,0.1);
   background: rgba(25,25,35,0.9);
 }
 .movie-header {
@@ -1155,35 +1377,36 @@ body {
 <body>
 <div class="movie-container">
   <div class="movie-header">
-      <img class="movie-poster" src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+      <img class="movie-poster" src="${media.Poster !== 'N/A' ? media.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
     <img class="movie-backdrop" src="${backdropImage}" alt="Backdrop">
-    <img class="movie-poster" src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+    <img class="movie-poster" src="${media.Poster !== 'N/A' ? media.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
   </div>
 
   <div class="movie-card">
-    <div class="movie-title">${movie.Title} <span>[${movie.Year}]</span></div>
+    <div class="movie-title">${media.Title} <span>[${media.Year}]</span></div>
     <ul class="movie-details">
-      <li><b>⭐ Rating:</b> <a href="${movie.imdbID !== 'N/A' ? `https://www.imdb.com/title/${movie.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${movie.imdbRating !== 'N/A' ? movie.imdbRating : 'N/A'}/10</a></li>
-      <li><b>🎙️ Language:</b> ${movie.Language}</li>
-      <li><b>🗓️ Released:</b> ${movie.Released}</li>
-      <li><b>🎚️ Runtime:</b> ${movie.Runtime}</li>
-      <li><b>📇 Starcast:</b> ${movie.Actors !== 'N/A' ? movie.Actors : 'N/A'}</li>
-      <li><b>🎭 Genre:</b> ${movie.Genre}</li>
-      <li><b>🎬 Director:</b> ${movie.Director !== 'N/A' ? movie.Director : 'N/A'}</li>
-      <li><b>✍️ Writer:</b> ${movie.Writer !== 'N/A' ? movie.Writer : 'N/A'}</li>
+      <li><b>⭐ Rating:</b> <a href="${media.imdbID !== 'N/A' ? `https://www.imdb.com/title/${media.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${media.imdbRating !== 'N/A' ? media.imdbRating : 'N/A'}/10</a></li>
+      <li><b>🎙️ Language:</b> ${media.Language}</li>
+      <li><b>🗓️ Released:</b> ${media.Released}</li>
+      <li><b>🎚️ Runtime:</b> ${media.Runtime}</li>
+      <li><b>📇 Starcast:</b> ${media.Actors !== 'N/A' ? media.Actors : 'N/A'}</li>
+      <li><b>🎭 Genre:</b> ${media.Genre}</li>
+      <li><b>🎬 Director:</b> ${media.Director !== 'N/A' ? media.Director : 'N/A'}</li>
+      ${seasonsInfo}
+      <li><b>✍️ Writer:</b> ${media.Writer !== 'N/A' ? media.Writer : 'N/A'}</li>
       <li><b>📀 Available Qualities:</b> 480p / 720p / 1080p / 4K</li>
       <li><b>💾 File Sizes:</b> 500 MB / 1.5 GB / 2.7 GB / 5 GB</li>
     </ul>
   </div>
 
-  <div class="mt-box">📺 MOVIE PLAYER</div>
+  <div class="mt-box">📺 ${mediaType.toUpperCase()} PLAYER</div>
   <div id="dkplyr"></div>
   <br>
 
   <script src="https://kuldeeptech-ai.github.io/generater/New%20folder/plyrimbd.js"><\/script>
 
-  <p>✅ Download <strong style="color:Green;">${movie.Title} ${movie.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${movie.Genre}</strong>.</p>
-  <p>🏷️ Tags: ${movie.Genre}</p>
+  <p>✅ Download <strong style="color:Green;">${media.Title} ${media.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${media.Genre}</strong>.</p>
+  <p>🏷️ Tags: ${media.Genre}</p>
 </div>
 </body>
 </html>`;
@@ -1192,8 +1415,8 @@ body {
             }
             
             function copyHTMLCode() {
-                if (!currentMovieData) {
-                    alert('Please search for a movie first');
+                if (!currentMediaData) {
+                    alert('Please search for a movie or TV show first');
                     return;
                 }
                 
@@ -1215,6 +1438,88 @@ body {
                 }
                 
                 document.body.removeChild(textArea);
+            }
+            
+            // History Functions
+            function addToHistory(title, type) {
+                // Check if already in history
+                const existingIndex = searchHistory.findIndex(item => 
+                    item.title.toLowerCase() === title.toLowerCase() && item.type === type
+                );
+                
+                if (existingIndex !== -1) {
+                    // Remove existing entry
+                    searchHistory.splice(existingIndex, 1);
+                }
+                
+                // Add to beginning of history
+                searchHistory.unshift({
+                    title: title,
+                    type: type,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Keep only last 10 items
+                if (searchHistory.length > 10) {
+                    searchHistory = searchHistory.slice(0, 10);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                
+                // Update display
+                updateHistoryDisplay();
+            }
+            
+            function updateHistoryDisplay() {
+                if (searchHistory.length === 0) {
+                    historyList.innerHTML = '<p style="text-align: center; color: #90caf9;">No search history yet</p>';
+                    return;
+                }
+                
+                historyList.innerHTML = '';
+                searchHistory.forEach(item => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <span class="history-item-title">${item.title}</span>
+                        <span class="history-item-type">${item.type === 'movie' ? '🎬 Movie' : '📺 TV Show'}</span>
+                    `;
+                    
+                    historyItem.addEventListener('click', () => {
+                        // Set the search input and trigger search
+                        movieInput.value = item.title;
+                        isMovie = item.type === 'movie';
+                        mediaToggle.checked = !isMovie;
+                        toggleMediaType();
+                        fetchFromOMDB();
+                    });
+                    
+                    historyList.appendChild(historyItem);
+                });
+            }
+            
+            function toggleHistory() {
+                if (historySection.style.display === 'none' || historySection.style.display === '') {
+                    historySection.style.display = 'block';
+                    toggleHistoryBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Hide';
+                } else {
+                    historySection.style.display = 'none';
+                    toggleHistoryBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show History';
+                }
+            }
+            
+            function clearHistory() {
+                if (confirm('Are you sure you want to clear your search history?')) {
+                    searchHistory = [];
+                    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                    updateHistoryDisplay();
+                }
+            }
+            
+            // Show history section if there's any history
+            if (searchHistory.length > 0) {
+                historySection.style.display = 'block';
             }
         });
     </script>
