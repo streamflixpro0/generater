@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 iframeWrapper.style.margin = "auto";
 
                 const iframe = document.createElement("iframe");
-                iframe.src = `https://vidrock.net/movie/${imdbTitle}?autoplay=true&autonext=true&theme=00&download=false`;
+                iframe.src = `https://player.autoembed.cc/embed/movie/${id}`;
                 iframe.style.position = "absolute";
                 iframe.style.top = "0";
                 iframe.style.left = "0";
