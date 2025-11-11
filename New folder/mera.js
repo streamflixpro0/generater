@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const iframeContainer = document.createElement("div");
                 iframeContainer.style.textAlign = "center";
-                iframeContainer.style.marginTop = "20px";
+                iframeContainer.style.marginTop = "0px";
 
                 const iframeWrapper = document.createElement("div");
                 iframeWrapper.style.position = "relative";
@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 iframeWrapper.style.overflow = "hidden";
                 iframeWrapper.style.margin = "auto";
 
+                iframeWrapper.classList.add('dkframe');
                 const iframe = document.createElement("iframe");
-                iframe.src = `https://vidrock.net/movie/${movieid}?theme=0000&download=false`;
-                iframe.src = `https://player.autoembed.cc/embed/movie/${movieid}`;
+                iframe.src = `https://smrta384und.com/play/${imdbTitle}`;
                 iframe.style.position = "absolute";
                 iframe.style.top = "0";
                 iframe.style.left = "0";
@@ -43,5 +43,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }
-
 });
