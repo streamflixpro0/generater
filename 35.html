@@ -1515,7 +1515,7 @@
                 let downloadLinksHTML = '';
                 if (downloadLinks.length > 0) {
                     downloadLinksHTML = `
-                        <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                        <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 0px;">
                             <h3 style="color: #fdd835; margin-bottom: 15px; text-align: center;">📥 ${downloadType === 'stream' ? 'Streaming' : 'Download'} Links</h3>
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
                     `;
@@ -1523,10 +1523,10 @@
                     downloadLinks.forEach(link => {
                         if (link.url) {
                             downloadLinksHTML += `
-                                <div style="background: rgba(255,255,255,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                                <div style="background: rgba(255,255,255,0.08); padding: 15px; border-radius: 0px; text-align: center;">
                                     <div style="font-weight: bold; color: #4facfe; margin-bottom: 8px;">${link.quality}</div>
                                     <div style="color: #90caf9; font-size: 0.9rem; margin-bottom: 10px;">${link.size}</div>
-                                    <a href="${link.url}" style="display: inline-block; padding: 8px 15px; background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; text-decoration: none; border-radius: 8px; font-weight: 600;" target="_blank">
+                                    <a href="${link.url}" style="display: inline-block; padding: 8px 15px; background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; text-decoration: none; border-radius: 0px; font-weight: 600;" target="_blank">
                                         ${downloadType === 'stream' ? 'Watch' : 'Download'}
                                     </a>
                                 </div>
