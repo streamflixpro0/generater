@@ -2,525 +2,1857 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> Post Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Data Generator - OMDB & TMDB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            touch-action: manipulation;
         }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: fixed;
-            font-family: 'Inter', sans-serif;
-        }
-
-        :root {
-            --bg-dark: linear-gradient(135deg, #1e1e2f, #2a2a4a, #3b3b5f);
-            --container-dark: rgba(40, 40, 60, 0.9);
-            --text-dark: #e0e0e0;
-            --accent-dark: #ff4e7e;
-            --btn-dark-1: linear-gradient(90deg, #ff4e7e, #ff8e53);
-            --btn-dark-2: linear-gradient(90deg, #4ecca3, #56ccf2);
-            --btn-dark-3: linear-gradient(90deg, #9575cd, #ba68c8);
-            --input-dark: rgba(255, 255, 255, 0.1);
-            --shadow-dark: rgba(0, 0, 0, 0.5);
-        }
-
+        
         body {
-            background: var(--bg-dark);
-            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            padding: 15px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            gap: 30px;
         }
-
-        .main-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
         }
-
-        .tab-container {
+        
+        h1 {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: #90caf9;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            margin-bottom: 20px;
+        }
+        
+        .frame {
+            background: rgba(25,25,35,0.85);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .frame:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            transform: translateY(-5px);
+        }
+        
+        .search-section {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+            border: 2px solid rgba(106, 17, 203, 0.3);
+        }
+        
+        .search-box {
             display: flex;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-direction: column;
         }
-
-        .tab-btn {
-            padding: 12px 20px;
-            background: transparent;
+        
+        @media (min-width: 768px) {
+            .search-box {
+                flex-direction: row;
+            }
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 18px 25px;
+            border-radius: 15px;
+            border: 2px solid #6a11cb;
+            background: rgba(20, 20, 30, 0.8);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #ff9a9e;
+            box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.3);
+        }
+        
+        .api-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .api-buttons {
+                flex-direction: row;
+            }
+        }
+        
+        .api-btn {
+            flex: 1;
+            padding: 18px 30px;
+            border-radius: 15px;
             border: none;
-            color: var(--text-dark);
+            color: white;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 200px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             position: relative;
+            overflow: hidden;
         }
-
-        .tab-btn.active {
-            color: var(--accent-dark);
-        }
-
-        .tab-btn.active::after {
+        
+        .api-btn::before {
             content: '';
             position: absolute;
-            bottom: -1px;
-            left: 0;
+            top: 0;
+            left: -100%;
             width: 100%;
-            height: 3px;
-            background: var(--accent-dark);
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
         }
-
-        .content-section {
-            display: none;
+        
+        .api-btn:hover::before {
+            left: 100%;
         }
-
-        .content-section.active {
-            display: block;
+        
+        .omdb-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ff6b6b);
+            border: 2px solid #ff6b6b;
         }
-
-        .generator-container {
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 20px;
+        
+        .tmdb-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe, #4facfe);
+            border: 2px solid #4facfe;
+        }
+        
+        .api-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+        
+        .omdb-btn:hover {
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.5);
+        }
+        
+        .tmdb-btn:hover {
+            box-shadow: 0 12px 25px rgba(79, 172, 254, 0.5);
+        }
+        
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .preview-section, .code-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .section-title {
+            color: #fdd835;
             margin-bottom: 20px;
-            box-shadow: 0 15px 40px var(--shadow-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: var(--container-dark);
-        }
-
-        h2 {
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(255,255,255,0.1);
             font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--accent-dark);
-            text-shadow: 0 2px 10px rgba(255, 78, 126, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
-        .input-group {
+        
+        .section-title i {
+            color: #ff9a9e;
+        }
+        
+        .movie-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border: 2px solid rgba(255,255,255,0.1);
+            background: rgba(25,25,35,0.9);
+        }
+        
+        .movie-header {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        @media (min-width: 768px) {
+            .movie-header {
+                height: 280px;
+            }
+        }
+        
+        .movie-backdrop {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(4px) brightness(0.6);
+        }
+        
+        .movie-poster {
+            position: absolute;
+            bottom: -40px;
+            left: 20px;
+            width: 100px;
+            border-radius: 15px;
+            border: 3px solid #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+        }
+        
+        .movie-poster:hover {
+            transform: scale(1.05);
+        }
+        
+        @media (min-width: 768px) {
+            .movie-poster {
+                width: 140px;
+                bottom: -60px;
+                left: 30px;
+            }
+        }
+        
+        .movie-card {
+            background: rgba(25,25,35,0.9);
+            padding: 60px 20px 20px;
+            border-radius: 20px;
+            margin-top: -40px;
+        }
+        
+        @media (min-width: 768px) {
+            .movie-card {
+                padding: 90px 30px 30px;
+                margin-top: -60px;
+            }
+        }
+        
+        .movie-title {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .movie-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .movie-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .movie-details li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .movie-details li {
+                font-size: 16px;
+            }
+        }
+        
+        .movie-details b {
+            color: #4facfe;
+            min-width: 180px;
+        }
+        
+        .imdb-rating-link {
+            color: #f5c518;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .imdb-rating-link:hover {
+            color: #ff9a9e;
+            text-decoration: underline;
+        }
+        
+        .credit-box {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 14px;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+        
+        .credit-box span {
+            color: #f5c518;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            display: none;
+            color: #90caf9;
+            font-size: 18px;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 25px;
+            color: #ff6b6b;
+            display: none;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 15px;
+            margin-top: 15px;
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            font-size: 16px;
+        }
+        
+        .mt-box {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .code-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .action-card {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+            border: 2px solid rgba(106, 17, 203, 0.3);
+        }
+        
+        .copy-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.4s;
+            font-size: 18px;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+            border: 2px solid #ff6b6b;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #ff8e8e, #ff6b6b);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.6);
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, rgba(255, 154, 158, 0.2), rgba(250, 208, 196, 0.2));
+            border: 2px solid rgba(255, 154, 158, 0.3);
+        }
+        
+        .instructions h3 {
+            color: #ff9a9e;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            padding-left: 10px;
+            border-left: 3px solid #4facfe;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.08);
+            padding: 25px 15px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff9a9e, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 15px;
         }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: var(--input-dark);
-            color: var(--text-dark);
+        
+        .feature h4 {
+            color: #fdd835;
             margin-bottom: 10px;
+            font-size: 1.2rem;
         }
-
-        textarea {
-            height: 200px;
-            resize: none;
-            font-family: 'Fira Code', monospace;
+        
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #56ab2f, #a8e063);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 3s ease-in-out;
+            font-weight: 600;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: #90caf9;
+            font-size: 1rem;
+            background: rgba(25,25,35,0.7);
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .player-container {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+        
+        .player-container iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+        }
+        
+        @media (min-width: 768px) {
+            .player-container iframe {
+                height: 400px;
+            }
+        }
+        
+        .quality-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .quality-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .quality-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .quality-btn.active {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border-color: #6a11cb;
+        }
+        
+        .note {
+            background: rgba(255,193,7,0.15);
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,193,7,0.2);
+        }
+        
+        .api-info {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #90caf9;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        
+        .api-tag {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .omdb-tag {
+            background: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+        
+        .tmdb-tag {
+            background: rgba(79, 172, 254, 0.3);
+            color: #4facfe;
+            border: 1px solid #4facfe;
+        }
+        
+        .code-preview {
+            background: #1e1e2e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid rgba(255,255,255,0.1);
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        pre {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
             line-height: 1.5;
-            user-select: text;
-            -webkit-user-select: text;
+            font-size: 12px;
         }
-
-        .button-group {
+        
+        .mobile-warning {
+            display: none;
+            background: rgba(255, 152, 0, 0.15);
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+        }
+        
+        @media (max-width: 767px) {
+            .mobile-warning {
+                display: block;
+            }
+            
+            .frame {
+                padding: 20px;
+            }
+        }
+        
+        .glow {
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(106, 17, 203, 0.8), 0 0 30px rgba(37, 117, 252, 0.6);
+            }
+        }
+        
+        /* Toggle Switch Styles */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(36px);
+        }
+        
+        /* History Section Styles */
+        .history-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .history-btn {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .history-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+        }
+        
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 10px;
+            background: rgba(20, 20, 30, 0.8);
+            padding: 15px;
+        }
+        
+        .history-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .history-item-title {
+            font-weight: 600;
+        }
+        
+        .history-item-type {
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            background: rgba(106, 17, 203, 0.3);
+        }
+        
+        .clear-history {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .clear-history:hover {
+            background: rgba(255, 107, 107, 0.3);
+        }
+        
+        /* Download Links Generator Styles */
+        .download-generator {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .download-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .download-title {
+            color: #fdd835;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .download-options {
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
             flex-wrap: wrap;
         }
-
-        button {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px;
-            border: none;
+        
+        .download-option-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
             color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
         }
-
-        .btn-primary { background: var(--btn-dark-1); }
-        .btn-secondary { background: var(--btn-dark-2); }
-        .btn-tertiary { background: var(--btn-dark-3); }
-
-        .toggle-group {
-            display: flex;
-            gap: 10px;
+        
+        .download-option-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .download-option-btn.active {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border-color: #6a11cb;
+        }
+        
+        .download-links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
             margin-bottom: 15px;
         }
-
-        .toggle-btn {
-            flex: 1;
+        
+        .download-link {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .download-link:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+        }
+        
+        .download-quality {
+            font-weight: bold;
+            color: #4facfe;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .download-size {
+            color: #90caf9;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .download-input {
+            width: 100%;
             padding: 10px;
-            border: none;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid #6a11cb;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-dark);
-            cursor: pointer;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
-
-        .toggle-btn.active {
-            background: var(--accent-dark);
+        
+        .download-input:focus {
+            outline: none;
+            border-color: #ff9a9e;
         }
-
+        
         .download-btn {
             display: inline-block;
-            padding: 10px 15px;
-            margin: 5px 0;
-            background: #e50914;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #ff6b6b;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #ff8e8e, #ff6b6b);
+            transform: scale(1.05);
+        }
+        
+        .download-note {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #90caf9;
             text-align: center;
         }
-
-        .copyright {
+        
+        .add-link-btn {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .add-link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+        }
+        
+        .remove-link-btn {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 0.8rem;
-            text-align: center;
-            margin-top: 20px;
-            opacity: 0.7;
+            margin-top: 8px;
+            transition: all 0.3s;
         }
-
-        @media (max-width: 600px) {
-            .generator-container {
-                padding: 15px;
-            }
-            
-            h2 {
-                font-size: 1.3rem;
-            }
-            
-            .button-group, .toggle-group {
-                flex-direction: column;
-            }
-            
-            button, .toggle-btn {
-                width: 100%;
-            }
+        
+        .remove-link-btn:hover {
+            background: rgba(255, 107, 107, 0.3);
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container">
-        <div class="tab-container">
-            <button class="tab-btn active" onclick="switchTab('post-generator')">Post Generator</button>
-            <button class="tab-btn" onclick="switchTab('download-generator')">Download Buttons</button>
-        </div>
-
-        <!-- Post Generator Section - Replaced with new version -->
-        <div id="post-generator" class="content-section active">
-            <div class="generator-container">
-                <h2>Movie & Series Post Generator</h2>
-                <div class="input-group">
-                    <input type="text" id="tmdbId" placeholder="Enter TMDB Movie ID">
-                    <button class="btn-tertiary" onclick="pasteTMDBId()">Paste</button>
+    <div class="container">
+        <header>
+            <h1>🎬 Movie & TV Show Data Generator</h1>
+            <p class="subtitle">Fetch details from OMDB & TMDB APIs</p>
+        </header>
+        
+        <div class="instructions frame">
+            <h3><i class="fas fa-info-circle"></i> How to Use This Generator</h3>
+            <ul>
+                <li>Select whether you want to search for a Movie or TV Show using the toggle</li>
+                <li>Enter a title in the search box below</li>
+                <li>Choose between OMDB or TMDB API using the colorful buttons</li>
+                <li>OMDB provides detailed information</li>
+                <li>TMDB provides high-quality backdrop images</li>
+                <li>Add download links with different quality options</li>
+                <li>Copy the complete HTML code for your Blogger post</li>
+                <li>Your search history is saved for quick access</li>
+            </ul>
+            
+            <div class="mobile-warning">
+                <i class="fas fa-mobile-alt"></i> You're viewing on a mobile device. For the best experience, consider using a desktop for easier code copying.
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature">
+                    <i class="fas fa-database"></i>
+                    <h4>Dual API Support</h4>
+                    <p>Fetch data from both OMDB and TMDB APIs</p>
                 </div>
-                <div class="toggle-group">
-                    <button class="toggle-btn active" id="movieToggle" onclick="toggleType('movie')">Movie</button>
-                    <button class="toggle-btn" id="seriesToggle" onclick="toggleType('series')">Series</button>
+                <div class="feature">
+                    <i class="fas fa-image"></i>
+                    <h4>HD Backdrops</h4>
+                    <p>TMDB provides high-quality backdrop images</p>
                 </div>
-                <div class="button-group">
-                    <button class="btn-primary" onclick="generateHTML()">Generate HTML</button>
-                    <button class="btn-secondary" onclick="copyToClipboard('outputHTML')">Copy Code</button>
-                    <button class="btn-tertiary" onclick="pasteFromClipboard()">Paste Code</button>
+                <div class="feature">
+                    <i class="fas fa-info-circle"></i>
+                    <h4>Detailed Info</h4>
+                    <p>OMDB provides comprehensive details</p>
                 </div>
-                <textarea id="outputHTML" placeholder="Generated HTML will appear here..."></textarea>
+                <div class="feature">
+                    <i class="fas fa-download"></i>
+                    <h4>Download Links</h4>
+                    <p>Add custom download links to your post</p>
+                </div>
             </div>
         </div>
-
-        <!-- Download Button Generator Section -->
-        <div id="download-generator" class="content-section">
-            <div class="generator-container">
-                <h2>Download Button Generator</h2>
-                <div class="input-group">
-                    <input type="text" id="resolution" placeholder="Resolution (e.g. 480p, 720p)">
-                    <input type="text" id="link" placeholder="Download link (https://...)">
+        
+        <div class="search-section frame glow">
+            <div class="toggle-container">
+                <span class="toggle-label">Movie</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="mediaToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">TV Show</span>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" id="movieInput" placeholder="Enter movie or TV show title">
+            </div>
+            
+            <div class="api-buttons">
+                <button class="api-btn omdb-btn" id="omdbBtn">
+                    <i class="fas fa-film"></i> Fetch from OMDB API
+                </button>
+                <button class="api-btn tmdb-btn" id="tmdbBtn">
+                    <i class="fas fa-images"></i> Fetch from TMDB API
+                </button>
+            </div>
+            
+            <div class="loading" id="loadingIndicator">
+                <i class="fas fa-spinner fa-spin"></i> Loading data...
+            </div>
+            <div class="error" id="errorMessage">
+                <i class="fas fa-exclamation-triangle"></i> Title not found. Please try another.
+            </div>
+            
+            <div class="history-section" id="historySection">
+                <div class="history-header">
+                    <h3><i class="fas fa-history"></i> Search History</h3>
+                    <button class="history-btn" id="toggleHistoryBtn">
+                        <i class="fas fa-chevron-up"></i> Hide
+                    </button>
                 </div>
-                <div class="button-group">
-                    <button class="btn-tertiary" onclick="addDownload()">Add Button</button>
-                    <button class="btn-secondary" onclick="copyToClipboard('downloadOutput')">Copy Code</button>
-                    <button class="btn-primary" onclick="resetDownloadGenerator()">Reset</button>
+                <div class="history-list" id="historyList">
+                    <!-- History items will be added here -->
                 </div>
-                <textarea id="downloadOutput" placeholder="Generated download buttons HTML will appear here..."></textarea>
-                <div id="downloadPreview" style="margin-top: 15px;"></div>
+                <button class="clear-history" id="clearHistoryBtn">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
             </div>
         </div>
-
-        <div class="copyright">© 2023 streamflixpro.fun - All Rights Reserved</div>
+        
+        <div class="results-container" id="resultsContainer" style="display: none;">
+            <div class="preview-section">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Preview</h2>
+                <div class="movie-container frame" id="movieContainer">
+                    <!-- Movie/TV show preview will be displayed here -->
+                </div>
+                
+                <div class="download-generator frame" id="downloadGenerator">
+                    <div class="download-header">
+                        <h3 class="download-title"><i class="fas fa-download"></i> Download Links Generator</h3>
+                    </div>
+                    
+                    <div class="download-options">
+                        <button class="download-option-btn active" data-type="direct">Direct Links</button>
+                        <button class="download-option-btn" data-type="torrent">Torrent Links</button>
+                        <button class="download-option-btn" data-type="stream">Streaming Links</button>
+                    </div>
+                    
+                    <div class="download-links-container" id="downloadLinksContainer">
+                        <!-- Download links will be added here -->
+                    </div>
+                    
+                    <button class="add-link-btn" id="addLinkBtn">
+                        <i class="fas fa-plus"></i> Add More Download Links
+                    </button>
+                    
+                    <div class="download-note">
+                        <i class="fas fa-info-circle"></i> Enter your actual download URLs. These will be included in the generated HTML code.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <div class="action-card frame">
+                    <h2 class="section-title"><i class="fas fa-code"></i> Generated HTML Code</h2>
+                    <p>Complete HTML code for your Blogger post:</p>
+                    <div class="code-preview">
+                        <pre id="htmlCode">// Search for a movie or TV show to generate HTML code...</pre>
+                    </div>
+                    <button class="copy-btn" id="copyBtn">
+                        <i class="fas fa-copy"></i> Copy HTML Code
+                    </button>
+                    <div class="note">
+                        <i class="fas fa-info-circle"></i> Paste this code in your Blogger post in HTML mode
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="frame">
+            <p>Movie & TV Show Data Generator &copy; 2023 | Using OMDB & TMDB APIs | Developed by Kuldeep Rai Sanatani</p>
+        </footer>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i> HTML code copied to clipboard!
     </div>
 
     <script>
-        // Disable zooming and scrolling
-        document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        });
-        
-        document.addEventListener('touchmove', function(e) {
-            if (!e.target.classList.contains('scrollable')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        // Tab switching
-        function switchTab(tabId) {
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
+        document.addEventListener('DOMContentLoaded', function() {
+            const omdbBtn = document.getElementById('omdbBtn');
+            const tmdbBtn = document.getElementById('tmdbBtn');
+            const movieInput = document.getElementById('movieInput');
+            const movieContainer = document.getElementById('movieContainer');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const errorMessage = document.getElementById('errorMessage');
+            const copyBtn = document.getElementById('copyBtn');
+            const htmlCode = document.getElementById('htmlCode');
+            const successMessage = document.getElementById('successMessage');
+            const mediaToggle = document.getElementById('mediaToggle');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const historySection = document.getElementById('historySection');
+            const historyList = document.getElementById('historyList');
+            const toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
+            const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+            const downloadGenerator = document.getElementById('downloadGenerator');
+            const downloadLinksContainer = document.getElementById('downloadLinksContainer');
+            const downloadOptionBtns = document.querySelectorAll('.download-option-btn');
+            const addLinkBtn = document.getElementById('addLinkBtn');
+            
+            // API Keys
+            const OMDB_API_KEY = '8501ba9a';
+            const TMDB_API_KEY = 'fed86956458f19fb45cdd382b6e6de83';
+            
+            let currentMediaData = null;
+            let currentApiSource = '';
+            let isMovie = true; // Default to movie search
+            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            let downloadType = 'direct'; // Default download type
+            let downloadLinks = []; // Store download links data
+            
+            // Initialize history display
+            updateHistoryDisplay();
+            
+            // Initialize download links
+            initializeDownloadLinks();
+            
+            // Event listeners
+            omdbBtn.addEventListener('click', fetchFromOMDB);
+            tmdbBtn.addEventListener('click', fetchFromTMDB);
+            movieInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    fetchFromOMDB();
+                }
             });
             
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        // Post Generator Functions - Replaced with new version
-        const apiKey = "bef32038953bef7647b4a5862532fe95";
-        let contentType = "movie";
-
-        function toggleType(type) {
-            contentType = type;
-            document.getElementById("movieToggle").classList.toggle("active", type === "movie");
-            document.getElementById("seriesToggle").classList.toggle("active", type === "series");
-            document.getElementById("tmdbId").placeholder = `Enter TMDB ${type === "movie" ? "Movie" : "Series"} ID`;
-        }
-
-        async function generateHTML() {
-            const tmdbId = document.getElementById("tmdbId").value.trim();
-            if (!tmdbId) {
-                alert("Please enter a valid TMDB ID");
-                return;
+            copyBtn.addEventListener('click', copyHTMLCode);
+            mediaToggle.addEventListener('change', toggleMediaType);
+            toggleHistoryBtn.addEventListener('click', toggleHistory);
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            addLinkBtn.addEventListener('click', addDownloadLink);
+            
+            // Add event listeners to download option buttons
+            downloadOptionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    downloadOptionBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Update download type
+                    downloadType = this.getAttribute('data-type');
+                    // Update download links
+                    updateDownloadLinksDisplay();
+                });
+            });
+            
+            function toggleMediaType() {
+                isMovie = !isMovie;
+                movieInput.placeholder = isMovie ? 
+                    "Enter movie title" : 
+                    "Enter TV show title";
+                
+                // Update toggle labels
+                document.querySelectorAll('.toggle-label').forEach((label, index) => {
+                    if (isMovie) {
+                        label.textContent = index === 0 ? 'Movie' : 'TV Show';
+                    } else {
+                        label.textContent = index === 0 ? 'TV Show' : 'Movie';
+                    }
+                });
             }
-
-            const apiUrl = contentType === "movie"
-                ? `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${apiKey}&append_to_response=videos,credits`
-                : `https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${apiKey}&append_to_response=credits`;
-
-            try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
-
-                if (!data.name && !data.title) {
-                    alert("Invalid TMDB ID. Try again.");
+            
+            function fetchFromOMDB() {
+                const title = movieInput.value.trim();
+                
+                if (!title) {
+                    alert('Please enter a title');
                     return;
                 }
-
-                if (contentType === "movie") {
-                    const title = data.title;
-                    const year = data.release_date ? data.release_date.split("-")[0] : "Unknown";
-                    const rating = data.vote_average ? data.vote_average.toFixed(1) : "N/A";
-                    const duration = data.runtime ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m` : "Unknown";
-                    const genres = data.genres.length ? data.genres.map(g => g.name).join(", ") : "N/A";
-                    const director = data.credits.crew.find(person => person.job === "Director")?.name || "Unknown";
-                    const cast = data.credits.cast.slice(0, 2).map(actor => `<a href="https://www.themoviedb.org/person/${actor.id}">${actor.name}</a>`).join(", ") || "N/A";
-                    const posterUrl = data.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face${data.poster_path}` : "https://via.placeholder.com/220x330?text=No+Image";
-                    const story = data.overview || "No storyline available.";
-                    const trailer = data.videos?.results.find(video => video.type === "Trailer");
-                    let trailerLink = "https://thegdplayer.blogspot.com/?player=plyr&provider=yt&link=";
-                    trailerLink += trailer ? trailer.key : "dQw4w9WgXcQ";
-
-                    const movieHTML = `
-<div class="separator" style="clear: both;">
-        <img alt="${title} (${year})" border="0" loading="lazy" src="${posterUrl}" />
-    </a>
-</div>
-
-<span class="hcl">
-    <b>{year}=${year}</b> <b>{rating}=${rating}</b> <b>{type}=Movie</b> <b>{khdub}</b>
-</span>
-
-<div style="height: 0px; overflow: hidden; padding-bottom: 56.25%; position: relative;">
-
-  <iframe allow="autoplay; encrypted-media" allowfullscreen="" scrolling="no" src="${trailerLink}" style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
-</div>
-<div class="m-tabs">
-<ul class="b-tabs">
-    <li>Info</li>
-    <li>Story</li>
-    <li>Download</li>
-</ul>
-<div class="c-tabs">
-<div class="s-tabs">
-<div class="boxInfo">
-<div class="box-i">
-    <span><b>● Title:</b> ${title}</span>
-    <span><b>● Duration:</b> ${duration}</span>
-    <span><b>● Year:</b> ${year}</span>
-    <span><b>● Genre:</b> ${genres}</span>
-    <span><b>● Lead Cast:</b> ${cast}</span>
-    <span><b>● Rating:</b> ⭐${rating}</span>
-    <span><b>● Director:</b> ${director}</span>
-    <span><b>● Type:</b> Movie</span>
-</div>
-</div>
-</div>
-<div class="s-tabs">
-    <p class="dexs">${story}</p>
-</div>
-<div class="s-tabs">
-    <div class="download-container">
-        <a class="download-button" href="https://smallshorts.com/480p">Download 480p</a>
-        <a class="download-button" href="https://smallshorts.com/720p">Download 720p</a>
-        <a class="download-button" href="https://smallshorts.com/1080p">Download 1080p</a>
-    </div>
-</div>
-</div>
-</div>`;
-                    document.getElementById("outputHTML").value = movieHTML;
-                } else {
-                    const title = data.name;
-                    const year = data.first_air_date ? data.first_air_date.split("-")[0] : "Unknown";
-                    const rating = data.vote_average ? data.vote_average.toFixed(1) : "N/A";
-                    const genres = data.genres.length ? data.genres.map(g => g.name).join(", ") : "N/A";
-                    const cast = data.credits.cast.slice(0, 2).map(actor => `<a href="https://www.themoviedb.org/person/${actor.id}">${actor.name}</a>`).join(", ") || "N/A";
-                    const posterUrl = data.poster_path ? `https://image.tmdb.org/t/p/original${data.poster_path}` : "https://via.placeholder.com/533x800?text=No+Image";
-                    const story = data.overview || "No storyline available.";
-                    const seasons = data.number_of_seasons || "Unknown";
-                    const episodes = data.number_of_episodes || "Unknown";
-                    const status = data.status === "Ended" ? "" : "<b>{ongoing}</b>";
-
-                    const seriesHTML = `
-<div class="separator" style="clear: both;">
-        <img alt="${title}" border="0" data-original-height="800" data-original-width="533" src="${posterUrl}" loading="lazy" />
-    </a>
-</div>
-
-<span class="hcl">
-    <b>{speak}=khmer</b> <b>{episode}=EP.1</b> <b>{type}=Drama</b> ${status}
-</span>
-
-<div style="height: 0px; overflow: hidden; padding-bottom: 56.25%; position: relative;">
-
-  <iframe allow="autoplay; encrypted-media" allowfullscreen="" scrolling="no" src="#" style="border: none; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
-</div>
-<div class="m-tabs">
-<ul class="b-tabs">
-    <li>Info</li>
-    <li>Story</li>
-    <li>Download</li>
-</ul>
-<div class="c-tabs">
-<div class="s-tabs">
-<div class="boxInfo">
-<div class="box-i">
-    <span><b>● Title:</b> ${title}</span>
-    <span><b>● Duration:</b> Not Available</span>
-    <span><b>● Year:</b> ${year}</span>
-    <span><b>● Genre:</b> ${genres}</span>
-    <span><b>● Lead Cast:</b> ${cast}</span>
-    <span><b>● Rating:</b> ⭐${rating}</span>
-    <span><b>● Director:</b> Not Available</span>
-    <span><b>● Type:</b> Series</span>
-    <span><b>● Seasons:</b> ${seasons}</span>
-    <span><b>● Total Episodes:</b> ${episodes}</span>
-</div>
-</div>
-</div>
-<div class="s-tabs">
-    <p class="dexs">${story}</p>
-</div>
-<div class="s-tabs">
-    <h2 style="text-align:center">Season 1</h2>
-    <div class="download-container">
-        <a class="download-button" href="#link-480p">Episode 1</a>
-        <a class="download-button" href="#link-720p">Episode 2</a>
-        <a class="download-button" href="#link-1080p">Episode 3</a>
-    </div>
-</div>
-</div>
-</div>`;
-                    document.getElementById("outputHTML").value = seriesHTML;
+                
+                currentApiSource = 'OMDB';
+                const type = isMovie ? 'movie' : 'series';
+                searchMedia(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&type=${type}&apikey=${OMDB_API_KEY}`, 'OMDB', title);
+            }
+            
+            function fetchFromTMDB() {
+                const title = movieInput.value.trim();
+                
+                if (!title) {
+                    alert('Please enter a title');
+                    return;
                 }
-            } catch (error) {
-                alert("Error fetching details. Please try again.");
-                console.error(error);
+                
+                currentApiSource = 'TMDB';
+                const type = isMovie ? 'movie' : 'tv';
+                searchMedia(`https://api.themoviedb.org/3/search/${type}?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(title)}`, 'TMDB', title);
             }
-        }
-
-        async function pasteFromClipboard() {
-            try {
-                const text = await navigator.clipboard.readText();
-                const textarea = document.getElementById("outputHTML");
-                textarea.value = text;
-                textarea.readOnly = false;
-                alert("Code pasted from clipboard!");
-            } catch (error) {
-                alert("Failed to paste from clipboard. Please try manually pasting with Ctrl+V.");
-                console.error(error);
-            }
-        }
-
-        async function pasteTMDBId() {
-            try {
-                const text = await navigator.clipboard.readText();
-                const input = document.getElementById("tmdbId");
-                input.value = text.trim();
-                alert("TMDB ID pasted!");
-            } catch (error) {
-                alert("Failed to paste TMDB ID. Please try manually pasting with Ctrl+V.");
-                console.error(error);
-            }
-        }
-
-        // Download Button Generator Functions
-        let downloadButtonsHTML = `<div class="s-tabs">\n  <div class="download-container">\n`;
-
-        function addDownload() {
-            const resolution = document.getElementById('resolution').value.trim();
-            const link = document.getElementById('link').value.trim();
-
-            if (!resolution || !link) {
-                alert("Please enter both resolution and link");
-                return;
-            }
-
-            const buttonHTML = `    <a class="download-button" href="${link}" style="display: block; padding: 12px; background: #e50914; color: white; text-align: center; text-decoration: none; border-radius: 4px; font-weight: bold;">Download ${resolution}</a>\n`;
             
-            downloadButtonsHTML += buttonHTML;
-            document.getElementById('downloadOutput').value = downloadButtonsHTML + "  </div>\n</div>";
+            function searchMedia(apiUrl, apiType, searchTitle) {
+                // Show loading indicator
+                loadingIndicator.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Fetch media data from API
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        loadingIndicator.style.display = 'none';
+                        
+                        if (apiType === 'OMDB') {
+                            if (data.Response === 'True') {
+                                currentMediaData = data;
+                                displayMediaData(data, 'OMDB');
+                                updateDownloadLinksDisplay();
+                                generateHTMLCode(data, 'OMDB');
+                                addToHistory(searchTitle, isMovie ? 'movie' : 'tv');
+                                resultsContainer.style.display = 'flex';
+                            } else {
+                                showError();
+                            }
+                        } else if (apiType === 'TMDB') {
+                            if (data.results && data.results.length > 0) {
+                                const media = data.results[0];
+                                // Fetch additional details for TMDB
+                                fetch(`https://api.themoviedb.org/3/${isMovie ? 'movie' : 'tv'}/${media.id}?api_key=${TMDB_API_KEY}&append_to_response=credits`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('TMDB details not found');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(mediaDetails => {
+                                        currentMediaData = formatTMDBData(mediaDetails);
+                                        displayMediaData(currentMediaData, 'TMDB');
+                                        updateDownloadLinksDisplay();
+                                        generateHTMLCode(currentMediaData, 'TMDB');
+                                        addToHistory(searchTitle, isMovie ? 'movie' : 'tv');
+                                        resultsContainer.style.display = 'flex';
+                                    })
+                                    .catch(error => {
+                                        console.error('Error fetching TMDB details:', error);
+                                        showError();
+                                    });
+                            } else {
+                                showError();
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        loadingIndicator.style.display = 'none';
+                        showError();
+                        console.error('Error fetching media data:', error);
+                    });
+            }
             
-            // Update preview
-            const previewContainer = document.getElementById('downloadPreview');
-            const newButton = document.createElement('a');
-            newButton.className = 'download-btn';
-            newButton.href = link;
-            newButton.textContent = `Download ${resolution}`;
-            newButton.style.margin = '5px';
-            newButton.style.display = 'inline-block';
-            previewContainer.appendChild(newButton);
+            function formatTMDBData(media) {
+                // Get director from credits
+                let director = 'N/A';
+                if (media.credits && media.credits.crew) {
+                    const directors = media.credits.crew.filter(person => person.job === 'Director');
+                    if (directors.length > 0) {
+                        director = directors.map(d => d.name).join(', ');
+                    }
+                }
+                
+                // Get actors from credits
+                let actors = 'N/A';
+                if (media.credits && media.credits.cast) {
+                    actors = media.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+                }
+                
+                // For TV shows, handle different properties
+                const isTV = !media.release_date;
+                
+                return {
+                    Title: media.title || media.name,
+                    Year: isTV ? 
+                        (media.first_air_date ? media.first_air_date.substring(0, 4) : 'N/A') : 
+                        (media.release_date ? media.release_date.substring(0, 4) : 'N/A'),
+                    Rated: media.adult ? 'R' : 'PG',
+                    Released: isTV ? (media.first_air_date || 'N/A') : (media.release_date || 'N/A'),
+                    Runtime: isTV ? 
+                        (media.episode_run_time && media.episode_run_time.length > 0 ? `${media.episode_run_time[0]} min` : 'N/A') : 
+                        (media.runtime ? `${media.runtime} min` : 'N/A'),
+                    Genre: media.genres ? media.genres.map(g => g.name).join(', ') : 'N/A',
+                    Director: director,
+                    Writer: 'N/A',
+                    Actors: actors,
+                    Plot: media.overview || 'N/A',
+                    Language: media.original_language || 'N/A',
+                    Country: media.production_countries ? media.production_countries[0]?.name : 'N/A',
+                    Awards: 'N/A',
+                    Poster: media.poster_path ? `https://image.tmdb.org/t/p/w500${media.poster_path}` : 'N/A',
+                    Backdrop: media.backdrop_path ? `https://image.tmdb.org/t/p/w1280${media.backdrop_path}` : 'N/A',
+                    Ratings: [{ Source: 'TMDB', Value: `${media.vote_average}/10` }],
+                    imdbRating: media.vote_average ? media.vote_average.toString() : 'N/A',
+                    imdbVotes: media.vote_count ? media.vote_count.toString() : 'N/A',
+                    imdbID: media.imdb_id || 'N/A',
+                    Type: isMovie ? 'movie' : 'series',
+                    DVD: 'N/A',
+                    BoxOffice: 'N/A',
+                    Production: 'N/A',
+                    Website: 'N/A',
+                    Response: 'True',
+                    totalSeasons: isTV ? (media.number_of_seasons || 'N/A') : 'N/A'
+                };
+            }
             
-            document.getElementById('resolution').value = '';
-            document.getElementById('link').value = '';
-        }
+            function displayMediaData(media, apiSource) {
+                // Generate HTML for media data
+                const backdropImage = apiSource === 'TMDB' && media.Backdrop !== 'N/A' 
+                    ? media.Backdrop 
+                    : getBackdropImage(media.Title);
+                    
+                const mediaType = isMovie ? 'Movie' : 'TV Show';
+                const seasonsInfo = !isMovie && media.totalSeasons !== 'N/A' ? 
+                    `<li><b>📺 Total Seasons:</b> ${media.totalSeasons}</li>` : '';
+                    
+                const mediaHTML = `
+                    <div class="movie-header">
+                        <img class="movie-backdrop" src="${backdropImage}" alt="Backdrop">
+                        <img class="movie-poster" src="${media.Poster !== 'N/A' ? media.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+                        <div class="api-info">
+                            <span class="api-tag ${apiSource.toLowerCase()}-tag">${apiSource}</span>
+                        </div>
+                    </div>
 
-        function resetDownloadGenerator() {
-            downloadButtonsHTML = `<div class="s-tabs">\n  <div class="download-container">\n`;
-            document.getElementById('downloadOutput').value = '';
-            document.getElementById('downloadPreview').innerHTML = '';
-            document.getElementById('resolution').value = '';
-            document.getElementById('link').value = '';
-        }
+                    <div class="movie-card">
+                        <div class="movie-title">${media.Title} <span>[${media.Year}]</span></div>
+                        <ul class="movie-details">
+                            <li><b>⭐ Rating:</b> <a href="${media.imdbID !== 'N/A' ? `https://www.imdb.com/title/${media.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${media.imdbRating !== 'N/A' ? media.imdbRating : 'N/A'}/10</a></li>
+                            <li><b>🎙️ Language:</b> ${media.Language}</li>
+                            <li><b>🗓️ Released:</b> ${media.Released}</li>
+                            <li><b>🎚️ Runtime:</b> ${media.Runtime}</li>
+                            <li><b>📇 Starcast:</b> ${media.Actors !== 'N/A' ? media.Actors : 'N/A'}</li>
+                            <li><b>🎭 Genre:</b> ${media.Genre}</li>
+                            <li><b>🎬 Director:</b> ${media.Director !== 'N/A' ? media.Director : 'N/A'}</li>
+                            ${seasonsInfo}
+                            <li><b>✍️ Writer:</b> ${media.Writer !== 'N/A' ? media.Writer : 'N/A'}</li>
+                            <li><b>📀 Available Qualities:</b> 480p / 720p / 1080p / 4K</li>
+                            <li><b>💾 File Sizes:</b> 500 MB / 1.5 GB / 2.7 GB / 5 GB</li>
+                        </ul>
+                    </div>
 
-        // Common Functions
-        function copyToClipboard(elementId) {
-            const textarea = document.getElementById(elementId);
-            textarea.select();
-            document.execCommand("copy");
-            alert("Code copied to clipboard!");
-        }
+                    <div class="mt-box">📺 ${mediaType.toUpperCase()} PLAYER</div>
+                    <div id="dkplyr"></div>
+                    <br>
+
+                    <script src="https://kuldeeptech-ai.github.io/generater/New%20folder/plyrimbd.js"><\/script>
+
+                    <p>✅ Download <strong style="color:Green;">${media.Title} ${media.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${media.Genre}</strong>.</p>
+                    <p>🏷️ Tags: ${media.Genre}</p>
+                `;
+                
+                // Insert HTML into container
+                movieContainer.innerHTML = mediaHTML;
+            }
+            
+            function getBackdropImage(title) {
+                // For popular media, use actual backdrop images
+                const backdropImages = {
+                    "The Dark Knight": "https://image.tmdb.org/t/p/w1280/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
+                    "Inception": "https://image.tmdb.org/t/p/w1280/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
+                    "Avatar": "https://image.tmdb.org/t/p/w1280/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
+                    "Avengers: Endgame": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+                    "The Shawshank Redemption": "https://image.tmdb.org/t/p/w1280/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+                    "Pulp Fiction": "https://image.tmdb.org/t/p/w1280/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
+                    "The Godfather": "https://image.tmdb.org/t/p/w1280/tmU7GeKVybMWFButWEGl2M4GeiP.jpg",
+                    "Breaking Bad": "https://image.tmdb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
+                    "Game of Thrones": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+                    "Stranger Things": "https://image.tmdb.org/t/p/w1280/56v2KjBlU4XaOv9rVYEQypROD7P.jpg"
+                };
+                
+                return backdropImages[title] || 'https://via.placeholder.com/500x282/333/fff?text=No+Backdrop+Image';
+            }
+            
+            function showError() {
+                errorMessage.style.display = 'block';
+                movieContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #ff6b6b;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>${isMovie ? 'Movie' : 'TV show'} not found. Please try another title.</p>
+                    </div>
+                `;
+                htmlCode.textContent = `// ${isMovie ? 'Movie' : 'TV show'} not found. Please search for a valid title.`;
+            }
+            
+            // Download Links Functions
+            function initializeDownloadLinks() {
+                // Create default download links
+                downloadLinks = [
+                    { quality: '480p', size: '500 MB', url: '' },
+                    { quality: '720p', size: '1.5 GB', url: '' },
+                    { quality: '1080p', size: '2.7 GB', url: '' },
+                    { quality: '4K', size: '5 GB', url: '' }
+                ];
+                
+                updateDownloadLinksDisplay();
+            }
+            
+            function updateDownloadLinksDisplay() {
+                downloadLinksContainer.innerHTML = '';
+                
+                downloadLinks.forEach((link, index) => {
+                    const linkHTML = `
+                        <div class="download-link">
+                            <div class="download-quality">${link.quality}</div>
+                            <div class="download-size">${link.size}</div>
+                            <input type="text" class="download-input" placeholder="Enter ${downloadType} URL" 
+                                   value="${link.url}" data-index="${index}">
+                            <button class="download-btn" data-index="${index}">
+                                ${downloadType === 'stream' ? 'Watch' : 'Download'}
+                            </button>
+                            ${index > 3 ? `<button class="remove-link-btn" data-index="${index}">Remove</button>` : ''}
+                        </div>
+                    `;
+                    downloadLinksContainer.innerHTML += linkHTML;
+                });
+                
+                // Add event listeners to URL inputs
+                document.querySelectorAll('.download-input').forEach(input => {
+                    input.addEventListener('input', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        downloadLinks[index].url = this.value;
+                        generateHTMLCode(currentMediaData, currentApiSource);
+                    });
+                });
+                
+                // Add event listeners to download buttons
+                document.querySelectorAll('.download-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        const url = downloadLinks[index].url;
+                        if (url) {
+                            window.open(url, '_blank');
+                        } else {
+                            alert('Please enter a URL first');
+                        }
+                    });
+                });
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-link-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        removeDownloadLink(index);
+                    });
+                });
+            }
+            
+            function addDownloadLink() {
+                const newLink = {
+                    quality: 'Custom',
+                    size: 'Unknown',
+                    url: ''
+                };
+                downloadLinks.push(newLink);
+                updateDownloadLinksDisplay();
+                generateHTMLCode(currentMediaData, currentApiSource);
+            }
+            
+            function removeDownloadLink(index) {
+                if (downloadLinks.length > 4) {
+                    downloadLinks.splice(index, 1);
+                    updateDownloadLinksDisplay();
+                    generateHTMLCode(currentMediaData, currentApiSource);
+                }
+            }
+            
+            function generateHTMLCode(media, apiSource) {
+                const backdropImage = apiSource === 'TMDB' && media.Backdrop !== 'N/A' 
+                    ? media.Backdrop 
+                    : getBackdropImage(media.Title);
+                
+                const mediaType = isMovie ? 'Movie' : 'TV Show';
+                const seasonsInfo = !isMovie && media.totalSeasons !== 'N/A' ? 
+                    `<li><b>📺 Total Seasons:</b> ${media.totalSeasons}</li>` : '';
+                
+                // Generate download links HTML
+                let downloadLinksHTML = '';
+                if (downloadLinks.length > 0) {
+                    downloadLinksHTML = `
+                        <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                            <h3 style="color: #fdd835; margin-bottom: 15px; text-align: center;">📥 ${downloadType === 'stream' ? 'Streaming' : 'Download'} Links</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                    `;
+                    
+                    downloadLinks.forEach(link => {
+                        if (link.url) {
+                            downloadLinksHTML += `
+                                <div style="background: rgba(255,255,255,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                                    <div style="font-weight: bold; color: #4facfe; margin-bottom: 8px;">${link.quality}</div>
+                                    <div style="color: #90caf9; font-size: 0.9rem; margin-bottom: 10px;">${link.size}</div>
+                                    <a href="${link.url}" style="display: inline-block; padding: 8px 15px; background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; text-decoration: none; border-radius: 8px; font-weight: 600;" target="_blank">
+                                        ${downloadType === 'stream' ? 'Watch' : 'Download'}
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    });
+                    
+                    downloadLinksHTML += `
+                            </div>
+                            <p style="margin-top: 15px; font-size: 0.9rem; color: #90caf9; text-align: center;">
+                                ${downloadLinks.filter(link => link.url).length === 0 ? 'No download links added yet.' : ''}
+                            </p>
+                        </div>
+                    `;
+                }
+                
+                const completeHTML = `<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #111;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+.movie-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  border-radius: 0px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  border: 0px solid rgba(255,255,255,0.1);
+  background: rgba(25,25,35,0.9);
+}
+.movie-header {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .movie-header {
+    height: 280px;
+  }
+}
+.movie-backdrop {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(px) brightness(3);
+}
+.movie-poster {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  width: 100px;
+  border-radius: 15px;
+  border: 3px solid #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+@media (min-width: 768px) {
+  .movie-poster {
+    width: 140px;
+    bottom: 10px;
+    left: 30px;
+  }
+}
+.movie-card {
+  background: rgba(25,25,25,0.9);
+  padding: 60px 20px 20px;
+  border-radius: 20px;
+  margin-top: -40px;
+}
+@media (min-width: 768px) {
+  .movie-card {
+    padding: 90px 30px 30px;
+    margin-top: -60px;
+  }
+}
+.movie-title {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+@media (min-width: 768px) {
+  .movie-title {
+    font-size: 1.8rem;
+  }
+}
+.movie-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.movie-details li {
+  padding: 6px 0;
+  border-bottom: 1.6px solid rgba(255,255,255,0.1);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+@media (min-width: 768px) {
+  .movie-details li {
+    font-size: 12px;
+  }
+}
+.movie-details b {
+  color: #4facfe;
+  min-width: 180px;
+}
+.imdb-rating-link {
+  color: #f5c518;
+  text-decoration: none;
+  font-weight: 600;
+}
+.imdb-rating-link:hover {
+  color: #ff9a9e;
+  text-decoration: underline;
+}
+.credit-box {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 14px;
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+}
+.credit-box span {
+  color: #f5c518;
+}
+.mt-box {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px;
+  margin: 25px 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.player-container {
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+.player-container iframe {
+  width: 100%;
+  height: 250px;
+  border: none;
+}
+@media (min-width: 768px) {
+  .player-container iframe {
+    height: 400px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="movie-container">
+  <div class="movie-header">
+      <img class="movie-poster" src="${media.Poster !== 'N/A' ? media.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+    <img class="movie-backdrop" src="${backdropImage}" alt="Backdrop">
+    <img class="movie-poster" src="${media.Poster !== 'N/A' ? media.Poster : 'https://via.placeholder.com/300x450/333/fff?text=No+Poster'}" alt="Poster">
+  </div>
+
+  <div class="movie-card">
+    <div class="movie-title">${media.Title} <span>[${media.Year}]</span></div>
+    <ul class="movie-details">
+      <li><b>⭐ Rating:</b> <a href="${media.imdbID !== 'N/A' ? `https://www.imdb.com/title/${media.imdbID}/` : '#'}" class="imdb-rating-link" target="_blank">${media.imdbRating !== 'N/A' ? media.imdbRating : 'N/A'}/10</a></li>
+      <li><b>🎙️ Language:</b> ${media.Language}</li>
+      <li><b>🗓️ Released:</b> ${media.Released}</li>
+      <li><b>🎚️ Runtime:</b> ${media.Runtime}</li>
+      <li><b>📇 Starcast:</b> ${media.Actors !== 'N/A' ? media.Actors : 'N/A'}</li>
+      <li><b>🎭 Genre:</b> ${media.Genre}</li>
+      <li><b>🎬 Director:</b> ${media.Director !== 'N/A' ? media.Director : 'N/A'}</li>
+      ${seasonsInfo}
+      <li><b>✍️ Writer:</b> ${media.Writer !== 'N/A' ? media.Writer : 'N/A'}</li>
+      <li><b>📀 Available Qualities:</b> 480p / 720p / 1080p / 4K</li>
+      <li><b>💾 File Sizes:</b> 500 MB / 1.5 GB / 2.7 GB / 5 GB</li>
+    </ul>
+  </div>
+
+  <div class="mt-box">📺 ${mediaType.toUpperCase()} PLAYER</div>
+  <div id="dkplyr"></div>
+  <br>
+
+  <script src="https://kuldeeptech-ai.github.io/generater/New%20folder/plyrimbd.js"><\/script>
+
+  <p>✅ Download <strong style="color:Green;">${media.Title} ${media.Year}</strong>. Available in 480p, 720p, 1080p, 4K. Genre: <strong>${media.Genre}</strong>.</p>
+  <p>🏷️ Tags: ${media.Genre}</p>
+  
+  ${downloadLinksHTML}
+</div>
+</body>
+</html>`;
+                
+                htmlCode.textContent = completeHTML;
+            }
+            
+            function copyHTMLCode() {
+                if (!currentMediaData) {
+                    alert('Please search for a movie or TV show first');
+                    return;
+                }
+                
+                // Copy to clipboard
+                const textArea = document.createElement('textarea');
+                textArea.value = htmlCode.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                } catch (err) {
+                    alert('Failed to copy code. Please select and copy manually.');
+                }
+                
+                document.body.removeChild(textArea);
+            }
+            
+            // History Functions
+            function addToHistory(title, type) {
+                // Check if already in history
+                const existingIndex = searchHistory.findIndex(item => 
+                    item.title.toLowerCase() === title.toLowerCase() && item.type === type
+                );
+                
+                if (existingIndex !== -1) {
+                    // Remove existing entry
+                    searchHistory.splice(existingIndex, 1);
+                }
+                
+                // Add to beginning of history
+                searchHistory.unshift({
+                    title: title,
+                    type: type,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Keep only last 10 items
+                if (searchHistory.length > 10) {
+                    searchHistory = searchHistory.slice(0, 10);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                
+                // Update display
+                updateHistoryDisplay();
+            }
+            
+            function updateHistoryDisplay() {
+                if (searchHistory.length === 0) {
+                    historyList.innerHTML = '<p style="text-align: center; color: #90caf9;">No search history yet</p>';
+                    return;
+                }
+                
+                historyList.innerHTML = '';
+                searchHistory.forEach(item => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <span class="history-item-title">${item.title}</span>
+                        <span class="history-item-type">${item.type === 'movie' ? '🎬 Movie' : '📺 TV Show'}</span>
+                    `;
+                    
+                    historyItem.addEventListener('click', () => {
+                        // Set the search input and trigger search
+                        movieInput.value = item.title;
+                        isMovie = item.type === 'movie';
+                        mediaToggle.checked = !isMovie;
+                        toggleMediaType();
+                        fetchFromOMDB();
+                    });
+                    
+                    historyList.appendChild(historyItem);
+                });
+            }
+            
+            function toggleHistory() {
+                if (historySection.style.display === 'none' || historySection.style.display === '') {
+                    historySection.style.display = 'block';
+                    toggleHistoryBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Hide';
+                } else {
+                    historySection.style.display = 'none';
+                    toggleHistoryBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show History';
+                }
+            }
+            
+            function clearHistory() {
+                if (confirm('Are you sure you want to clear your search history?')) {
+                    searchHistory = [];
+                    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                    updateHistoryDisplay();
+                }
+            }
+            
+            // Show history section if there's any history
+            if (searchHistory.length > 0) {
+                historySection.style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html>
